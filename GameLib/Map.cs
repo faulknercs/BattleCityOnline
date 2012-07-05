@@ -9,7 +9,7 @@ namespace BattleCity.GameLib
     {
 
         
-        private const uint width = 20;
+        private const uint width = 19;
         private const uint height = 20;
     }
 }
