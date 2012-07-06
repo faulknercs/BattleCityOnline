@@ -10,7 +10,7 @@ namespace BattleCity.GameLib
     /// </summary>
     /// <param name="sender">Source of event</param>
     /// <param name="args">Event arguments, contains information about key state</param>
-    delegate void PlayerKeyEventHandler(Object sender, PlayerKeyEventArgs args);
+    public delegate void PlayerKeyEventHandler(Object sender, PlayerKeyEventArgs args);
 
     /// <summary>
     /// Interface, which represents player
