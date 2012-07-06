@@ -6,11 +6,11 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("BattleCity Online")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyDescription("Online version of the Great game.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
 [assembly: AssemblyProduct("BattleCity Returns")]
-[assembly: AssemblyCopyright("Copyright ©  2012")]
+[assembly: AssemblyCopyright("Copyright ©  2012 BattleCity Online team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

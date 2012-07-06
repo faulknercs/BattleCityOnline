@@ -32,6 +32,12 @@ namespace BattleCity.GameLib
 
         }
 
+        private void ChangePlayersState()
+        {
+
+        }
+
+        private Map currentMap;
         private IList<Player> players = new List<Player>();
         private bool gameOver = false;
     }

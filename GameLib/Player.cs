@@ -13,7 +13,7 @@ namespace BattleCity.GameLib
     public delegate void PlayerKeyEventHandler(Object sender, PlayerKeyEventArgs args);
 
     /// <summary>
-    /// Interface, which represents player
+    /// Class, which represents abstract player
     /// </summary>
     public abstract class Player
     {
@@ -30,5 +30,43 @@ namespace BattleCity.GameLib
 
         public uint Score { get; set; }
         public uint Lives { get; set; }
+
+        protected virtual void OnUpCommand(bool isReleased)
+        {
+            if (UpCommand != null)
+            {
+                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
+                UpCommand(this, args);
+            }
+        }
+
+        protected virtual void OnDownCommand(bool isReleased)
+        {
+            if (DownCommand != null)
+            {
+                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
+                DownCommand(this, args);
+            }
+        }
+
+        protected virtual void OnLeftCommand(bool isReleased)
+        {
+            if (LeftCommand != null)
+            {
+                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
+                LeftCommand(this, args);
+            }
+        }
+
+        protected virtual void OnRightCommand(bool isReleased)
+        {
+            if (RightCommand != null)
+            {
+                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
+                RightCommand(this, args);
+            }
+        }
+
+
     }
 }
