@@ -10,7 +10,7 @@ namespace BattleCity.GameLib
     /// </summary>
     class TankObject : MapObject
     {
-        public TankObject(IPlayer managingPlayer, int x, int y)
+        public TankObject(Player managingPlayer, int x, int y)
             : base (x, y)
         {
             this.managingPlayer = managingPlayer;
@@ -58,6 +58,6 @@ namespace BattleCity.GameLib
             IsRightState = false;
         }
 
-        private IPlayer managingPlayer;
+        private Player managingPlayer;
     }
 }

@@ -8,7 +8,7 @@ namespace BattleCity.GameLib
     /// <summary>
     /// Represents local player, which connected from current proccess
     /// </summary>
-    public class LocalPlayer : IPlayer
+    public class LocalPlayer : Player
     {
         public event PlayerKeyEventHandler UpCommand;
         public event PlayerKeyEventHandler DownCommand;
@@ -16,9 +16,5 @@ namespace BattleCity.GameLib
         public event PlayerKeyEventHandler RightCommand;
         public event PlayerKeyEventHandler ShootCommand;
 
-        public String Name { get; set; }
-
-        public uint Score { get; set; }
-        public uint Lives { get; set; }
     }
 }

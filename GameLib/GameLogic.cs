@@ -14,7 +14,7 @@ namespace BattleCity.GameLib
         /// Add new player to the game
         /// </summary>
         /// <param name="player">Player, which will be added to the game</param>
-        public void AddPlayer(IPlayer player)
+        public void AddPlayer(Player player)
         {
             players.Add(player);
         }
@@ -32,7 +32,7 @@ namespace BattleCity.GameLib
 
         }
 
-        private IList<IPlayer> players = new List<IPlayer>();
+        private IList<Player> players = new List<Player>();
         private bool gameOver = false;
     }
 }

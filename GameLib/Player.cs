@@ -15,20 +15,20 @@ namespace BattleCity.GameLib
     /// <summary>
     /// Interface, which represents player
     /// </summary>
-    public interface IPlayer
+    public abstract class Player
     {
-        event PlayerKeyEventHandler UpCommand;
-        event PlayerKeyEventHandler DownCommand;
-        event PlayerKeyEventHandler LeftCommand;
-        event PlayerKeyEventHandler RightCommand;
-        event PlayerKeyEventHandler ShootCommand;
+        public event PlayerKeyEventHandler UpCommand;
+        public event PlayerKeyEventHandler DownCommand;
+        public event PlayerKeyEventHandler LeftCommand;
+        public event PlayerKeyEventHandler RightCommand;
+        public event PlayerKeyEventHandler ShootCommand;
 
         /// <summary>
         /// Holds name of the player
         /// </summary>
-        String Name { get; set; }
+        public String Name { get; set; }
 
-        uint Score { get; set; }
-        uint Lives { get; set; }
+        public uint Score { get; set; }
+        public uint Lives { get; set; }
     }
 }

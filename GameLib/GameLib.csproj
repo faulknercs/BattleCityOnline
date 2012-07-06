@@ -51,7 +51,7 @@
   <ItemGroup>
     <Compile Include="GameLogic.cs" />
     <Compile Include="MapObject.cs" />
-    <Compile Include="IPlayer.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="LocalPlayer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />

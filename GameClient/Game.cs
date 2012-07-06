@@ -53,7 +53,7 @@ namespace BattleCity.GameClient
             base.OnRenderFrame(e);
         }
 
-        private IPlayer player = new LocalPlayer();
+        private Player player = new LocalPlayer();
         private const String windowName = "Battle City Returns!";
     }
 }
