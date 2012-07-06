@@ -14,7 +14,8 @@ namespace BattleCity.GameLib
             BRICK,
             CONCRETE,
             WATER,
-            FOREST
+            FOREST,
+            BASE
         }
 
         public MapObject(int x, int y)
