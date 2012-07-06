@@ -5,10 +5,9 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class Map
+    public class Map
     {
-
-        
+        //СУКАЁБАНЫЙКОММЕНТываыва
         private const uint width = 19;
         private const uint height = 20;
     }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class MapObject
+    public class MapObject
     {
         public enum Types
         {
@@ -19,12 +19,12 @@ namespace BattleCity.GameLib
 
         public MapObject(int x, int y)
         {
-            this.X = x;
-            this.Y = y;
+            this.x = x;
+            this.y = y;
         }
 
-        public int X { get; set; }
-        public int Y { get; set; }
+        public int x { get; set; }
 
+        public int y { get; set; }
     }
 }
