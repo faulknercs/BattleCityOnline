@@ -5,6 +5,9 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
+    /// <summary>
+    /// Represents an object of game map.
+    /// </summary>
     class MapObject
     {
         public enum Types

@@ -5,12 +5,31 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
+    /// <summary>
+    /// Represents game proccess
+    /// </summary>
     public class GameLogic
     {
-
+        /// <summary>
+        /// Add new player to the game
+        /// </summary>
+        /// <param name="player">Player, which will be added to the game</param>
         public void AddPlayer(IPlayer player)
         {
             players.Add(player);
+        }
+
+        /// <summary>
+        /// Calculate next game state (position of tanks at next moment, etc)
+        /// </summary>
+        public void NextState()
+        {
+            
+        }
+
+        private void CreatePlayersTanks()
+        {
+
         }
 
         private IList<IPlayer> players = new List<IPlayer>();
