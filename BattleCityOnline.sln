@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib", "GameLib\GameLib.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameClient", "GameClient\GameClient.csproj", "{EE30ABF6-D55A-4B4B-B1AE-696422AE47C2}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestProject", "TestProject\TestProject.csproj", "{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,16 @@ Global
 		{EE30ABF6-D55A-4B4B-B1AE-696422AE47C2}.Release|Mixed Platforms.Build.0 = Release|x86
 		{EE30ABF6-D55A-4B4B-B1AE-696422AE47C2}.Release|x86.ActiveCfg = Release|x86
 		{EE30ABF6-D55A-4B4B-B1AE-696422AE47C2}.Release|x86.Build.0 = Release|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Debug|Any CPU.ActiveCfg = Debug|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Debug|Mixed Platforms.ActiveCfg = Debug|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Debug|Mixed Platforms.Build.0 = Debug|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Debug|x86.ActiveCfg = Debug|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Debug|x86.Build.0 = Debug|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Release|Any CPU.ActiveCfg = Release|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Release|Mixed Platforms.ActiveCfg = Release|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Release|Mixed Platforms.Build.0 = Release|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Release|x86.ActiveCfg = Release|x86
+		{7444DC83-FCDC-4E2D-A5DB-A221F9A6207A}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
