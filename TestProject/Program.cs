@@ -14,7 +14,10 @@ namespace TestProject
         /// F - Forest
         /// O - Base
         /// </summary>
-        static char[][] map = new char[9][];
+
+        static char[][] partMap = new char[10][];
+        static char[][] halfMap = new char[20][];
+
         static List<char[][]> staticElements = new List<char[][]>();
         private static Random rnd = new Random();
 
@@ -23,40 +26,46 @@ namespace TestProject
             initialize();
             while (true)
             {
-                clearMap(map);
+                clearMap(partMap);
 
-                for (int i = 1; i < map.Length - 1; i++)
-                    for (int j = 1; j < map[i].Length - 1; j++)
-                    {
-                        if (isEmptyBox(map, i, j))
-                        {
-                            char[][] element = staticElements[rnd.Next(0, staticElements.Count)];
-                            int rotationAngle = rnd.Next(0, 5);
-                            for (int k = 0; k < rotationAngle; k++)
-                                element = rotateElement(element);
+                //Fill part of a map (1/4)
+                for (int i = 1; i < partMap.Length - 1; i++)
+                    for (int j = 1; j < partMap[i].Length - 1; j++)
+                        if (isEmptyBox(partMap, i, j))
                             if (rnd.Next(0, 4) == 0) //should be element be added
-                                addConcreteStaticElement(map, element, i, j);
-                        }
+                            {
+                                char[][] element = getRandomElementToAddOnMap();
+                                addConcreteStaticElementOnMap(partMap, element, i, j);
+                            }
+                //Mirror of a part map (1/2) (LEFT PART OF MAP)
+                for (int i = 0; i < partMap.Length; i++)
+                    for (int j = 0; j < partMap[i].Length; j++)
+                    {
+                        halfMap[i][j] = partMap[i][j];
+                        halfMap[halfMap.Length - 1 - i][j] = partMap[i][j];
                     }
-                output(map);
+                output(halfMap);
                 Console.ReadKey();
             }
         }
 
-        private static void addConcreteStaticElement(char[][] map, char[][] element, int x, int y)
+        private static char[][] getRandomElementToAddOnMap()
         {
-            map[x - 1][y - 1] = element[0][0];
-            map[x - 1][y] = element[0][1];
-            map[x - 1][y + 1] = element[0][2];
-            map[x][y - 1] = element[1][0];
-            map[x][y] = element[1][1];
-            map[x][y + 1] = element[1][2];
-            map[x + 1][y - 1] = element[2][0];
-            map[x + 1][y] = element[2][1];
-            map[x + 1][y + 1] = element[2][2];
+            char[][] element = staticElements[rnd.Next(0, staticElements.Count)];
+            int rotationAngle = rnd.Next(0, 5);
+            for (int k = 0; k < rotationAngle; k++)
+                element = rotateStaticElement(element);
+            return element;
         }
 
-        private static char[][] rotateElement(char[][] element)
+        private static void addConcreteStaticElementOnMap(char[][] map, char[][] element, int x, int y)
+        {
+            for (int i = 0; i < element.Length; i++)
+                for (int j = 0; j < element[i].Length; j++)
+                    map[x - 1 + i][y - 1 + j] = element[i][j];
+        }
+
+        private static char[][] rotateStaticElement(char[][] element)
         {
             char[][] tmp = new[] { new char[3], new char[3], new char[3] };
             for (int i = 0; i < element.Length; i++)
@@ -79,8 +88,10 @@ namespace TestProject
         private static void initialize()
         {
             //initialize mapInfo
-            for (int i = 0; i < map.Length; i++)
-                map[i] = new char[10];
+            for (int i = 0; i < partMap.Length; i++)
+                partMap[i] = new char[9];
+            for (int i = 0; i < halfMap.Length; i++)
+                halfMap[i] = new char[9];
             //initialize elementsInfo
             char[][] element = new[]
                                    {
