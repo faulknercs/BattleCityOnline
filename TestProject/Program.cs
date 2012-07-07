@@ -20,7 +20,7 @@ namespace TestProject
 
         private static void Main()
         {
-            initialize(map);
+            initialize();
             while (true)
             {
                 clearMap(map);
@@ -58,40 +58,25 @@ namespace TestProject
 
         private static char[][] rotateElement(char[][] element)
         {
-            char[][] tmp = new[]
-                               {
-                                   new char[3],new char[3],new char[3]
-                               };
-            tmp[0][0] = element[2][0];
-            tmp[0][1] = element[1][0];
-            tmp[0][2] = element[0][0];
-            tmp[1][0] = element[2][1];
-            tmp[1][1] = element[1][1];
-            tmp[1][2] = element[0][1];
-            tmp[2][0] = element[2][2];
-            tmp[2][1] = element[1][2];
-            tmp[2][2] = element[0][2];
+            char[][] tmp = new[] { new char[3], new char[3], new char[3] };
+            for (int i = 0; i < element.Length; i++)
+                for (int j = 0; j < element[i].Length; j++)
+                    tmp[i][j] = element[2 - j][i];
             return tmp;
         }
 
         private static bool isEmptyBox(char[][] map, int x, int y)
         {
-            if (map[x - 1][y - 1] == 'E')
-                if (map[x - 1][y] == 'E')
-                    if (map[x - 1][y + 1] == 'E')
-                        if (map[x][y - 1] == 'E')
-                            if (map[x][y] == 'E')
-                                if (map[x][y + 1] == 'E')
-                                    if (map[x + 1][y - 1] == 'E')
-                                        if (map[x + 1][y] == 'E')
-                                            if (map[x + 1][y + 1] == 'E')
-                                                return true;
+            if (map[x - 1][y - 1] == 'E' && map[x - 1][y] == 'E' && map[x - 1][y + 1] == 'E')
+                if (map[x][y - 1] == 'E' && map[x][y] == 'E' && map[x][y + 1] == 'E')
+                    if (map[x + 1][y - 1] == 'E' && map[x + 1][y] == 'E' && map[x + 1][y + 1] == 'E')
+                        return true;
             return false;
         }
 
         #region clearmap output initialize
 
-        private static void initialize(char[][] map)
+        private static void initialize()
         {
             //initialize mapInfo
             for (int i = 0; i < map.Length; i++)
