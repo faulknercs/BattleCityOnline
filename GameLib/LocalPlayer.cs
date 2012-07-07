@@ -5,7 +5,10 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class LocalPlayer : IPlayer
+    /// <summary>
+    /// Represents local player, which connected from current proccess
+    /// </summary>
+    public class LocalPlayer : Player
     {
         public event PlayerKeyEventHandler UpCommand;
         public event PlayerKeyEventHandler DownCommand;

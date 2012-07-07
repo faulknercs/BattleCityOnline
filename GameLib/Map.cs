@@ -7,7 +7,8 @@ namespace BattleCity.GameLib
 {
     public class Map
     {
-        //СУКАЁБАНЫЙКОММЕНТываыва
+        private MapObject[][] map;
+
         private const uint width = 19;
         private const uint height = 20;
     }

@@ -8,6 +8,8 @@ using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
+using BattleCity.GameLib;
+
 namespace BattleCity.GameClient
 {
     /// <summary>
@@ -30,16 +32,28 @@ namespace BattleCity.GameClient
             
         }
 
+        /// <summary>
+        /// Called when it is time to setup the next frame.
+        /// </summary>
+        /// <param name="e">Contains timing information for framerate independent logic.</param>
         protected override void OnUpdateFrame(FrameEventArgs e)
         {
             base.OnUpdateFrame(e);
+            GameLogic gameplay = new GameLogic();
+            gameplay.AddPlayer(player);
+
         }
 
+        /// <summary>
+        /// Called when it is time to render the next frame.
+        /// </summary>
+        /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             base.OnRenderFrame(e);
         }
 
+        private Player player = new LocalPlayer();
         private const String windowName = "Battle City Returns!";
     }
 }

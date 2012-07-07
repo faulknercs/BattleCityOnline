@@ -5,7 +5,10 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    public class MapObject
+    /// <summary>
+    /// Represents an object of game map.
+    /// </summary>
+    internal class MapObject
     {
         public enum Types
         {
@@ -14,7 +17,8 @@ namespace BattleCity.GameLib
             BRICK,
             CONCRETE,
             WATER,
-            FOREST
+            FOREST,
+            BASE
         }
 
         public MapObject(int x, int y)

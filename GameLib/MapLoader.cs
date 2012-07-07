@@ -7,6 +7,9 @@ namespace BattleCity.GameLib
 {
     public class MapLoader
     {
-        
+        public MapLoader()
+        {
+
+        }
     }
 }
