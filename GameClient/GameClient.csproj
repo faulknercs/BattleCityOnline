@@ -53,6 +53,11 @@
     <Compile Include="Main.cs" />
     <Compile Include="MainMenu.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\StringItems.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>StringItems.resx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="OpenTK.dll.config">
@@ -64,6 +69,12 @@
       <Project>{A6AC5841-FAAB-44AA-A9A1-41FE323DB8BB}</Project>
       <Name>GameLib</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\StringItems.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>StringItems.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
