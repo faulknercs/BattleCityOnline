@@ -5,9 +5,8 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class Map
+    public class Map
     {
-
         private MapObject[][] map;
 
         private const uint width = 19;
