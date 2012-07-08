@@ -65,6 +65,7 @@
   <ItemGroup>
     <Compile Include="Game.cs" />
     <Compile Include="GameRenderer.cs" />
+    <Compile Include="KeySettings.cs" />
     <Compile Include="LocalPlayer.cs" />
     <Compile Include="Main.cs" />
     <Compile Include="MainMenu.cs" />

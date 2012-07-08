@@ -53,6 +53,8 @@ namespace BattleCity.GameClient
             base.OnRenderFrame(e);
         }
 
+        internal static KeySettings Keys;
+
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";
     }

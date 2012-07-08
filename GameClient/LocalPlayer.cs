@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 using BattleCity.GameLib;
@@ -22,8 +21,9 @@ namespace BattleCity.GameClient
         public void KeyEventHandler(Object source, KeyboardKeyEventArgs args)
         {
             PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyUp(args.Key));
-            // TODO: Add keys
-            //if(args.Key == )
+            // TODO: Add other keys
+            if (args.Key == Game.Keys.UpKey)
+                UpCommand(this, p_args);
         }
     }
 }
