@@ -15,43 +15,32 @@ namespace TestProject
         /// O - Base
         /// </summary>
 
-        static char[][] partMap = new char[10][];
-        static char[][] halfMap = new char[20][];
+        static char[][] map = new char[20][];
 
-        static List<char[][]> staticElements = new List<char[][]>();
-        private static Random rnd = new Random();
+        static List<char[][]> listOfStaticElements = new List<char[][]>();
+        static Random rnd = new Random();
 
         private static void Main()
         {
             initialize();
             while (true)
             {
-                clearMap(partMap);
-
-                //Fill part of a map (1/4)
-                for (int i = 1; i < partMap.Length - 1; i++)
-                    for (int j = 1; j < partMap[i].Length - 1; j++)
-                        if (isEmptyBox(partMap, i, j))
-                            if (rnd.Next(0, 4) == 0) //should be element be added
-                            {
-                                char[][] element = getRandomElementToAddOnMap();
-                                addConcreteStaticElementOnMap(partMap, element, i, j);
-                            }
-                //Mirror of a part map (1/2) (LEFT PART OF MAP)
-                for (int i = 0; i < partMap.Length; i++)
-                    for (int j = 0; j < partMap[i].Length; j++)
-                    {
-                        halfMap[i][j] = partMap[i][j];
-                        halfMap[halfMap.Length - 1 - i][j] = partMap[i][j];
-                    }
-                output(halfMap);
+                while (true)
+                {
+                    makeConcreteMap();
+                    if (rnd.Next(0, 2) == 0) addWaterOnMap(); //Water on map 50%
+                    if (isMapGood(map)) break;
+                }
+                addBricksOnMap();
+                addForestOnMap();
+                output(map);
                 Console.ReadKey();
             }
         }
 
-        private static char[][] getRandomElementToAddOnMap()
+        private static char[][] getRandomElementFromListOfStaticElements()
         {
-            char[][] element = staticElements[rnd.Next(0, staticElements.Count)];
+            char[][] element = listOfStaticElements[rnd.Next(0, listOfStaticElements.Count)];
             int rotationAngle = rnd.Next(0, 5);
             for (int k = 0; k < rotationAngle; k++)
                 element = rotateStaticElement(element);
@@ -64,6 +53,120 @@ namespace TestProject
                 for (int j = 0; j < element[i].Length; j++)
                     map[x - 1 + i][y - 1 + j] = element[i][j];
         }
+
+        private static void makeConcreteMap()
+        {
+            char[][] partMap = new char[10][];
+            char[][] halfMap = new char[20][];
+            for (int i = 0; i < partMap.Length; i++)
+                partMap[i] = new char[9];
+            for (int i = 0; i < halfMap.Length; i++)
+                halfMap[i] = new char[9];
+            clearMap(partMap);
+
+            #region Fill part of a map (1/4)
+
+            for (int i = 1; i < partMap.Length - 1; i++)
+                for (int j = 1; j < partMap[i].Length - 1; j++)
+                    if (isEmptyBox(partMap, i, j))
+                        if (rnd.Next(0, 4) == 0) //should be element be added
+                        {
+                            char[][] element = getRandomElementFromListOfStaticElements();
+                            addConcreteStaticElementOnMap(partMap, element, i, j);
+                        }
+
+            #endregion Fill part of a map (1/4)
+
+            #region Mirror of a part map (1/2) (LEFT PART OF MAP)
+
+            for (int i = 0; i < partMap.Length; i++)
+                for (int j = 0; j < partMap[i].Length; j++)
+                {
+                    halfMap[i][j] = partMap[i][j];
+                    halfMap[halfMap.Length - 1 - i][j] = partMap[i][j];
+                }
+
+            #endregion Mirror of a part map (1/2) (LEFT PART OF MAP)
+
+            #region Mirror of a part map (2/2) (FULL MAP)
+
+            for (int i = 0; i < halfMap.Length; i++)
+                for (int j = 0; j < halfMap[i].Length; j++)
+                {
+                    map[i][j] = halfMap[i][j];
+                    map[i][map[i].Length - 1 - j] = halfMap[i][j];
+                }
+
+            #endregion Mirror of a part map (2/2) (FULL MAP)
+
+            #region adding middle line
+
+            foreach (char[] t in map)
+                t[9] = t[8].Equals('C') ? 'C' : 'E';
+
+            //adding base and tanks
+
+            map[0][9 - 2] = 'T';
+            map[0][9] = 'O';
+            map[0][9 + 2] = 'T';
+            map[2][9] = 'T';
+            map[19][9 - 2] = 'T';
+            map[19][9] = 'O';
+            map[19][9 + 2] = 'T';
+            map[17][9] = 'T';
+
+            #endregion adding middle line
+        }
+
+        #region ADD : BRICK | WATER | FOREST
+
+        private static void addBricksOnMap()
+        {
+            if (!map[0][9 - 1].Equals('C'))
+                map[0][9 - 1] = 'B';
+            if (!map[0][9 + 1].Equals('C'))
+                map[0][9 + 1] = 'B';
+            if (!map[1][9].Equals('C'))
+                map[1][9] = 'B';
+            if (!map[1][9 - 1].Equals('C'))
+                map[1][9 - 1] = 'B';
+            if (!map[1][9 + 1].Equals('C'))
+                map[1][9 + 1] = 'B';
+
+            if (!map[19][9 - 1].Equals('C'))
+                map[19][9 - 1] = 'B';
+            if (!map[19][9 + 1].Equals('C'))
+                map[19][9 + 1] = 'B';
+            if (!map[18][9].Equals('C'))
+                map[18][9] = 'B';
+            if (!map[18][9 - 1].Equals('C'))
+                map[18][9 - 1] = 'B';
+            if (!map[18][9 + 1].Equals('C'))
+                map[18][9 + 1] = 'B';
+
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                    if (map[i][j].Equals('E') && rnd.Next(0, 4) == 0) //30% of Brick
+                        map[i][j] = 'B';
+        }
+
+        private static void addForestOnMap()
+        {
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                    if (map[i][j].Equals('E') && rnd.Next(0, 5) == 0)
+                        map[i][j] = 'F';
+        }
+
+        private static void addWaterOnMap()
+        {
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                    if (map[i][j].Equals('E') && rnd.Next(0, 16) == 0)
+                        map[i][j] = 'W';
+        }
+
+        #endregion ADD : BRICK | WATER | FOREST
 
         private static char[][] rotateStaticElement(char[][] element)
         {
@@ -83,15 +186,82 @@ namespace TestProject
             return false;
         }
 
+        private static bool isMapGood(char[][] map)
+        {
+            bool foundEmpty = true;
+            const char check = 'T';
+            //initialize
+            char[][] tmpMap = new char[22][];
+            for (int i = 0; i < tmpMap.Length; i++)
+                tmpMap[i] = new char[21];
+            //Setting each element to 'c'
+            foreach (char[] t in tmpMap)
+                for (int j = 0; j < t.Length; j++)
+                    t[j] = 'C';
+            //Adding map to tmpMap
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                    tmpMap[i + 1][j + 1] = map[i][j];
+            //Getting random element with 'E'
+            int x = rnd.Next(5, 16);
+            int y = rnd.Next(5, 16);
+            if (!tmpMap[x][y].Equals('E'))
+                while (!tmpMap[x][y].Equals('E'))
+                {
+                    x = rnd.Next(0, 20);
+                    y = rnd.Next(0, 21);
+                }
+            tmpMap[x][y] = check;
+            //Setting to check every Close 'E' to check, added before
+            while (foundEmpty)
+            {
+                foundEmpty = false;
+                for (int i = 1; i < tmpMap.Length - 1; i++)
+                {
+                    for (int j = 1; j < tmpMap[i].Length - 1; j++)
+                    {
+                        if (tmpMap[i][j].Equals(check))
+                        {
+                            if (tmpMap[i - 1][j].Equals('E'))
+                            {
+                                tmpMap[i - 1][j] = check;
+                                foundEmpty = true;
+                            }
+                            if (tmpMap[i + 1][j].Equals('E'))
+                            {
+                                tmpMap[i + 1][j] = check;
+                                foundEmpty = true;
+                            }
+                            if (tmpMap[i][j - 1].Equals('E'))
+                            {
+                                tmpMap[i][j - 1] = check;
+                                foundEmpty = true;
+                            }
+                            if (tmpMap[i][j + 1].Equals('E'))
+                            {
+                                tmpMap[i][j + 1] = check;
+                                foundEmpty = true;
+                            }
+                        }
+                    }
+                }
+            }
+            foreach (char[] t in tmpMap)
+                for (int j = 0; j < t.Length; j++)
+                {
+                    if (t[j].Equals('E'))
+                        foundEmpty = true;
+                }
+            return !foundEmpty;
+        }
+
         #region clearmap output initialize
 
         private static void initialize()
         {
             //initialize mapInfo
-            for (int i = 0; i < partMap.Length; i++)
-                partMap[i] = new char[9];
-            for (int i = 0; i < halfMap.Length; i++)
-                halfMap[i] = new char[9];
+            for (int i = 0; i < map.Length; i++)
+                map[i] = new char[19];
             //initialize elementsInfo
             char[][] element = new[]
                                    {
@@ -99,35 +269,35 @@ namespace TestProject
                                        new[]{ 'E','C','E' },
                                        new[]{ 'E','C','E' }
                                    };
-            staticElements.Add(element);
+            listOfStaticElements.Add(element);
             element = new[]
                                    {
                                         new[]{ 'E','E','E' },
                                         new[]{ 'C','C','C' },
                                         new[]{ 'E','E','E' }
                                    };
-            staticElements.Add(element);
+            listOfStaticElements.Add(element);
             element = new[]
                                    {
                                         new[]{ 'E','E','E' },
                                         new[]{ 'E','C','C' },
                                         new[]{ 'E','E','E' }
                                    };
-            staticElements.Add(element);
+            listOfStaticElements.Add(element);
             element = new[]
                                    {
                                         new[]{ 'E','C','E' },
                                         new[]{ 'C','C','C' },
                                         new[]{ 'E','C','E' }
                                    };
-            staticElements.Add(element);
+            listOfStaticElements.Add(element);
             element = new[]
                                    {
                                         new[]{ 'E','E','E' },
                                         new[]{ 'E','C','C' },
                                         new[]{ 'E','C','E' }
                                    };
-            staticElements.Add(element);
+            listOfStaticElements.Add(element);
         }
 
         private static void clearMap(char[][] map)
@@ -140,6 +310,12 @@ namespace TestProject
         private static void output(char[][] map)
         {
             Console.Clear();
+            for (int i = 0; i < map[0].Length; i++)
+                if (i < 9)
+                    Console.Write((i + 1) + " ");
+                else
+                    Console.Write((-10 + i + 1) + " ");
+            Console.WriteLine();
             foreach (char[] t in map)
             {
                 foreach (char t1 in t)
