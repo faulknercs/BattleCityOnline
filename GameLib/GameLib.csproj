@@ -54,7 +54,6 @@
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="LocalPlayer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />
     <Compile Include="PlayerKeyEventArgs.cs" />

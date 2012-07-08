@@ -20,7 +20,7 @@ namespace BattleCity.GameClient
         public Game(int width, int height)
             : base(width, height, GraphicsMode.Default, windowName)
         {
-            
+            Keyboard.KeyRepeat = false;
         }
 
         /// <summary>
@@ -54,6 +54,6 @@ namespace BattleCity.GameClient
         }
 
         private Player player = new LocalPlayer();
-        private const String windowName = "Battle City Returns!";
+        private const String windowName = "Battle City Online";
     }
 }
