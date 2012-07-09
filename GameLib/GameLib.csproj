@@ -37,9 +37,6 @@
     <SignAssembly>false</SignAssembly>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="OpenTK">
-      <HintPath>..\ThirdParty\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -54,7 +51,6 @@
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="Player.cs" />
-    <Compile Include="LocalPlayer.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />
     <Compile Include="PlayerKeyEventArgs.cs" />

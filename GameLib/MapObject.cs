@@ -21,7 +21,7 @@ namespace BattleCity.GameLib
             BASE
         }
 
-        public MapObject(int x, int y, Types)
+        public MapObject(int x, int y)
         {
             this.x = x;
             this.y = y;

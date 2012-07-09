@@ -11,7 +11,7 @@ namespace BattleCity.GameLib
     class TankObject : MapObject
     {
         public TankObject(Player managingPlayer, int x, int y)
-            : base (x, y)
+            : base (x, y, Types.TANK)
         {
             this.managingPlayer = managingPlayer;
             Init();
