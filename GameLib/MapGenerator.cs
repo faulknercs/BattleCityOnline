@@ -10,20 +10,6 @@ namespace BattleCity.GameLib
             objectInit();
         }
 
-        /// <summary>
-        /// E - Empty
-        /// T - Tank
-        /// B - Brick
-        /// C - Concrete
-        /// W - Water
-        /// F - Forest
-        /// O - Base
-        /// </summary>
-
-        char[][] map = new char[20][];
-        static List<char[][]> listOfStaticElements = new List<char[][]>();
-        static Random rnd = new Random();
-
         private void objectInit()
         {
             //initialize mapInfo
@@ -68,9 +54,25 @@ namespace BattleCity.GameLib
         }
 
         /// <summary>
+        /// E - Empty
+        /// T - Tank
+        /// B - Brick
+        /// C - Concrete
+        /// W - Water
+        /// F - Forest
+        /// O - Base
+        /// </summary>
+
+        MapObject[][] map = new MapObject[20][];
+        static List<char[][]> listOfStaticElements = new List<char[][]>();
+        static Random rnd = new Random();
+
+        #region Map Generator By Mode
+
+        /// <summary>
         /// Classical mode (one team defends its base, another one attacks trying to destroy the base)
         /// </summary>
-        public char[][] generateCLASSIC_Map()
+        public MapObject[][] generateCLASSIC_Map()
         {
             while (true)
             {
@@ -96,7 +98,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Team deathmatch (two teams attacking each other) without bases
         /// </summary>
-        public char[][] generateTDM_Map()
+        public MapObject[][] generateTDM_Map()
         {
             while (true)
             {
@@ -113,7 +115,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Team deathmatch with bases (both teams have their own base)
         /// </summary>
-        public char[][] generateTDMB_Map()
+        public MapObject[][] generateTDMB_Map()
         {
             while (true)
             {
@@ -148,7 +150,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Deathmatch (every player fights for himself) without bases
         /// </summary>
-        public char[][] generateDM_Map()
+        public MapObject[][] generateDM_Map()
         {
             while (true)
             {
@@ -162,63 +164,17 @@ namespace BattleCity.GameLib
             return map;
         }
 
+        #endregion Map Generator By Mode
+
+        #region Methods
+
         /// <summary>
-        /// Methods
+        /// Is element proper to current position
         /// </summary>
-        private void makeConcreteMap()
-        {
-            char[][] partMap = new char[10][];
-            char[][] halfMap = new char[20][];
-            for (int i = 0; i < partMap.Length; i++)
-                partMap[i] = new char[9];
-            for (int i = 0; i < halfMap.Length; i++)
-                halfMap[i] = new char[9];
-
-            //"clear" map
-            foreach (char[] t in map)
-                for (int j = 0; j < t.Length; j++)
-                    t[j] = 'E';
-
-            #region Fill part of a map (1/4)
-
-            for (int i = 1; i < partMap.Length - 1; i++)
-                for (int j = 1; j < partMap[i].Length - 1; j++)
-                    if (isEmptyBox(partMap, i, j))
-                        if (rnd.Next(0, 4) == 0) //should be element be added
-                        {
-                            char[][] element = getRandomElementFromListOfStaticElements();
-                            addConcreteStaticElementOnMap(partMap, element, i, j);
-                        }
-
-            #endregion Fill part of a map (1/4)
-
-            #region Mirror of a part map (1/2) (LEFT PART OF MAP)
-
-            for (int i = 0; i < partMap.Length; i++)
-                for (int j = 0; j < partMap[i].Length; j++)
-                {
-                    halfMap[i][j] = partMap[i][j];
-                    halfMap[halfMap.Length - 1 - i][j] = partMap[i][j];
-                }
-
-            #endregion Mirror of a part map (1/2) (LEFT PART OF MAP)
-
-            #region Mirror of a part map (2/2) (FULL MAP)
-
-            for (int i = 0; i < halfMap.Length; i++)
-                for (int j = 0; j < halfMap[i].Length; j++)
-                {
-                    map[i][j] = halfMap[i][j];
-                    map[i][map[i].Length - 1 - j] = halfMap[i][j];
-                }
-
-            #endregion Mirror of a part map (2/2) (FULL MAP)
-
-            //adding middle line
-            foreach (char[] t in map)
-                t[9] = t[8].Equals('C') ? 'C' : 'E';
-        }
-
+        /// <param name="map">Current Map</param>
+        /// <param name="x">Current X</param>
+        /// <param name="y">Current Y</param>
+        /// <returns>true - map is good</returns>
         private bool isEmptyBox(char[][] map, int x, int y)
         {
             if (map[x - 1][y - 1] == 'E' && map[x - 1][y] == 'E' && map[x - 1][y + 1] == 'E')
@@ -244,6 +200,25 @@ namespace BattleCity.GameLib
             for (int i = 0; i < map.Length; i++)
                 for (int j = 0; j < map[i].Length; j++)
                     tmpMap[i + 1][j + 1] = map[i][j];
+
+            //Check if 'C' in middle line
+            bool concreteBreak = false;
+            for (int i = 1; i < tmpMap.Length - 1; i++)
+            {
+                if (tmpMap[i][10].Equals('C'))
+                    concreteBreak = true;
+            }
+            if (!concreteBreak)
+                return false;
+            //Check Concrete blocks count
+            int concreteCount = 0;
+            for (int i = 1; i <= 9; i++)
+                for (int j = 1; j <= 10; j++)
+                    if (tmpMap[i][j].Equals('C'))
+                        concreteCount++;
+            if (concreteCount < 25 || concreteCount > 35)
+                return false;
+
             //Getting random element with 'E'
             int x = rnd.Next(5, 16);
             int y = rnd.Next(5, 16);
@@ -299,6 +274,62 @@ namespace BattleCity.GameLib
 
         #region ADD : CONCRETE | BRICK | WATER | FOREST
 
+        private void makeConcreteMap()
+        {
+            MapObject[][] partMap = new MapObject[10][];
+            MapObject[][] halfMap = new MapObject[20][];
+            for (int i = 0; i < partMap.Length; i++)
+                partMap[i] = new MapObject[9];
+            for (int i = 0; i < halfMap.Length; i++)
+                halfMap[i] = new MapObject[9];
+
+            //"clear" map
+            for (int i = 0; i < partMap.Length; i++)
+                for (int j = 0; j < partMap[i].Length; j++)
+                {
+                    partMap[i][j] = MapObject.Types.EMPTY;
+                }
+
+            #region Fill part of a map (1/4)
+
+            for (int i = 1; i < partMap.Length - 1; i++)
+                for (int j = 1; j < partMap[i].Length - 1; j++)
+                    if (isEmptyBox(partMap, i, j))
+                        if (rnd.Next(0, 4) == 0) //should be element be added
+                        {
+                            char[][] element = getRandomElementFromListOfStaticElements();
+                            addConcreteStaticElementOnMap(partMap, element, i, j);
+                        }
+
+            #endregion Fill part of a map (1/4)
+
+            #region Mirror of a part map (1/2) (LEFT PART OF MAP)
+
+            for (int i = 0; i < partMap.Length; i++)
+                for (int j = 0; j < partMap[i].Length; j++)
+                {
+                    halfMap[i][j] = partMap[i][j];
+                    halfMap[halfMap.Length - 1 - i][j] = partMap[i][j];
+                }
+
+            #endregion Mirror of a part map (1/2) (LEFT PART OF MAP)
+
+            #region Mirror of a part map (2/2) (FULL MAP)
+
+            for (int i = 0; i < halfMap.Length; i++)
+                for (int j = 0; j < halfMap[i].Length; j++)
+                {
+                    map[i][j] = halfMap[i][j];
+                    map[i][map[i].Length - 1 - j] = halfMap[i][j];
+                }
+
+            #endregion Mirror of a part map (2/2) (FULL MAP)
+
+            //adding middle line
+            foreach (char[] t in map)
+                t[9] = t[8].Equals('C') ? 'C' : 'E';
+        }
+
         private void addConcreteStaticElementOnMap(char[][] map, char[][] element, int x, int y)
         {
             for (int i = 0; i < element.Length; i++)
@@ -332,6 +363,8 @@ namespace BattleCity.GameLib
 
         #endregion ADD : CONCRETE | BRICK | WATER | FOREST
 
+        #region Element By Random
+
         private char[][] getRandomElementFromListOfStaticElements()
         {
             char[][] element = listOfStaticElements[rnd.Next(0, listOfStaticElements.Count)];
@@ -349,5 +382,9 @@ namespace BattleCity.GameLib
                     tmp[i][j] = element[2 - j][i];
             return tmp;
         }
+
+        #endregion Element By Random
+
+        #endregion Methods
     }
 }
