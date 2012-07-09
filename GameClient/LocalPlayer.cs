@@ -12,18 +12,29 @@ namespace BattleCity.GameClient
     /// </summary>
     public class LocalPlayer : Player
     {
-        public event PlayerKeyEventHandler UpCommand;
-        public event PlayerKeyEventHandler DownCommand;
-        public event PlayerKeyEventHandler LeftCommand;
-        public event PlayerKeyEventHandler RightCommand;
-        public event PlayerKeyEventHandler ShootCommand;
+        public LocalPlayer()
+        {
+            keys.UpKey = Properties.Settings.Default.UpKey;
+            keys.DownKey = Properties.Settings.Default.DownKey;
+            keys.LeftKey = Properties.Settings.Default.LeftKey;
+            keys.RightKey = Properties.Settings.Default.RightKey;
+            keys.ShootKey = Properties.Settings.Default.ShootKey;
+        }
 
         public void KeyEventHandler(Object source, KeyboardKeyEventArgs args)
         {
             PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyUp(args.Key));
             // TODO: Add other keys
-            if (args.Key == Game.Keys.UpKey)
-                UpCommand(this, p_args);
+            if (args.Key == keys.UpKey)
+                OnUpCommand(p_args);
+            if (args.Key == keys.DownKey)
+                OnDownCommand(p_args);
+            if (args.Key == keys.LeftKey)
+                OnLeftCommand(p_args);
+            if (args.Key == keys.RightKey)
+                OnRightCommand(p_args);
         }
+
+        private KeySettings keys;
     }
 }

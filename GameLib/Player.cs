@@ -30,42 +30,29 @@ namespace BattleCity.GameLib
         public uint Score { get; set; }
         public uint Lives { get; set; }
 
-        protected virtual void OnUpCommand(bool isReleased)
+        protected virtual void OnUpCommand(PlayerKeyEventArgs args)
         {
             if (UpCommand != null)
-            {
-                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
                 UpCommand(this, args);
-            }
         }
 
-        protected virtual void OnDownCommand(bool isReleased)
+        protected virtual void OnDownCommand(PlayerKeyEventArgs args)
         {
             if (DownCommand != null)
-            {
-                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
                 DownCommand(this, args);
-            }
         }
 
-        protected virtual void OnLeftCommand(bool isReleased)
+        protected virtual void OnLeftCommand(PlayerKeyEventArgs args)
         {
             if (LeftCommand != null)
-            {
-                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
                 LeftCommand(this, args);
-            }
         }
 
-        protected virtual void OnRightCommand(bool isReleased)
+        protected virtual void OnRightCommand(PlayerKeyEventArgs args)
         {
             if (RightCommand != null)
-            {
-                PlayerKeyEventArgs args = new PlayerKeyEventArgs(isReleased);
                 RightCommand(this, args);
-            }
         }
-
 
     }
 }
