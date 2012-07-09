@@ -54,5 +54,11 @@ namespace BattleCity.GameLib
                 RightCommand(this, args);
         }
 
+        protected virtual void OnShootCommand(PlayerKeyEventArgs args)
+        {
+            if (ShootCommand != null)
+                ShootCommand(this, args);
+        }
+
     }
 }

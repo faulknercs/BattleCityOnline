@@ -24,7 +24,6 @@ namespace BattleCity.GameClient
         public void KeyEventHandler(Object source, KeyboardKeyEventArgs args)
         {
             PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyUp(args.Key));
-            // TODO: Add other keys
             if (args.Key == keys.UpKey)
                 OnUpCommand(p_args);
             if (args.Key == keys.DownKey)
@@ -33,6 +32,8 @@ namespace BattleCity.GameClient
                 OnLeftCommand(p_args);
             if (args.Key == keys.RightKey)
                 OnRightCommand(p_args);
+            if (args.Key == keys.ShootKey)
+                OnShootCommand(p_args);
         }
 
         private KeySettings keys;

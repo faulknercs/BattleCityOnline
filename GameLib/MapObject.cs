@@ -18,17 +18,22 @@ namespace BattleCity.GameLib
             CONCRETE,
             WATER,
             FOREST,
-            BASE
+            BASE,
+            TEMPORARY // Do not use it as type of MapObject. Needs for some actions
         }
 
-        public MapObject(int x, int y)
+        public MapObject(int x, int y, Types type)
         {
-            this.x = x;
-            this.y = y;
+            this.X = x;
+            this.Y = y;
+            this.Type = type;
         }
 
-        public int x { get; set; }
 
-        public int y { get; set; }
+        public int X { get; set; } //using X insted of x because of in C# adopted PascalCase Code Style
+
+        public int Y { get; set; }
+
+        public Types Type { get; set; }
     }
 }
