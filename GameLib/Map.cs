@@ -18,11 +18,6 @@ namespace BattleCity.GameLib
             return map;
         }
 
-        public void AddMapObject(MapObject obj, int x, int y)
-        {
-            this.map[x][y] = obj; // should add x & y check (IndexOutOfBounds).
-        }
-
         private MapObject[][] map;
 
         private const uint width = 19;

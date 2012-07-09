@@ -21,6 +21,11 @@ namespace BattleCity.GameClient
             keys.ShootKey = Properties.Settings.Default.ShootKey;
         }
 
+        /// <summary>
+        /// Method, which processes keyboards events (key up and key down).
+        /// </summary>
+        /// <param name="source">Source of event. Not used.</param>
+        /// <param name="args">Arguments of event. Uses to determine, is key up or down</param>
         public void KeyEventHandler(Object source, KeyboardKeyEventArgs args)
         {
             PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyUp(args.Key));

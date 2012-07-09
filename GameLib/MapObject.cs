@@ -10,6 +10,9 @@ namespace BattleCity.GameLib
     /// </summary>
     internal class MapObject
     {
+        /// <summary>
+        /// Types of the objects, which can exists on game map
+        /// </summary>
         public enum Types
         {
             EMPTY = 0,
@@ -29,11 +32,18 @@ namespace BattleCity.GameLib
             this.Type = type;
         }
 
-
+        /// <summary>
+        /// x-coordinate of object
+        /// </summary>
         public int X { get; set; } //using X insted of x because of in C# adopted PascalCase Code Style
-
+        /// <summary>
+        /// y-coordinate of object
+        /// </summary>
         public int Y { get; set; }
 
+        /// <summary>
+        /// Type of object
+        /// </summary>
         public Types Type { get; set; }
     }
 }
