@@ -1,20 +1,22 @@
-﻿using System;
+﻿﻿using System;
+
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
 namespace BattleCity.GameClient
 {
-    class ClientMain
+    internal class ClientMain
     {
         // TODO: Change it in the future.
         public static void Main(String[] args)
         {
-            using(Game g = new Game(320, 240))
+            int width = 500;
+            int height = 526;
+            using (Game g = new Game(width, height))
             {
                 g.Run(30);
             }
-            
         }
     }
 }
