@@ -17,7 +17,7 @@ namespace BattleCity.GameClient
             : base(width, height, GraphicsMode.Default, windowName)
         {
             Keyboard.KeyRepeat = false;
-            
+
             WindowBorder = WindowBorder.Fixed;
             windowHeight = Convert.ToInt16(height / ((400 / 380) * 13.5));
             windowWidth = Convert.ToInt16(width / 13.5);
@@ -125,7 +125,7 @@ namespace BattleCity.GameClient
             for (int i = 0; i <= 19; i++)
             {
                 GL.Begin(BeginMode.Lines);
-                GL.Color3(Color.Red);
+                GL.Color3(Color.Black);
                 GL.LineWidth(1);
                 GL.Vertex3(-windowWidth / 2 + i * elementWidth, windowHeight / 2, 0);
                 GL.Vertex3(-windowWidth / 2 + i * elementWidth, -windowHeight / 2, 0);
@@ -134,7 +134,7 @@ namespace BattleCity.GameClient
             for (int i = 0; i <= 20; i++)
             {
                 GL.Begin(BeginMode.Lines);
-                GL.Color3(Color.Red);
+                GL.Color3(Color.Black);
                 GL.LineWidth(1);
                 GL.Vertex3(-windowWidth / 2, windowHeight / 2 - i * elementHeight, 0);
                 GL.Vertex3(windowWidth / 2, windowHeight / 2 - i * elementHeight, 0);
