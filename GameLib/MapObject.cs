@@ -8,7 +8,7 @@ namespace BattleCity.GameLib
     /// <summary>
     /// Represents an object of game map.
     /// </summary>
-    internal class MapObject
+    public class MapObject
     {
         /// <summary>
         /// Types of the objects, which can exists on game map
@@ -36,6 +36,7 @@ namespace BattleCity.GameLib
         /// x-coordinate of object
         /// </summary>
         public int X { get; set; } //using X insted of x because of in C# adopted PascalCase Code Style
+
         /// <summary>
         /// y-coordinate of object
         /// </summary>
