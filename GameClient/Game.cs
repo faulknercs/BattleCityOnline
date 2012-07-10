@@ -65,8 +65,19 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
-            if (Keyboard[Key.Q])
+            if (Keyboard[Key.Q]){
                 map = mapGenerator.generateCLASSIC_Map();
+                mapp = new Map(map);
+                mode = new GameMode(GameMode.Mode.CLASSIC);
+                save = new MapSave(mapp, mode);
+                save.createXMLDoc("C:\\inputXML.xml");
+
+                loader = new MapLoader();
+                mapp2 = loader.loadMap("C:\\inputXML.xml");
+                mode2 = loader.getMode();
+                save2 = new MapSave(mapp2, mode2);
+                save2.createXMLDoc("C:\\outputXML.xml");
+            }
             if (Keyboard[Key.W])
                 map = mapGenerator.generateDM_Map();
             if (Keyboard[Key.E])
@@ -157,6 +168,10 @@ namespace BattleCity.GameClient
 
         MapGenerator mapGenerator = new MapGenerator();
         MapObject[][] map;
+        Map mapp, mapp2;
+        private GameMode mode, mode2;
+        private MapSave save, save2;
+        private MapLoader loader;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";
     }
