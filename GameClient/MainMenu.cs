@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-<<<<<<< HEAD
 
-=======
->>>>>>> 8a41a90959f631022b9fd494883d143e12110438
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -18,10 +15,7 @@ namespace BattleCity.GameClient
     {
         public MainMenu()
         {
-<<<<<<< HEAD
-            
-=======
->>>>>>> 8a41a90959f631022b9fd494883d143e12110438
+
         }
     }
 }

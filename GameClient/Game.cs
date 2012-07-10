@@ -16,16 +16,13 @@ namespace BattleCity.GameClient
         public Game(int width, int height)
             : base(width, height, GraphicsMode.Default, windowName)
         {
-<<<<<<< HEAD
             Keyboard.KeyRepeat = false;
             
-=======
             WindowBorder = WindowBorder.Fixed;
             windowHeight = Convert.ToInt16(height / ((400 / 380) * 13.5));
             windowWidth = Convert.ToInt16(width / 13.5);
             elementWidth = windowWidth / 19;
             elementHeight = windowHeight / 20;
->>>>>>> 8a41a90959f631022b9fd494883d143e12110438
         }
 
         private float windowWidth;
