@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class GameMode
+    public class GameMode
     {
         public enum Mode : byte
         {
@@ -14,21 +14,27 @@ namespace BattleCity.GameLib
             TDMB,               //Team deathmatch with bases (both teams have their own base)
             DM                  //Deathmatch (every player fights for himself) without bases
         }
-        public GameMode (GameMode.Mode m)
+        public GameMode(Mode m)
         {
             mode = m;
             switch (mode)
             {
                 case Mode.CLASSIC:
+                    //                    modeName = "Classic";
                     break;
                 case Mode.TDM:
+                    //                    modeName = "Team Deathmatch";
                     break;
                 case Mode.TDMB:
+                    //                   modeName = "Team Deathmatch With Bases";
                     break;
                 case Mode.DM:
+                    //                    modeName = "Deathmatch";
                     break;
             }
         }
-        private Mode mode;
+        public Mode mode { get; set; }
+        //        private String modeName;
+        //        public String getName() { return modeName; }
     }
 }
