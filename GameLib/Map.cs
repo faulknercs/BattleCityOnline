@@ -9,12 +9,11 @@ namespace BattleCity.GameLib
     {
         public Map(MapObject[][] content)
         {
-            this.map = content;
+            map = content;
         }
 
         public MapObject[][] GetInternalForm()
         {
-            // TODO: Maybe, should return clone of map instead of reference (slower, but safer). Or maybe this method isn't needed
             return map;
         }
 
