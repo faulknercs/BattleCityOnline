@@ -21,6 +21,7 @@ namespace BattleCity.GameClient
             : base(width, height, GraphicsMode.Default, windowName)
         {
             Keyboard.KeyRepeat = false;
+            
         }
 
         /// <summary>

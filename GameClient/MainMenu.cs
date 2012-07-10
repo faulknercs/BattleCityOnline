@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using OpenTK;
 using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
 
 namespace BattleCity.GameClient
@@ -11,6 +13,9 @@ namespace BattleCity.GameClient
     /// </summary>
     class MainMenu
     {
-        
+        public MainMenu()
+        {
+            
+        }
     }
 }
