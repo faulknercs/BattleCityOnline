@@ -16,10 +16,17 @@ namespace BattleCity.GameLib
         }
         private Map map;
         private GameMode mode;
-        private XmlTextWriter writer = null;
+        private XmlWriter writer = null;
         public void createXMLDoc(String filePath)
         {
-            writer = new XmlTextWriter(filePath, Encoding.Unicode);
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Indent = true;
+            settings.IndentChars = "\t";
+            settings.NewLineChars = "\n";
+            //settings.OmitXmlDeclaration = true; // "<?xml version="1.0" encoding="utf-8"?>"
+
+            //writer = new XmlTextWriter(filePath, Encoding.Unicode);
+            writer = XmlWriter.Create(filePath,settings);
             writer.WriteStartDocument();
             writer.WriteStartElement("map");        //
             //writer.WriteStartElement("name");
