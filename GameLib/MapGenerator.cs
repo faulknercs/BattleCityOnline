@@ -1,22 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace BattleCity.GameLib
 {
     public class MapGenerator
     {
         public MapGenerator()
-        {
-            objectInit();
-        }
+        { objectInit(); }
 
         private void objectInit()
         {
-            //initialize mapInfo
-            for (int i = 0; i < map.Length; i++)
+            for (int i = 0; i < map.Length; i++) //initialize mapInfo
                 map[i] = new MapObject[19];
-            //initialize elementsInfo
-            MapObject[][] element = new[]
+            MapObject[][] element = new[] //initialize elementsInfo
                                         {
                                             new[]
                                                 {
@@ -128,16 +125,6 @@ namespace BattleCity.GameLib
             listOfStaticElements.Add(element);
         }
 
-        /// <summary>
-        /// E - Empty
-        /// T - Tank
-        /// B - Brick
-        /// C - Concrete
-        /// W - Water
-        /// F - Forest
-        /// O - Base
-        /// </summary>
-
         MapObject[][] map = new MapObject[20][];
         static List<MapObject[][]> listOfStaticElements = new List<MapObject[][]>();
         static Random rnd = new Random();
@@ -156,17 +143,16 @@ namespace BattleCity.GameLib
                 //clearing space for base
                 map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
 
-                if (rnd.Next(0, 2) == 0) addWaterOnMap(); //Water on map 50%
+                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
                 if (isMapGood()) break;
             }
             //adding base
             map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
             //adding bricks
-            if (map[0][9 - 1].Type == MapObject.Types.EMPTY) map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
-            if (map[0][9 + 1].Type == MapObject.Types.EMPTY) map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
+            map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
+            map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
             for (int i = 8; i <= 10; i++)
-                if (map[1][i].Type == MapObject.Types.EMPTY)
-                    map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
+                map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
             addBricksOnMap();
             addForestOnMap();
             return map;
@@ -181,7 +167,7 @@ namespace BattleCity.GameLib
             {
                 makeConcreteMap();
 
-                if (rnd.Next(0, 2) == 0) addWaterOnMap(); //Water on map 50%
+                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
                 if (isMapGood()) break;
             }
             addBricksOnMap();
@@ -202,7 +188,7 @@ namespace BattleCity.GameLib
                 map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
                 map[19][9] = new MapObject(19, 9, MapObject.Types.EMPTY);
 
-                if (rnd.Next(0, 2) == 0) addWaterOnMap(); //Water on map 50%
+                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
                 if (isMapGood()) break;
             }
             //adding base
@@ -210,14 +196,14 @@ namespace BattleCity.GameLib
             map[19][9] = new MapObject(19, 9, MapObject.Types.BASE);
 
             //adding bricks
-            if (map[0][9 - 1].Type == MapObject.Types.EMPTY) map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
-            if (map[0][9 + 1].Type == MapObject.Types.EMPTY) map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
-            if (map[19][9 - 1].Type == MapObject.Types.EMPTY) map[19][9 - 1] = new MapObject(19, 9 - 1, MapObject.Types.BRICK);
-            if (map[19][9 + 1].Type == MapObject.Types.EMPTY) map[19][9 + 1] = new MapObject(19, 9 + 1, MapObject.Types.BRICK);
+            map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
+            map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
+            map[19][9 - 1] = new MapObject(19, 9 - 1, MapObject.Types.BRICK);
+            map[19][9 + 1] = new MapObject(19, 9 + 1, MapObject.Types.BRICK);
             for (int i = 8; i <= 10; i++)
             {
-                if (map[1][i].Type == MapObject.Types.EMPTY) map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
-                if (map[18][i].Type == MapObject.Types.EMPTY) map[18][i] = new MapObject(18, 1, MapObject.Types.BRICK);
+                map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
+                map[18][i] = new MapObject(18, 1, MapObject.Types.BRICK);
             }
             addBricksOnMap();
             addForestOnMap();
@@ -233,7 +219,7 @@ namespace BattleCity.GameLib
             {
                 makeConcreteMap();
 
-                if (rnd.Next(0, 2) == 0) addWaterOnMap(); //Water on map 50%
+                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
                 if (isMapGood()) break;
             }
             addBricksOnMap();
@@ -254,22 +240,15 @@ namespace BattleCity.GameLib
         /// <returns>true - map is good</returns>
         private bool isEmptyBox(MapObject[][] map, int x, int y)
         {
-            if (map[x - 1][y - 1].Type == MapObject.Types.EMPTY)
-                if (map[x - 1][y].Type == MapObject.Types.EMPTY)
-                    if (map[x - 1][y + 1].Type == MapObject.Types.EMPTY)
-                        if (map[x][y - 1].Type == MapObject.Types.EMPTY)
-                            if (map[x][y].Type == MapObject.Types.EMPTY)
-                                if (map[x][y + 1].Type == MapObject.Types.EMPTY)
-                                    if (map[x + 1][y - 1].Type == MapObject.Types.EMPTY)
-                                        if (map[x + 1][y].Type == MapObject.Types.EMPTY)
-                                            if (map[x + 1][y + 1].Type == MapObject.Types.EMPTY)
-                                                return true;
+            if (map[x - 1][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y + 1].Type.Equals(MapObject.Types.EMPTY))
+                if (map[x][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x][y].Type.Equals(MapObject.Types.EMPTY) && map[x][y + 1].Type.Equals(MapObject.Types.EMPTY))
+                    if (map[x + 1][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x + 1][y].Type.Equals(MapObject.Types.EMPTY) && map[x + 1][y + 1].Type.Equals(MapObject.Types.EMPTY))
+                        return true;
             return false;
         }
 
         private bool isMapGood()
         {
-            bool foundEmpty = true;
             //initialize
             MapObject[][] tmpMap = new MapObject[22][];
             for (int i = 0; i < tmpMap.Length; i++)
@@ -286,9 +265,9 @@ namespace BattleCity.GameLib
 
             //Check if 'C' in middle line
             bool concreteBreak = false;
-            for (int i = 1; i < tmpMap.Length - 1; i++)
+            for (int i = 3; i < tmpMap.Length - 3; i++)
             {
-                if (tmpMap[i][10].Type == MapObject.Types.CONCRETE)
+                if (tmpMap[i][10].Type.Equals(MapObject.Types.CONCRETE))
                     concreteBreak = true;
             }
             if (!concreteBreak)
@@ -297,7 +276,7 @@ namespace BattleCity.GameLib
             int concreteCount = 0;
             for (int i = 1; i <= 9; i++)
                 for (int j = 1; j <= 10; j++)
-                    if (tmpMap[i][j].Type == MapObject.Types.CONCRETE)
+                    if (tmpMap[i][j].Type.Equals(MapObject.Types.CONCRETE))
                         concreteCount++;
             if (concreteCount < 25 || concreteCount > 35)
                 return false;
@@ -305,37 +284,38 @@ namespace BattleCity.GameLib
             //Getting random element with 'E'
             int x = rnd.Next(5, 16);
             int y = rnd.Next(5, 16);
-            if (tmpMap[x][y].Type != MapObject.Types.EMPTY)
-                while (tmpMap[x][y].Type != MapObject.Types.EMPTY)
+            if (!tmpMap[x][y].Type.Equals(MapObject.Types.EMPTY))
+                while (!tmpMap[x][y].Type.Equals(MapObject.Types.EMPTY))
                 {
                     x = rnd.Next(0, 20);
                     y = rnd.Next(0, 21);
                 }
             tmpMap[x][y].Type = MapObject.Types.TEMPORARY;
             //Setting to check every Close 'E' to check, added before
+            bool foundEmpty = true;
             while (foundEmpty)
             {
                 foundEmpty = false;
                 for (int i = 1; i < tmpMap.Length - 1; i++)
                     for (int j = 1; j < tmpMap[i].Length - 1; j++)
-                        if (tmpMap[i][j].Type == MapObject.Types.TEMPORARY)
+                        if (tmpMap[i][j].Type.Equals(MapObject.Types.TEMPORARY))
                         {
-                            if (tmpMap[i - 1][j].Type == MapObject.Types.EMPTY)
+                            if (tmpMap[i - 1][j].Type.Equals(MapObject.Types.EMPTY))
                             {
                                 tmpMap[i - 1][j].Type = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i + 1][j].Type == MapObject.Types.EMPTY)
+                            if (tmpMap[i + 1][j].Type.Equals(MapObject.Types.EMPTY))
                             {
                                 tmpMap[i + 1][j].Type = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i][j - 1].Type == MapObject.Types.EMPTY)
+                            if (tmpMap[i][j - 1].Type.Equals(MapObject.Types.EMPTY))
                             {
                                 tmpMap[i][j - 1].Type = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i][j + 1].Type == MapObject.Types.EMPTY)
+                            if (tmpMap[i][j + 1].Type.Equals(MapObject.Types.EMPTY))
                             {
                                 tmpMap[i][j + 1].Type = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
@@ -344,7 +324,7 @@ namespace BattleCity.GameLib
             }
             foreach (MapObject[] t in tmpMap)
                 foreach (MapObject t1 in t)
-                    if (t1.Type == MapObject.Types.EMPTY)
+                    if (t1.Type.Equals(MapObject.Types.EMPTY))
                         foundEmpty = true;
             return !foundEmpty;
         }
@@ -370,7 +350,7 @@ namespace BattleCity.GameLib
             for (int i = 1; i < partMap.Length - 1; i++)
                 for (int j = 1; j < partMap[i].Length - 1; j++)
                     if (isEmptyBox(partMap, i, j))
-                        if (rnd.Next(0, 4) == 0) //should be element be added
+                        if (rnd.Next(0, 4).Equals(0)) //should be element be added
                         {
                             MapObject[][] element = getRandomElementFromListOfStaticElements();
                             addConcreteStaticElementOnMap(partMap, element, i, j);
@@ -419,26 +399,20 @@ namespace BattleCity.GameLib
 
         private void addBricksOnMap()
         {
-            foreach (MapObject[] t in map)
-                foreach (MapObject t1 in t)
-                    if (t1.Type == MapObject.Types.EMPTY && rnd.Next(0, 4) == 0) //30% of Brick
-                        t1.Type = MapObject.Types.BRICK;
+            foreach (MapObject t1 in map.SelectMany(t => t.Where(t1 => t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 4).Equals(0))))
+                t1.Type = MapObject.Types.BRICK;
         }
 
         private void addForestOnMap()
         {
-            foreach (MapObject[] t in map)
-                foreach (MapObject t1 in t)
-                    if (t1.Type == MapObject.Types.EMPTY && rnd.Next(0, 5) == 0)
-                        t1.Type = MapObject.Types.FOREST;
+            foreach (MapObject t1 in from t in map from t1 in t where t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 5).Equals(0) select t1)
+                t1.Type = MapObject.Types.FOREST;
         }
 
         private void addWaterOnMap()
         {
-            foreach (MapObject[] t in map)
-                foreach (MapObject t1 in t)
-                    if (t1.Type == MapObject.Types.EMPTY && rnd.Next(0, 16) == 0)
-                        t1.Type = MapObject.Types.WATER;
+            foreach (MapObject t1 in from t in map from t1 in t where t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 16).Equals(0) select t1)
+                t1.Type = MapObject.Types.WATER;
         }
 
         #endregion ADD : CONCRETE | BRICK | WATER | FOREST
