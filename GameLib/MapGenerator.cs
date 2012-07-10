@@ -6,10 +6,7 @@ namespace BattleCity.GameLib
 {
     public class MapGenerator
     {
-        public MapGenerator()
-        { objectInit(); }
-
-        private void objectInit()
+        private static void objectInit()
         {
             for (int i = 0; i < map.Length; i++) //initialize mapInfo
                 map[i] = new MapObject[19];
@@ -125,7 +122,7 @@ namespace BattleCity.GameLib
             listOfStaticElements.Add(element);
         }
 
-        MapObject[][] map = new MapObject[20][];
+        static MapObject[][] map = new MapObject[20][];
         static List<MapObject[][]> listOfStaticElements = new List<MapObject[][]>();
         static Random rnd = new Random();
 
@@ -134,7 +131,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Classical mode (one team defends its base, another one attacks trying to destroy the base)
         /// </summary>
-        public MapObject[][] generateCLASSIC_Map()
+        public static MapObject[][] generateCLASSIC_Map()
         {
             while (true)
             {
@@ -161,7 +158,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Team deathmatch (two teams attacking each other) without bases
         /// </summary>
-        public MapObject[][] generateTDM_Map()
+        public static MapObject[][] generateTDM_Map()
         {
             while (true)
             {
@@ -178,7 +175,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Team deathmatch with bases (both teams have their own base)
         /// </summary>
-        public MapObject[][] generateTDMB_Map()
+        public static MapObject[][] generateTDMB_Map()
         {
             while (true)
             {
@@ -213,7 +210,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Deathmatch (every player fights for himself) without bases
         /// </summary>
-        public MapObject[][] generateDM_Map()
+        public static MapObject[][] generateDM_Map()
         {
             while (true)
             {
@@ -238,7 +235,7 @@ namespace BattleCity.GameLib
         /// <param name="x">Current X</param>
         /// <param name="y">Current Y</param>
         /// <returns>true - map is good</returns>
-        private bool isEmptyBox(MapObject[][] map, int x, int y)
+        private static bool isEmptyBox(MapObject[][] map, int x, int y)
         {
             if (map[x - 1][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y + 1].Type.Equals(MapObject.Types.EMPTY))
                 if (map[x][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x][y].Type.Equals(MapObject.Types.EMPTY) && map[x][y + 1].Type.Equals(MapObject.Types.EMPTY))
@@ -247,7 +244,7 @@ namespace BattleCity.GameLib
             return false;
         }
 
-        private bool isMapGood()
+        private static bool isMapGood()
         {
             //initialize
             MapObject[][] tmpMap = new MapObject[22][];
@@ -331,8 +328,9 @@ namespace BattleCity.GameLib
 
         #region ADD : CONCRETE | BRICK | WATER | FOREST
 
-        private void makeConcreteMap()
+        private static void makeConcreteMap()
         {
+            objectInit();
             MapObject[][] partMap = new MapObject[10][];
             MapObject[][] halfMap = new MapObject[20][];
             for (int i = 0; i < partMap.Length; i++)
@@ -390,26 +388,26 @@ namespace BattleCity.GameLib
             }
         }
 
-        private void addConcreteStaticElementOnMap(MapObject[][] map, MapObject[][] element, int x, int y)
+        private static void addConcreteStaticElementOnMap(MapObject[][] map, MapObject[][] element, int x, int y)
         {
             for (int i = 0; i < element.Length; i++)
                 for (int j = 0; j < element[i].Length; j++)
                     map[x - 1 + i][y - 1 + j] = new MapObject(x - 1 + i, y - 1 + j, element[i][j].Type);
         }
 
-        private void addBricksOnMap()
+        private static void addBricksOnMap()
         {
             foreach (MapObject t1 in map.SelectMany(t => t.Where(t1 => t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 4).Equals(0))))
                 t1.Type = MapObject.Types.BRICK;
         }
 
-        private void addForestOnMap()
+        private static void addForestOnMap()
         {
             foreach (MapObject t1 in from t in map from t1 in t where t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 5).Equals(0) select t1)
                 t1.Type = MapObject.Types.FOREST;
         }
 
-        private void addWaterOnMap()
+        private static void addWaterOnMap()
         {
             foreach (MapObject t1 in from t in map from t1 in t where t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 16).Equals(0) select t1)
                 t1.Type = MapObject.Types.WATER;
@@ -419,7 +417,7 @@ namespace BattleCity.GameLib
 
         #region Element By Random
 
-        private MapObject[][] getRandomElementFromListOfStaticElements()
+        private static MapObject[][] getRandomElementFromListOfStaticElements()
         {
             MapObject[][] element = listOfStaticElements[rnd.Next(0, listOfStaticElements.Count)];
             int rotationAngle = rnd.Next(0, 5);
@@ -428,7 +426,7 @@ namespace BattleCity.GameLib
             return element;
         }
 
-        private MapObject[][] rotateStaticElement(MapObject[][] element)
+        private static MapObject[][] rotateStaticElement(MapObject[][] element)
         {
             MapObject[][] tmp = new[] { new MapObject[3], new MapObject[3], new MapObject[3] };
             for (int i = 0; i < element.Length; i++)

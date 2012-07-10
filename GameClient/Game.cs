@@ -65,25 +65,25 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
-            if (Keyboard[Key.Q]){
-                map = mapGenerator.generateCLASSIC_Map();
-                mapp = new Map(map);
+            if (Keyboard[Key.Q])
+            {
+                map = new Map(MapGenerator.generateCLASSIC_Map());
                 mode = new GameMode(GameMode.Mode.CLASSIC);
-                save = new MapSave(mapp, mode);
+                save = new MapSave(map, mode);
                 save.createXMLDoc("C:\\inputXML.xml");
 
                 loader = new MapLoader();
-                mapp2 = loader.loadMap("C:\\inputXML.xml");
+                mapp = loader.loadMap("C:\\inputXML.xml");
                 mode2 = loader.getMode();
-                save2 = new MapSave(mapp2, mode2);
+                save2 = new MapSave(mapp, mode2);
                 save2.createXMLDoc("C:\\outputXML.xml");
             }
             if (Keyboard[Key.W])
-                map = mapGenerator.generateDM_Map();
+                map = new Map(MapGenerator.generateDM_Map());
             if (Keyboard[Key.E])
-                map = mapGenerator.generateTDMB_Map();
+                map = new Map(MapGenerator.generateTDMB_Map());
             if (Keyboard[Key.R])
-                map = mapGenerator.generateTDM_Map();
+                map = new Map(MapGenerator.generateTDM_Map());
             if (Keyboard[Key.Escape])
                 Exit();
         }
@@ -111,12 +111,12 @@ namespace BattleCity.GameClient
             GL.LoadMatrix(ref modelview);
 
             if (map != null)
-                for (int i = 0; i < map.Length; i++)
-                    for (int j = 0; j < map[i].Length; j++)
+                for (int i = 0; i < map.GetInternalForm().Length; i++)
+                    for (int j = 0; j < map.GetInternalForm()[i].Length; j++)
                     {
                         double xStart = Convert.ToDouble(j);
                         double yStart = Convert.ToDouble(i);
-                        switch (map[i][j].Type)
+                        switch (map.GetInternalForm()[i][j].Type)
                         {
                             case MapObject.Types.EMPTY: DrawMapPart(xStart, yStart, Color.Yellow);
                                 break;
@@ -166,9 +166,7 @@ namespace BattleCity.GameClient
             GL.End();
         }
 
-        MapGenerator mapGenerator = new MapGenerator();
-        MapObject[][] map;
-        Map mapp, mapp2;
+        Map map, mapp;
         private GameMode mode, mode2;
         private MapSave save, save2;
         private MapLoader loader;
