@@ -98,7 +98,7 @@ namespace BattleCity.GameClient
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.Black);
-
+            
             watchMapGenerator();
 
             SwapBuffers();
@@ -165,7 +165,7 @@ namespace BattleCity.GameClient
 
             GL.End();
         }
-
+        
         Map map, mapp;
         private GameMode mode, mode2;
         private MapSave save, save2;

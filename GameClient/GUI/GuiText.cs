@@ -34,7 +34,8 @@ namespace BattleCity.GameClient.GUI
                 if (value != textValue)
                 {
                     textValue = value;
-                    // TODO: needs to recalculate text parameters
+                    needToCalculateSize = true;
+                    needToRenderTexture = true;
                 }
             }
         }
@@ -43,6 +44,8 @@ namespace BattleCity.GameClient.GUI
         {
             get
             {
+                if (needToCalculateSize)
+                    CalculateSize();
                 return textWidth;
             }
         }
@@ -51,6 +54,8 @@ namespace BattleCity.GameClient.GUI
         {
             get
             {
+                if (needToCalculateSize)
+                    CalculateSize();
                 return textHeight;
             }
         }
@@ -71,6 +76,16 @@ namespace BattleCity.GameClient.GUI
             textTexture.Bind();
             //render code
 
+        }
+
+        private void CalculateSize()
+        {
+            using(Graphics g = Graphics.FromImage(new Bitmap(0,0)))
+            {
+                SizeF size = g.MeasureString(Text, textFont);
+                textWidth = (int)Math.Ceiling(size.Width);
+                textHeight = (int)Math.Ceiling(size.Height);
+            }
         }
 
         private Font textFont;
