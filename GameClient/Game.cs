@@ -160,9 +160,13 @@ namespace BattleCity.GameClient
             GL.Begin(BeginMode.Quads);
 
             textureList[textureIndex].Bind();
+            GL.TexCoord2(0, 0);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
+            GL.TexCoord2(1, 0);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
+            GL.TexCoord2(1, 1);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
+            GL.TexCoord2(0, 1);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
 
             GL.End();
