@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text;
 using System.Drawing;
 using System.Drawing.Text;
-
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -11,7 +9,7 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Supports text rendering using OpenTK
     /// </summary>
-    class GuiText
+    internal class GuiText
     {
         public GuiText(Font font)
         {
@@ -53,7 +51,7 @@ namespace BattleCity.GameClient.GUI
         /// <summary>
         /// Gets or sets text font
         /// </summary>
-        public Font TextFont 
+        public Font TextFont
         {
             get
             {
@@ -78,7 +76,7 @@ namespace BattleCity.GameClient.GUI
         /// <summary>
         /// Returns text texture width
         /// </summary>
-        public int Width 
+        public int Width
         {
             get
             {
@@ -109,7 +107,7 @@ namespace BattleCity.GameClient.GUI
             if (Text == null || Text == "")
                 return;
 
-            if(needToRenderTexture)
+            if (needToRenderTexture)
             {
                 RenderTexture();
                 needToRenderTexture = false;
@@ -138,7 +136,7 @@ namespace BattleCity.GameClient.GUI
 
         private void CalculateSize()
         {
-            using(Graphics g = Graphics.FromImage(new Bitmap(1,1)))
+            using (Graphics g = Graphics.FromImage(new Bitmap(1, 1)))
             {
                 SizeF size = g.MeasureString(Text, textFont);
                 textWidth = (int)Math.Ceiling(size.Width);
@@ -150,7 +148,7 @@ namespace BattleCity.GameClient.GUI
         {
             Bitmap bitmap = new Bitmap(Width, Height);
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
-            using(Graphics g = Graphics.FromImage(bitmap))
+            using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.Clear(Color.Transparent);
                 g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
