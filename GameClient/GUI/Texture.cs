@@ -1,19 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Drawing;
+﻿using System.Drawing;
 using System.Drawing.Imaging;
 
 using OpenTK.Graphics.OpenGL;
-
 
 namespace BattleCity.GameClient.GUI
 {
     /// <summary>
     /// Incapsulates opengl 2D textures
     /// </summary>
-    class Texture
+    internal class Texture
     {
         public Texture(Bitmap bitmap)
         {
@@ -25,7 +20,7 @@ namespace BattleCity.GameClient.GUI
 
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             BitmapData bitmapData = bitmap.LockBits(rect, ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0, 
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             bitmap.UnlockBits(bitmapData);
 
@@ -42,6 +37,7 @@ namespace BattleCity.GameClient.GUI
         }
 
         public int Width { get; private set; }
+
         public int Height { get; private set; }
 
         private int glTextureHandle;

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Drawing;
+using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
-using System.Drawing.Text;
 
 namespace BattleCity.GameClient
 {
@@ -21,7 +21,15 @@ namespace BattleCity.GameClient
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-            
+            textureList = new[]
+                                            {
+                                                new Texture(new Bitmap(Properties.Resources.empty)),
+                                                new Texture(new Bitmap(Properties.Resources.brick)),
+                                                new Texture(new Bitmap(Properties.Resources.concrete)),
+                                                new Texture(new Bitmap(Properties.Resources.water)),
+                                                new Texture(new Bitmap(Properties.Resources.forest)),
+                                                new Texture(new Bitmap(Properties.Resources._base))
+                                            };
             WindowBorder = WindowBorder.Fixed;
             windowHeight = Convert.ToInt16(height / ((400 / 380) * 13.5));
             windowWidth = Convert.ToInt16(width / 13.5);
@@ -29,6 +37,7 @@ namespace BattleCity.GameClient
             elementHeight = windowHeight / 20;
         }
 
+        private Texture[] textureList;
         private float windowWidth;
         private float windowHeight;
         private float elementWidth;
@@ -70,18 +79,7 @@ namespace BattleCity.GameClient
             //gameplay.AddPlayer(player);
 
             if (Keyboard[Key.Q])
-            {
                 map = new Map(MapGenerator.generateCLASSIC_Map());
-                mode = new GameMode(GameMode.Mode.CLASSIC);
-                save = new MapSave(map, mode);
-                save.createXMLDoc("C:\\inputXML.xml");
-
-                loader = new MapLoader();
-                mapp = loader.loadMap("C:\\inputXML.xml");
-                mode2 = loader.getMode();
-                save2 = new MapSave(mapp, mode2);
-                save2.createXMLDoc("C:\\outputXML.xml");
-            }
             if (Keyboard[Key.W])
                 map = new Map(MapGenerator.generateDM_Map());
             if (Keyboard[Key.E])
@@ -122,17 +120,17 @@ namespace BattleCity.GameClient
                         double yStart = Convert.ToDouble(i);
                         switch (map.GetInternalForm()[i][j].Type)
                         {
-                            case MapObject.Types.EMPTY: DrawMapPart(xStart, yStart, Color.Yellow);
+                            case MapObject.Types.EMPTY: DrawMapPart(xStart, yStart, 0);
                                 break;
-                            case MapObject.Types.BRICK: DrawMapPart(xStart, yStart, Color.RosyBrown);
+                            case MapObject.Types.BRICK: DrawMapPart(xStart, yStart, 1);
                                 break;
-                            case MapObject.Types.CONCRETE: DrawMapPart(xStart, yStart, Color.DarkBlue);
+                            case MapObject.Types.CONCRETE: DrawMapPart(xStart, yStart, 2);
                                 break;
-                            case MapObject.Types.WATER: DrawMapPart(xStart, yStart, Color.LightBlue);
+                            case MapObject.Types.WATER: DrawMapPart(xStart, yStart, 3);
                                 break;
-                            case MapObject.Types.FOREST: DrawMapPart(xStart, yStart, Color.GreenYellow);
+                            case MapObject.Types.FOREST: DrawMapPart(xStart, yStart, 4);
                                 break;
-                            case MapObject.Types.BASE: DrawMapPart(xStart, yStart, Color.Red);
+                            case MapObject.Types.BASE: DrawMapPart(xStart, yStart, 5);
                                 break;
                         }
                     }
@@ -155,27 +153,26 @@ namespace BattleCity.GameClient
                 GL.Vertex3(windowWidth / 2, windowHeight / 2 - i * elementHeight, 0);
                 GL.End();
             }
-            
-            
         }
 
-        private void DrawMapPart(double leftX, double leftY, Color color)
+        private void DrawMapPart(double leftX, double leftY, int textureIndex)
         {
             GL.Begin(BeginMode.Quads);
 
-            GL.Color3(color);
+            textureList[textureIndex].Bind();
+            GL.TexCoord2(0, 0);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
+            GL.TexCoord2(1, 0);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
+            GL.TexCoord2(1, 1);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
+            GL.TexCoord2(0, 1);
             GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
 
             GL.End();
         }
 
-        Map map, mapp;
-        private GameMode mode, mode2;
-        private MapSave save, save2;
-        private MapLoader loader;
+        private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";
     }
