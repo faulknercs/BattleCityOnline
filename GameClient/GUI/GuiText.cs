@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Drawing;
 
+using OpenTK.Graphics.OpenGL;
+
 namespace BattleCity.GameClient.GUI
 {
     /// <summary>
@@ -11,12 +13,17 @@ namespace BattleCity.GameClient.GUI
     /// </summary>
     class GuiText
     {
-        public GuiText()
+        public GuiText(String text)
         {
-
+            this.Text = text;
         }
 
-        public String Value
+        public GuiText()
+        {
+            
+        }
+
+        public String Text
         {
             get
             {
@@ -32,15 +39,46 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        public int Width 
+        {
+            get
+            {
+                return textWidth;
+            }
+        }
+
+        public int Height
+        {
+            get
+            {
+                return textHeight;
+            }
+        }
+
+        /// <summary>
+        /// Render text
+        /// </summary>
         public void Render()
         {
-            if (Value == null || Value == "")
+            if (Text == null || Text == "")
                 return;
+
+            if(needToRenderTexture)
+            {
+
+            }
+
+            textTexture.Bind();
+            //render code
+
         }
 
         private Font textFont;
         private String textValue;
+        private Texture textTexture;
         private int textWidth;
         private int textHeight;
+        private bool needToRenderTexture;
+        private bool needToCalculateSize;
     }
 }

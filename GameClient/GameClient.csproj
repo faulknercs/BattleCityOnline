@@ -67,6 +67,7 @@
     <Compile Include="Game.cs" />
     <Compile Include="GameRenderer.cs" />
     <Compile Include="GUI\GuiText.cs" />
+    <Compile Include="GUI\Texture.cs" />
     <Compile Include="KeySettings.cs" />
     <Compile Include="LocalPlayer.cs" />
     <Compile Include="Main.cs" />
