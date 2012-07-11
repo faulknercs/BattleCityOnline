@@ -5,6 +5,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using System.Drawing.Text;
 
 namespace BattleCity.GameClient
 {
@@ -17,7 +18,10 @@ namespace BattleCity.GameClient
             : base(width, height, GraphicsMode.Default, windowName)
         {
             Keyboard.KeyRepeat = false;
-
+            GL.Enable(EnableCap.Texture2D);
+            GL.Enable(EnableCap.Blend);
+            GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+            
             WindowBorder = WindowBorder.Fixed;
             windowHeight = Convert.ToInt16(height / ((400 / 380) * 13.5));
             windowWidth = Convert.ToInt16(width / 13.5);
@@ -98,7 +102,7 @@ namespace BattleCity.GameClient
 
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             GL.ClearColor(Color.Black);
-            
+
             watchMapGenerator();
 
             SwapBuffers();
@@ -151,6 +155,8 @@ namespace BattleCity.GameClient
                 GL.Vertex3(windowWidth / 2, windowHeight / 2 - i * elementHeight, 0);
                 GL.End();
             }
+            
+            
         }
 
         private void DrawMapPart(double leftX, double leftY, Color color)
@@ -165,7 +171,7 @@ namespace BattleCity.GameClient
 
             GL.End();
         }
-        
+
         Map map, mapp;
         private GameMode mode, mode2;
         private MapSave save, save2;

@@ -11,7 +11,7 @@ using OpenTK.Graphics.OpenGL;
 namespace BattleCity.GameClient.GUI
 {
     /// <summary>
-    /// Incapsulates opengl textures
+    /// Incapsulates opengl 2D textures
     /// </summary>
     class Texture
     {

@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using System.Drawing;
+using System.Drawing.Text;
 
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace BattleCity.GameClient.GUI
@@ -13,16 +13,26 @@ namespace BattleCity.GameClient.GUI
     /// </summary>
     class GuiText
     {
-        public GuiText(String text)
+        public GuiText(Font font)
+        {
+            this.TextFont = font;
+        }
+
+        public GuiText(Font font, Color4 color)
+            : this(font)
+        {
+            this.TextColor = color;
+        }
+
+        public GuiText(Font font, Color4 color, String text)
+            : this(font, color)
         {
             this.Text = text;
         }
 
-        public GuiText()
-        {
-            
-        }
-
+        /// <summary>
+        /// Gets or sets text value
+        /// </summary>
         public String Text
         {
             get
@@ -40,6 +50,34 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        /// <summary>
+        /// Gets or sets text font
+        /// </summary>
+        public Font TextFont 
+        {
+            get
+            {
+                return textFont;
+            }
+            set
+            {
+                if (!value.Equals(textFont))
+                {
+                    textFont = value;
+                    needToCalculateSize = true;
+                    needToRenderTexture = true;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Gets or sets text color
+        /// </summary>
+        public Color4 TextColor { get; set; }
+
+        /// <summary>
+        /// Returns text texture width
+        /// </summary>
         public int Width 
         {
             get
@@ -50,6 +88,9 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        /// <summary>
+        /// Returns text texture height
+        /// </summary>
         public int Height
         {
             get
@@ -70,21 +111,52 @@ namespace BattleCity.GameClient.GUI
 
             if(needToRenderTexture)
             {
-
+                RenderTexture();
+                needToRenderTexture = false;
             }
 
             textTexture.Bind();
-            //render code
+            GL.Color4(TextColor);
 
+            //render code
+            GL.Begin(BeginMode.Quads);
+
+            GL.TexCoord2(0, 0);
+            GL.Vertex2(0, 0);
+
+            GL.TexCoord2(1, 0);
+            GL.Vertex2(Width, 0);
+
+            GL.TexCoord2(1, 1);
+            GL.Vertex2(Width, Height);
+
+            GL.TexCoord2(0, 1);
+            GL.Vertex2(0, Height);
+
+            GL.End();
         }
 
         private void CalculateSize()
         {
-            using(Graphics g = Graphics.FromImage(new Bitmap(0,0)))
+            using(Graphics g = Graphics.FromImage(new Bitmap(1,1)))
             {
                 SizeF size = g.MeasureString(Text, textFont);
                 textWidth = (int)Math.Ceiling(size.Width);
                 textHeight = (int)Math.Ceiling(size.Height);
+            }
+        }
+
+        private void RenderTexture()
+        {
+            Bitmap bitmap = new Bitmap(Width, Height);
+            Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
+            using(Graphics g = Graphics.FromImage(bitmap))
+            {
+                g.Clear(Color.Transparent);
+                g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
+                g.DrawString(Text, textFont, Brushes.White, rect);
+
+                textTexture = new Texture(bitmap);
             }
         }
 
@@ -93,7 +165,7 @@ namespace BattleCity.GameClient.GUI
         private Texture textTexture;
         private int textWidth;
         private int textHeight;
-        private bool needToRenderTexture;
-        private bool needToCalculateSize;
+        private bool needToRenderTexture = true;
+        private bool needToCalculateSize = true;
     }
 }
