@@ -33,8 +33,8 @@ namespace BattleCity.GameClient
                               };
 
             WindowBorder = WindowBorder.Fixed;
-            windowHeight = Convert.ToInt16(height / ((400 / 380) * 13.5));
-            windowWidth = Convert.ToInt16(width / 13.5);
+            windowWidth = width;
+            windowHeight = height;
             gameRenderer = new GameRenderer(windowWidth, windowHeight, textureList);
         }
 
@@ -60,13 +60,15 @@ namespace BattleCity.GameClient
         /// <param name="e">Not used.</param>
         protected override void OnResize(EventArgs e)
         {
-            base.OnResize(e);
+            GL.Viewport(0, 0, (int)windowWidth, (int)windowHeight);
 
-            GL.Viewport(ClientRectangle);
-
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)Math.PI / 4, Width / (float)Height, 1.0f, 64.0f);
             GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadMatrix(ref projection);
+            Matrix4 ortho = Matrix4.CreateOrthographicOffCenter(-windowWidth / 2, windowWidth / 2, -windowHeight / 2, windowHeight / 2, 1, -1);
+            GL.LoadMatrix(ref ortho);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+
+            base.OnResize(e);
         }
 
         /// <summary>
@@ -112,31 +114,14 @@ namespace BattleCity.GameClient
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            base.OnRenderFrame(e);
-
-            Matrix4 modelview = Matrix4.LookAt(0, 0, 50, 0, 0, 0, 0, 1, 0);
-            GL.MatrixMode(MatrixMode.Modelview);
-            GL.LoadMatrix(ref modelview);
-
             if (needDrawMap)
             {
-                GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-                GL.ClearColor(Color.Black);
                 gameRenderer.drawMap(map);
                 needDrawMap = false;
             }
             if (needRefreshMap)
             {
-                /* clear the proper quad and replace it a texture
-                GL.Begin(BeginMode.Quads);
-                GL.Color3(Color.Black);
-                GL.Vertex3(-windowWidth / 2, windowHeight / 2, 0);
-                GL.Vertex3(-windowWidth / 2 + windowWidth / 19, windowHeight / 2, 0);
-                GL.Vertex3(-windowWidth / 2 + windowWidth / 19, windowHeight / 2 - windowHeight / 19, 0);
-                GL.Vertex3(-windowWidth / 2, windowHeight / 2 - windowHeight / 19, 0);
-                GL.End();
-                gameRenderer.refreshMap(0, 0, MapObject.Types.CONCRETE);
-                */
+                gameRenderer.drawMap(17, 1, MapObject.Types.WATER);
                 needRefreshMap = false;
             }
 
