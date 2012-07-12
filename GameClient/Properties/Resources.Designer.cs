@@ -67,37 +67,37 @@ namespace BattleCity.GameClient.Properties {
             }
         }
         
-        internal static System.Drawing.Bitmap _brick {
+        internal static System.Drawing.Bitmap brick {
             get {
-                object obj = ResourceManager.GetObject("_brick", resourceCulture);
+                object obj = ResourceManager.GetObject("brick", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap _concrete {
+        internal static System.Drawing.Bitmap concrete {
             get {
-                object obj = ResourceManager.GetObject("_concrete", resourceCulture);
+                object obj = ResourceManager.GetObject("concrete", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap _empty {
+        internal static System.Drawing.Bitmap empty {
             get {
-                object obj = ResourceManager.GetObject("_empty", resourceCulture);
+                object obj = ResourceManager.GetObject("empty", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap _forest {
+        internal static System.Drawing.Bitmap forest {
             get {
-                object obj = ResourceManager.GetObject("_forest", resourceCulture);
+                object obj = ResourceManager.GetObject("forest", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
         
-        internal static System.Drawing.Bitmap _water {
+        internal static System.Drawing.Bitmap water {
             get {
-                object obj = ResourceManager.GetObject("_water", resourceCulture);
+                object obj = ResourceManager.GetObject("water", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

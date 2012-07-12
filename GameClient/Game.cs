@@ -24,11 +24,11 @@ namespace BattleCity.GameClient
 
             textureList = new[]
                               {
-                                  new Texture(new Bitmap(Properties.Resources._empty)),
-                                  new Texture(new Bitmap(Properties.Resources._brick)),
-                                  new Texture(new Bitmap(Properties.Resources._concrete)),
-                                  new Texture(new Bitmap(Properties.Resources._water)),
-                                  new Texture(new Bitmap(Properties.Resources._forest)),
+                                  new Texture(new Bitmap(Properties.Resources.empty)),
+                                  new Texture(new Bitmap(Properties.Resources.brick)),
+                                  new Texture(new Bitmap(Properties.Resources.concrete)),
+                                  new Texture(new Bitmap(Properties.Resources.water)),
+                                  new Texture(new Bitmap(Properties.Resources.forest)),
                                   new Texture(new Bitmap(Properties.Resources._base))
                               };
 
@@ -121,7 +121,7 @@ namespace BattleCity.GameClient
             }
             if (needRefreshMap)
             {
-                gameRenderer.drawMap(17, 1, MapObject.Types.WATER);
+                gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
                 needRefreshMap = false;
             }
 

@@ -231,10 +231,7 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Is element proper to current position
         /// </summary>
-        /// <param name="map">Current Map</param>
-        /// <param name="x">Current X</param>
-        /// <param name="y">Current Y</param>
-        /// <returns>true - map is good</returns>
+        /// <returns>true - box is good</returns>
         private static bool isEmptyBox(MapObject[][] map, int x, int y)
         {
             if (map[x - 1][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y + 1].Type.Equals(MapObject.Types.EMPTY))
@@ -246,48 +243,44 @@ namespace BattleCity.GameLib
 
         private static bool isMapGood()
         {
-            //initialize
-            MapObject[][] tmpMap = new MapObject[22][];
+            //initialize tmpMap with size +2 then map by x and y
+            MapObject.Types[][] tmpMap = new MapObject.Types[22][];
             for (int i = 0; i < tmpMap.Length; i++)
-                tmpMap[i] = new MapObject[21];
-            //Setting each element to 'c'
+                tmpMap[i] = new MapObject.Types[21];
+
             for (int i = 0; i < tmpMap.Length; i++)
                 for (int j = 0; j < tmpMap[i].Length; j++)
-                    tmpMap[i][j] = new MapObject(i, j, MapObject.Types.CONCRETE);
-
-            //Adding map to tmpMap
+                    tmpMap[i][j] = MapObject.Types.CONCRETE; //each element = Concrete
             for (int i = 0; i < map.Length; i++)
                 for (int j = 0; j < map[i].Length; j++)
-                    tmpMap[i + 1][j + 1] = new MapObject(i + 1, j + 1, map[i][j].Type);
+                    tmpMap[i + 1][j + 1] = map[i][j].Type; //copy map to tmpMap
 
-            //Check if 'C' in middle line
-            bool concreteBreak = false;
-            for (int i = 3; i < tmpMap.Length - 3; i++)
-            {
-                if (tmpMap[i][10].Type.Equals(MapObject.Types.CONCRETE))
-                    concreteBreak = true;
-            }
-            if (!concreteBreak)
-                return false;
-            //Check Concrete blocks count
-            int concreteCount = 0;
-            for (int i = 1; i <= 9; i++)
-                for (int j = 1; j <= 10; j++)
-                    if (tmpMap[i][j].Type.Equals(MapObject.Types.CONCRETE))
-                        concreteCount++;
-            if (concreteCount < 25 || concreteCount > 35)
-                return false;
+            ////Check if 'C' in middle line
+            //bool concreteBreak = false;
+            //for (int i = 3; i < tmpMap.Length - 3; i++)
+            //    if (tmpMap[i][10].Equals(MapObject.Types.CONCRETE))
+            //        concreteBreak = true;
+            //if (!concreteBreak)
+            //    return false;
+            ////Check Concrete blocks count
+            //int concreteCount = 0;
+            //for (int i = 1; i <= 9; i++)
+            //    for (int j = 1; j <= 10; j++)
+            //        if (tmpMap[i][j].Equals(MapObject.Types.CONCRETE))
+            //            concreteCount++;
+            //if (concreteCount < 25 || concreteCount > 35)
+            //    return false;
 
             //Getting random element with 'E'
             int x = rnd.Next(5, 16);
             int y = rnd.Next(5, 16);
-            if (!tmpMap[x][y].Type.Equals(MapObject.Types.EMPTY))
-                while (!tmpMap[x][y].Type.Equals(MapObject.Types.EMPTY))
+            if (!tmpMap[x][y].Equals(MapObject.Types.EMPTY))
+                while (!tmpMap[x][y].Equals(MapObject.Types.EMPTY))
                 {
                     x = rnd.Next(0, 20);
                     y = rnd.Next(0, 21);
                 }
-            tmpMap[x][y].Type = MapObject.Types.TEMPORARY;
+            tmpMap[x][y] = MapObject.Types.TEMPORARY;
             //Setting to check every Close 'E' to check, added before
             bool foundEmpty = true;
             while (foundEmpty)
@@ -295,33 +288,33 @@ namespace BattleCity.GameLib
                 foundEmpty = false;
                 for (int i = 1; i < tmpMap.Length - 1; i++)
                     for (int j = 1; j < tmpMap[i].Length - 1; j++)
-                        if (tmpMap[i][j].Type.Equals(MapObject.Types.TEMPORARY))
+                        if (tmpMap[i][j].Equals(MapObject.Types.TEMPORARY))
                         {
-                            if (tmpMap[i - 1][j].Type.Equals(MapObject.Types.EMPTY))
+                            if (tmpMap[i - 1][j].Equals(MapObject.Types.EMPTY))
                             {
-                                tmpMap[i - 1][j].Type = MapObject.Types.TEMPORARY;
+                                tmpMap[i - 1][j] = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i + 1][j].Type.Equals(MapObject.Types.EMPTY))
+                            if (tmpMap[i + 1][j].Equals(MapObject.Types.EMPTY))
                             {
-                                tmpMap[i + 1][j].Type = MapObject.Types.TEMPORARY;
+                                tmpMap[i + 1][j] = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i][j - 1].Type.Equals(MapObject.Types.EMPTY))
+                            if (tmpMap[i][j - 1].Equals(MapObject.Types.EMPTY))
                             {
-                                tmpMap[i][j - 1].Type = MapObject.Types.TEMPORARY;
+                                tmpMap[i][j - 1] = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
-                            if (tmpMap[i][j + 1].Type.Equals(MapObject.Types.EMPTY))
+                            if (tmpMap[i][j + 1].Equals(MapObject.Types.EMPTY))
                             {
-                                tmpMap[i][j + 1].Type = MapObject.Types.TEMPORARY;
+                                tmpMap[i][j + 1] = MapObject.Types.TEMPORARY;
                                 foundEmpty = true;
                             }
                         }
             }
-            foreach (MapObject[] t in tmpMap)
-                foreach (MapObject t1 in t)
-                    if (t1.Type.Equals(MapObject.Types.EMPTY))
+            foreach (MapObject.Types[] t in tmpMap)
+                foreach (MapObject.Types t1 in t)
+                    if (t1.Equals(MapObject.Types.EMPTY))
                         foundEmpty = true;
             return !foundEmpty;
         }
@@ -331,61 +324,43 @@ namespace BattleCity.GameLib
         private static void makeConcreteMap()
         {
             objectInit();
-            MapObject[][] partMap = new MapObject[10][];
-            MapObject[][] halfMap = new MapObject[20][];
-            for (int i = 0; i < partMap.Length; i++)
-                partMap[i] = new MapObject[9];
-            for (int i = 0; i < halfMap.Length; i++)
-                halfMap[i] = new MapObject[9];
 
             //"clear" map
-            for (int i = 0; i < partMap.Length; i++)
-                for (int j = 0; j < partMap[i].Length; j++)
-                    partMap[i][j] = new MapObject(i, j, MapObject.Types.EMPTY);
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                    map[i][j] = new MapObject(i, j, MapObject.Types.EMPTY);
 
             #region Fill part of a map (1/4)
 
-            for (int i = 1; i < partMap.Length - 1; i++)
-                for (int j = 1; j < partMap[i].Length - 1; j++)
-                    if (isEmptyBox(partMap, i, j))
+            for (int i = 1; i < 10 - 1; i++)
+                for (int j = 1; j < 9 - 1; j++)
+                    if (isEmptyBox(map, i, j))
                         if (rnd.Next(0, 4).Equals(0)) //should be element be added
                         {
                             MapObject[][] element = getRandomElementFromListOfStaticElements();
-                            addConcreteStaticElementOnMap(partMap, element, i, j);
+                            addConcreteStaticElementOnMap(map, element, i, j);
                         }
 
             #endregion Fill part of a map (1/4)
 
-            #region Mirror of a part map (1/2) (LEFT PART OF MAP)
-
-            for (int i = 0; i < partMap.Length; i++)
-                for (int j = 0; j < partMap[i].Length; j++)
-                {
-                    halfMap[i][j] = new MapObject(i, j, partMap[i][j].Type);
-                    halfMap[halfMap.Length - 1 - i][j] = new MapObject(halfMap.Length - 1 - i, j, partMap[i][j].Type);
-                }
-
-            #endregion Mirror of a part map (1/2) (LEFT PART OF MAP)
-
             #region Mirror of a part map (2/2) (FULL MAP)
 
-            for (int i = 0; i < halfMap.Length; i++)
-                for (int j = 0; j < halfMap[i].Length; j++)
+            for (int i = 0; i < 10; i++)
+                for (int j = 0; j < 9; j++)
                 {
-                    map[i][j] = new MapObject(i, j, halfMap[i][j].Type);
-                    map[i][map[i].Length - 1 - j] = new MapObject(i, map[i].Length - 1 - j, halfMap[i][j].Type);
+                    map[i][j] = new MapObject(i, j, map[i][j].Type);
+                    map[map.Length - 1 - i][j] = new MapObject(map.Length - 1 - i, j, map[i][j].Type);
+                    map[i][map[i].Length - 1 - j] = new MapObject(i, map[i].Length - 1 - j, map[i][j].Type);
+                    map[map.Length - 1 - i][map[i].Length - 1 - j] = new MapObject(map.Length - 1 - i, map[i].Length - 1 - j, map[i][j].Type);
                 }
 
             #endregion Mirror of a part map (2/2) (FULL MAP)
 
             //adding middle line
             for (int i = 0; i < map.Length; i++)
-            {
-                MapObject[] t = map[i];
-                t[9] = t[8].Type == MapObject.Types.CONCRETE
+                map[i][9] = map[i][8].Type == MapObject.Types.CONCRETE
                            ? new MapObject(i, 9, MapObject.Types.CONCRETE)
                            : new MapObject(i, 9, MapObject.Types.EMPTY);
-            }
         }
 
         private static void addConcreteStaticElementOnMap(MapObject[][] map, MapObject[][] element, int x, int y)
