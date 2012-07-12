@@ -1,6 +1,7 @@
-﻿using System;
+﻿using System.Drawing;
 using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
+using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
@@ -28,65 +29,78 @@ namespace BattleCity.GameClient
 
         public void drawMap(Map map)
         {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.ClearColor(Color.Black);
             for (int i = 0; i < map.GetInternalForm().Length; i++)
                 for (int j = 0; j < map.GetInternalForm()[i].Length; j++)
-                {
-                    double xStart = Convert.ToDouble(j);
-                    double yStart = Convert.ToDouble(i);
                     switch (map.GetInternalForm()[i][j].Type)
                     {
-                        case MapObject.Types.EMPTY: DrawMapPart(xStart, yStart, 0);
+                        case MapObject.Types.EMPTY: DrawMapPart(j, i, 0);
                             break;
-                        case MapObject.Types.BRICK: DrawMapPart(xStart, yStart, 1);
+                        case MapObject.Types.BRICK: DrawMapPart(j, i, 1);
                             break;
-                        case MapObject.Types.CONCRETE: DrawMapPart(xStart, yStart, 2);
+                        case MapObject.Types.CONCRETE: DrawMapPart(j, i, 2);
                             break;
-                        case MapObject.Types.WATER: DrawMapPart(xStart, yStart, 3);
+                        case MapObject.Types.WATER: DrawMapPart(j, i, 3);
                             break;
-                        case MapObject.Types.FOREST: DrawMapPart(xStart, yStart, 4);
+                        case MapObject.Types.FOREST: DrawMapPart(j, i, 4);
                             break;
-                        case MapObject.Types.BASE: DrawMapPart(xStart, yStart, 5);
+                        case MapObject.Types.BASE: DrawMapPart(j, i, 5);
                             break;
                     }
-                }
         }
 
-        public void refreshMap(int i, int j, MapObject.Types type)
+        public void drawMap(int xFromLeft, int yFromTop, MapObject.Types type)
         {
-            double x = Convert.ToDouble(j);
-            double y = Convert.ToDouble(i);
             switch (type)
             {
-                case MapObject.Types.EMPTY: DrawMapPart(x, y, 0);
+                case MapObject.Types.EMPTY: DrawMapPart(yFromTop, xFromLeft, 0);
                     break;
-                case MapObject.Types.BRICK: DrawMapPart(x, y, 1);
+                case MapObject.Types.BRICK: DrawMapPart(yFromTop, xFromLeft, 1);
                     break;
-                case MapObject.Types.CONCRETE: DrawMapPart(x, y, 2);
+                case MapObject.Types.CONCRETE: DrawMapPart(yFromTop, xFromLeft, 2);
                     break;
-                case MapObject.Types.WATER: DrawMapPart(x, y, 3);
+                case MapObject.Types.WATER: DrawMapPart(yFromTop, xFromLeft, 3);
                     break;
-                case MapObject.Types.FOREST: DrawMapPart(x, y, 4);
+                case MapObject.Types.FOREST: DrawMapPart(yFromTop, xFromLeft, 4);
                     break;
-                case MapObject.Types.BASE: DrawMapPart(x, y, 5);
+                case MapObject.Types.BASE: DrawMapPart(yFromTop, xFromLeft, 5);
                     break;
             }
         }
 
-        private void DrawMapPart(double leftX, double leftY, int textureIndex)
+        private void DrawMapPart(int x, int y, int textureIndex)
         {
+            Vector2 v1 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight);
+            Vector2 v2 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
+                                   windowHeight / 2 - x * elementHeight);
+            Vector2 v3 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
+                           windowHeight / 2 - x * elementHeight - elementHeight);
+            Vector2 v4 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight - elementHeight);
+            //Clear zone
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.Color3(Color.Black);
+                GL.Vertex2(v1);
+                GL.Vertex2(v2);
+                GL.Vertex2(v3);
+                GL.Vertex2(v4);
+            }
+            GL.End();
+            //mapping texture
             textureList[textureIndex].Bind();
             GL.Begin(BeginMode.Quads);
-
-            GL.Color4(Color4.Transparent);
-            GL.TexCoord2(0, 0);
-            GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
-            GL.TexCoord2(1, 0);
-            GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight, 0);
-            GL.TexCoord2(1, 1);
-            GL.Vertex3(-windowWidth / 2 + leftX * elementWidth + elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
-            GL.TexCoord2(0, 1);
-            GL.Vertex3(-windowWidth / 2 + leftX * elementWidth, windowHeight / 2 - leftY * elementHeight - elementHeight, 0);
-
+            {
+                GL.Color4(Color4.Transparent);
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(v1);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(v2);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(v3);
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(v4);
+            }
             GL.End();
         }
 
