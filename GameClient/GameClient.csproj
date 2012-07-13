@@ -137,14 +137,17 @@
       <Install>true</Install>
     </BootstrapperPackage>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
-    <None Include="Textures\base.png" />
-    <Content Include="Textures\brick.png" />
-    <Content Include="Textures\concrete.png" />
-    <Content Include="Textures\empty.png" />
-    <Content Include="Textures\forest.png" />
-    <Content Include="Textures\water.png" />
+    <Folder Include="Textures\Bonuses\" />
+    <Folder Include="Textures\Tanks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\base.png" />
+    <None Include="Textures\MapElements\brick.png" />
+    <None Include="Textures\MapElements\concrete.png" />
+    <None Include="Textures\MapElements\empty.png" />
+    <None Include="Textures\MapElements\forest.png" />
+    <None Include="Textures\MapElements\water.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

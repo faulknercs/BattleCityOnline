@@ -35,36 +35,36 @@ namespace BattleCity.GameClient
                 for (int j = 0; j < map.GetInternalForm()[i].Length; j++)
                     switch (map.GetInternalForm()[i][j].Type)
                     {
-                        case MapObject.Types.EMPTY: DrawMapPart(j, i, 0);
+                        case MapObject.Types.EMPTY: DrawMapPart(i, j, 0);
                             break;
-                        case MapObject.Types.BRICK: DrawMapPart(j, i, 1);
+                        case MapObject.Types.BRICK: DrawMapPart(i, j, 1);
                             break;
-                        case MapObject.Types.CONCRETE: DrawMapPart(j, i, 2);
+                        case MapObject.Types.CONCRETE: DrawMapPart(i, j, 2);
                             break;
-                        case MapObject.Types.WATER: DrawMapPart(j, i, 3);
+                        case MapObject.Types.WATER: DrawMapPart(i, j, 3);
                             break;
-                        case MapObject.Types.FOREST: DrawMapPart(j, i, 4);
+                        case MapObject.Types.FOREST: DrawMapPart(i, j, 4);
                             break;
-                        case MapObject.Types.BASE: DrawMapPart(j, i, 5);
+                        case MapObject.Types.BASE: DrawMapPart(i, j, 5);
                             break;
                     }
         }
 
-        public void drawMap(int xFromLeft, int yFromTop, MapObject.Types type)
+        public void drawMap(int x, int y, MapObject.Types type)
         {
             switch (type)
             {
-                case MapObject.Types.EMPTY: DrawMapPart(yFromTop, xFromLeft, 0);
+                case MapObject.Types.EMPTY: DrawMapPart(x, y, 0);
                     break;
-                case MapObject.Types.BRICK: DrawMapPart(yFromTop, xFromLeft, 1);
+                case MapObject.Types.BRICK: DrawMapPart(x, y, 1);
                     break;
-                case MapObject.Types.CONCRETE: DrawMapPart(yFromTop, xFromLeft, 2);
+                case MapObject.Types.CONCRETE: DrawMapPart(x, y, 2);
                     break;
-                case MapObject.Types.WATER: DrawMapPart(yFromTop, xFromLeft, 3);
+                case MapObject.Types.WATER: DrawMapPart(x, y, 3);
                     break;
-                case MapObject.Types.FOREST: DrawMapPart(yFromTop, xFromLeft, 4);
+                case MapObject.Types.FOREST: DrawMapPart(x, y, 4);
                     break;
-                case MapObject.Types.BASE: DrawMapPart(yFromTop, xFromLeft, 5);
+                case MapObject.Types.BASE: DrawMapPart(x, y, 5);
                     break;
             }
         }
@@ -87,6 +87,7 @@ namespace BattleCity.GameClient
                 GL.Vertex2(v4);
             }
             GL.End();
+
             //mapping texture
             textureList[textureIndex].Bind();
             GL.Begin(BeginMode.Quads);
