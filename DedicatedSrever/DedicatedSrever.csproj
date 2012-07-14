@@ -47,6 +47,12 @@
     <Compile Include="Message.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GameLib\GameLib.csproj">
+      <Project>{A6AC5841-FAAB-44AA-A9A1-41FE323DB8BB}</Project>
+      <Name>GameLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
