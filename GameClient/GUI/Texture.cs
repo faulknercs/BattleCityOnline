@@ -40,6 +40,9 @@ namespace BattleCity.GameClient.GUI
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMagFilter, (int)TextureMagFilter.Linear);
         }
 
+        /// <summary>
+        /// Gets texture width.
+        /// </summary>
         public virtual int Width 
         { 
             get
@@ -48,6 +51,9 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        /// <summary>
+        /// Gets texture height
+        /// </summary>
         public virtual int Height 
         { 
             get 
@@ -56,6 +62,9 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        /// <summary>
+        /// Creates empty texture.
+        /// </summary>
         protected Texture()
         {
             glTextureHandle = GL.GenTexture();

@@ -63,11 +63,6 @@ namespace BattleCity.GameClient.GUI
         }
 
         /// <summary>
-        /// Gets or sets text color
-        /// </summary>
-        public Color4 TextColor { get; set; }
-
-        /// <summary>
         /// Returns text texture width
         /// </summary>
         public override int Width
@@ -111,12 +106,11 @@ namespace BattleCity.GameClient.GUI
                 textWidth = (int)Math.Ceiling(size.Width);
                 textHeight = (int)Math.Ceiling(size.Height);
             }
+            needToCalculateSize = false;
         }
 
         private void RenderTexture()
         {
-//             if (textHeight == 0 || textWidth == 0)
-//                 return;
             Bitmap bitmap = new Bitmap(Width, Height);
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             using (Graphics g = Graphics.FromImage(bitmap))

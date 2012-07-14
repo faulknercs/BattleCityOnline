@@ -141,7 +141,7 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
-        TextTexture t;
+        Texture t;
         private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";
