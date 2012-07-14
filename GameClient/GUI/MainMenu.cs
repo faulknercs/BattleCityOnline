@@ -16,19 +16,21 @@ namespace BattleCity.GameClient.GUI
     {
         public MainMenu(float windowWidth, float windowHeight)
         {
+            this.windowHeight = windowHeight;
+            this.windowWidth = windowWidth;
             Init();
         }
 
         public void Render()
         {
-
+            DrawBackGround();
         }
 
         private void Init()
         {
             //load background
             //...
-
+            
             textFont = new Font(FontFamily.GenericMonospace, 12, GraphicsUnit.Pixel); //Incapsulate it in factory in the future
             textColor = Color4.White;
 
@@ -38,7 +40,33 @@ namespace BattleCity.GameClient.GUI
             exitLabel = new GuiText(textFont, textColor, Properties.StringItems.strExit);
         }
 
-        private Texture backGround;
+        private void DrawBackGround()
+        {
+            backGroundTexture.Bind();
+            GL.Color4(Color4.White);
+            float x = windowWidth / 2;
+            float y = windowWidth / 2;
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(-x, y);
+
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(x, y);
+
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(x, -y);
+
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(-x, -y);
+            }
+            GL.End();
+        }
+
+        private float windowHeight;
+        private float windowWidth;
+
+        private Texture backGroundTexture;
 
         private Font textFont;
         private Color4 textColor;

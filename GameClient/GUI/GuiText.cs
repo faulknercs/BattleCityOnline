@@ -115,22 +115,22 @@ namespace BattleCity.GameClient.GUI
 
             textTexture.Bind();
             GL.Color4(TextColor);
-            
+
             //render code
             GL.Begin(BeginMode.Quads);
-            
-            GL.TexCoord2(0, 0);
-            GL.Vertex2(0, Height);
+            {
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(0, Height);
 
-            GL.TexCoord2(1, 0);
-            GL.Vertex2(Width, Height);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(Width, Height);
 
-            GL.TexCoord2(1, 1);
-            GL.Vertex2(Width, 0);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(Width, 0);
 
-            GL.TexCoord2(0, 1);
-            GL.Vertex2(0, 0);
-
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(0, 0);
+            }
             GL.End();
         }
 
