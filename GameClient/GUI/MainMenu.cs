@@ -36,10 +36,10 @@ namespace BattleCity.GameClient.GUI
             textFont = new Font(FontFamily.GenericMonospace, 12, GraphicsUnit.Pixel); //Incapsulate it in factory in the future
             textColor = Color4.White;
 
-            singlePlayerLabel = new GuiText(textFont, textColor, Properties.StringItems.strSinglePlayer);
-            networkGameLabel = new GuiText(textFont, textColor, Properties.StringItems.strMultiPlayer);
-            optionsLabel = new GuiText(textFont, textColor, Properties.StringItems.strOptions);
-            exitLabel = new GuiText(textFont, textColor, Properties.StringItems.strExit);
+            singlePlayerLabel = new TextTexture(textFont, Properties.StringItems.strSinglePlayer);
+            networkGameLabel = new TextTexture(textFont, Properties.StringItems.strMultiPlayer);
+            optionsLabel = new TextTexture(textFont, Properties.StringItems.strOptions);
+            exitLabel = new TextTexture(textFont, Properties.StringItems.strExit);
         }
 
         private void DrawBackGround()
@@ -57,9 +57,9 @@ namespace BattleCity.GameClient.GUI
         private Font textFont;
         private Color4 textColor;
 
-        private GuiText singlePlayerLabel;
-        private GuiText networkGameLabel;
-        private GuiText optionsLabel;
-        private GuiText exitLabel;
+        private TextTexture singlePlayerLabel;
+        private TextTexture networkGameLabel;
+        private TextTexture optionsLabel;
+        private TextTexture exitLabel;
     }
 }

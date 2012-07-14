@@ -21,7 +21,7 @@ namespace BattleCity.GameClient
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-
+            t = new TextTexture(new Font(FontFamily.GenericMonospace, 12, GraphicsUnit.Pixel), "Text Example");
             textureList = new[]
                               {
                                   new Texture(new Bitmap(Properties.Resources.empty)),
@@ -114,6 +114,20 @@ namespace BattleCity.GameClient
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
+            GL.Color4(Color4.White);
+            t.Bind();
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(0, t.Height);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(t.Width, t.Height);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(t.Width, 0);
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(0, 0);
+            }
+            GL.End();
             if (needDrawMap)
             {
                 gameRenderer.drawMap(map);
@@ -127,7 +141,7 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
-
+        TextTexture t;
         private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";

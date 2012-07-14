@@ -70,7 +70,7 @@
     <Compile Include="GameRenderer.cs" />
     <Compile Include="GUI\AbstractMenu.cs" />
     <Compile Include="GUI\GL2_Renderer.cs" />
-    <Compile Include="GUI\GuiText.cs" />
+    <Compile Include="GUI\TextTexture.cs" />
     <Compile Include="GUI\IRendererImpl.cs" />
     <Compile Include="GUI\Texture.cs" />
     <Compile Include="KeySettings.cs" />

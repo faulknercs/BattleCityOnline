@@ -9,22 +9,15 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Supports text rendering using OpenTK
     /// </summary>
-    /// TODO: make throug inheritance from Texture, it will be better :)
-    internal class GuiText
+    internal class TextTexture : Texture
     {
-        public GuiText(Font font)
+        public TextTexture(Font font)
         {
             this.TextFont = font;
         }
 
-        public GuiText(Font font, Color4 color)
+        public TextTexture(Font font, String text)
             : this(font)
-        {
-            this.TextColor = color;
-        }
-
-        public GuiText(Font font, Color4 color, String text)
-            : this(font, color)
         {
             this.Text = text;
         }
@@ -77,7 +70,7 @@ namespace BattleCity.GameClient.GUI
         /// <summary>
         /// Returns text texture width
         /// </summary>
-        public int Width
+        public override int Width
         {
             get
             {
@@ -90,7 +83,7 @@ namespace BattleCity.GameClient.GUI
         /// <summary>
         /// Returns text texture height
         /// </summary>
-        public int Height
+        public override int Height
         {
             get
             {
@@ -101,39 +94,13 @@ namespace BattleCity.GameClient.GUI
         }
 
         /// <summary>
-        /// Render text
+        /// Overriden. Binds text texture to a Texture2D target (GL_TEXTURE_2D in OpenGL).
         /// </summary>
-        public void Render()
+        public override void Bind()
         {
-            if (Text == null || Text == "")
-                return;
-
+            base.Bind();
             if (needToRenderTexture)
-            {
                 RenderTexture();
-                needToRenderTexture = false;
-            }
-
-            textTexture.Bind();
-            GL.Color4(TextColor);
-
-            //render code
-            // TODO: remake with IRendererImpl
-            GL.Begin(BeginMode.Quads);
-            {
-                GL.TexCoord2(0, 0);
-                GL.Vertex2(0, Height);
-
-                GL.TexCoord2(1, 0);
-                GL.Vertex2(Width, Height);
-
-                GL.TexCoord2(1, 1);
-                GL.Vertex2(Width, 0);
-
-                GL.TexCoord2(0, 1);
-                GL.Vertex2(0, 0);
-            }
-            GL.End();
         }
 
         private void CalculateSize()
@@ -148,21 +115,23 @@ namespace BattleCity.GameClient.GUI
 
         private void RenderTexture()
         {
+//             if (textHeight == 0 || textWidth == 0)
+//                 return;
             Bitmap bitmap = new Bitmap(Width, Height);
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             using (Graphics g = Graphics.FromImage(bitmap))
             {
                 g.Clear(Color.Transparent);
                 g.TextRenderingHint = TextRenderingHint.AntiAliasGridFit;
-                g.DrawString(Text, textFont, Brushes.White, rect);
-
-                textTexture = new Texture(bitmap);
+                g.DrawString(Text, TextFont, Brushes.White, rect);
             }
+            GetDataFromBitmap(bitmap);
+            needToRenderTexture = false;
         }
 
         private Font textFont;
         private String textValue;
-        private Texture textTexture;
+
         private int textWidth;
         private int textHeight;
         private bool needToRenderTexture = true;
