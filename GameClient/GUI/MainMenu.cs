@@ -31,7 +31,7 @@ namespace BattleCity.GameClient.GUI
         private void Init()
         {
             //load background
-            //...
+            //backGroundTexture = new Texture(new Bitmap(Properties.Resources.main_background));
             
             textFont = new Font(FontFamily.GenericMonospace, 12, GraphicsUnit.Pixel); //Incapsulate it in factory in the future
             textColor = Color4.White;

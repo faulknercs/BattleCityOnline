@@ -52,5 +52,22 @@ namespace BattleCity.GameClient.GUI
             }
             GL.End();
         }
+
+        public void Render(Texture texture, float x1, float y1, float x2, float y2)
+        {
+            texture.Bind();
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(x1, y2);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(x2, y2);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(x2, y1);
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(x1, y1);
+            }
+            GL.End();
+        }
     }
 }

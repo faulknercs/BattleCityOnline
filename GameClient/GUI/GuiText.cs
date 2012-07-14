@@ -9,6 +9,7 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Supports text rendering using OpenTK
     /// </summary>
+    /// TODO: make throug inheritance from Texture, it will be better :)
     internal class GuiText
     {
         public GuiText(Font font)

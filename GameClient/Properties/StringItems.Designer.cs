@@ -61,6 +61,15 @@ namespace BattleCity.GameClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Credits.
+        /// </summary>
+        internal static string strAuthors {
+            get {
+                return ResourceManager.GetString("strAuthors", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Connect to Server.
         /// </summary>
         internal static string strConnect {

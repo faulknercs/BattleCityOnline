@@ -29,7 +29,7 @@ namespace BattleCity.GameClient.GUI
         public float Width
         {
             get
-            {renderer.Render()
+            {
                 return menuWidth;
             }
         }
