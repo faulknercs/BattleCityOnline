@@ -15,7 +15,7 @@ namespace BattleCity.GameClient
     internal class Game : GameWindow
     {
         public Game(int width, int height)
-            : base(width, height, GraphicsMode.Default, windowName)
+            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 3, 1, GraphicsContextFlags.Default)
         {
             Keyboard.KeyRepeat = false;
             GL.Enable(EnableCap.Texture2D);
@@ -67,7 +67,7 @@ namespace BattleCity.GameClient
             GL.LoadMatrix(ref ortho);
             
             GL.MatrixMode(MatrixMode.Modelview);
-
+            
             base.OnResize(e);
         }
 

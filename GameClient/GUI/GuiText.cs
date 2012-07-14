@@ -117,6 +117,7 @@ namespace BattleCity.GameClient.GUI
             GL.Color4(TextColor);
 
             //render code
+            // TODO: remake with IRendererImpl
             GL.Begin(BeginMode.Quads);
             {
                 GL.TexCoord2(0, 0);
