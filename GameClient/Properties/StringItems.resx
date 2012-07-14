@@ -123,6 +123,9 @@
   <data name="strCreateServer" xml:space="preserve">
     <value>Create Server</value>
   </data>
+  <data name="strExit" xml:space="preserve">
+    <value>Exit Game</value>
+  </data>
   <data name="strMultiPlayer" xml:space="preserve">
     <value>Network Game</value>
   </data>

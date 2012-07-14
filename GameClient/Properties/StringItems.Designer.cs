@@ -79,6 +79,15 @@ namespace BattleCity.GameClient.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Exit Game.
+        /// </summary>
+        internal static string strExit {
+            get {
+                return ResourceManager.GetString("strExit", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Network Game.
         /// </summary>
         internal static string strMultiPlayer {

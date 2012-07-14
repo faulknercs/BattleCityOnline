@@ -11,7 +11,7 @@ namespace BattleCity.GameClient
     /// Class, which is responsible for displaying the gameplay
     /// </summary>
     internal class GameRenderer
-    {
+    {//think, we can load textures in Renderer instead of passing them as parameter
         public GameRenderer(float windowWidth, float windowHeight, Texture[] textureList)
         {
             this.windowWidth = windowWidth;
