@@ -11,7 +11,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace MapEditor
+namespace BattleCity.MapEditor
 {
     public partial class MainWindow : Form
     {
@@ -32,9 +32,15 @@ namespace MapEditor
         {
             if (!isLoaded)
                 return;
-
+            
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
             glControl.SwapBuffers();
+        }
+
+        private void aboutMenuItem_Click(object sender, EventArgs e)
+        {
+            Form aboutForm = new AboutWindow();
+            aboutForm.ShowDialog();
         }
     }
 }
