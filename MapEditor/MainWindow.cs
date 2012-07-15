@@ -7,6 +7,10 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
+
 namespace MapEditor
 {
     public partial class MainWindow : Form
@@ -14,6 +18,23 @@ namespace MapEditor
         public MainWindow()
         {
             InitializeComponent();
+        }
+
+        private void MainWindow_Load(object sender, EventArgs e)
+        {
+            isLoaded = true;
+        }
+
+        //Needs for glControl correct work
+        private bool isLoaded = false;
+
+        private void glControl_Paint(object sender, PaintEventArgs e)
+        {
+            if (!isLoaded)
+                return;
+
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            glControl.SwapBuffers();
         }
     }
 }
