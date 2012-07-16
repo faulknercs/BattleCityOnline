@@ -60,14 +60,17 @@ namespace BattleCity.GameClient
         /// <param name="e">Not used.</param>
         protected override void OnResize(EventArgs e)
         {
+            // TODO: replace this code with using IRendererImpl
             GL.Viewport(0, 0, (int)windowWidth, (int)windowHeight);
 
             GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+
             Matrix4 ortho = Matrix4.CreateOrthographicOffCenter(-windowWidth / 2, windowWidth / 2, -windowHeight / 2, windowHeight / 2, 1, -1);
             GL.LoadMatrix(ref ortho);
-            
+
             GL.MatrixMode(MatrixMode.Modelview);
-            
+
             base.OnResize(e);
         }
 

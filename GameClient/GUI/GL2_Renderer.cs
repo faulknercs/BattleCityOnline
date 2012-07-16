@@ -8,7 +8,7 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Rendering subsystem for OpenGL 2.0 version
     /// </summary>
-    class GL2_Renderer : IRendererImpl
+    internal class GL2_Renderer : IRendererImpl
     {
         public void Render(Texture texture, float x, float y)
         {
@@ -32,7 +32,7 @@ namespace BattleCity.GameClient.GUI
         {
             if (coords.Length < 8)
                 throw new ArgumentOutOfRangeException("coord", "Incorrect coordinate massive");
-
+            // TODO: thinks, it's not effective, should remake it in the future
             texture.Bind();
             Vector2 v1 = new Vector2(coords[0], coords[1]);
             Vector2 v2 = new Vector2(coords[2], coords[3]);
@@ -68,6 +68,22 @@ namespace BattleCity.GameClient.GUI
                 GL.Vertex2(x1, y1);
             }
             GL.End();
+        }
+
+        public void SetColor(OpenTK.Graphics.Color4 color)
+        {
+            GL.Color4(color);
+        }
+
+        public void Resize(int width, int height)
+        {
+            GL.Viewport(0, 0, width, height);
+            //set new projection whith bottom left corner coordinates (-w,-h), (0, 0) - is center
+            GL.MatrixMode(MatrixMode.Projection);
+            GL.LoadIdentity();
+            GL.Ortho(-width / 2, width / 2, -height / 2, height / 2, -1, 1);
+
+            GL.MatrixMode(MatrixMode.Modelview);
         }
     }
 }

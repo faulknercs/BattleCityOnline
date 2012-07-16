@@ -8,7 +8,7 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Incapsulates opengl 2D textures
     /// </summary>
-    internal class Texture
+    public class Texture
     {
         public Texture(Bitmap bitmap)
         {

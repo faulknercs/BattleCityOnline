@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+
+using OpenTK.Graphics;
 
 namespace BattleCity.GameClient.GUI
 {
@@ -9,7 +8,7 @@ namespace BattleCity.GameClient.GUI
     /// Interface of rendering subsystem. 
     /// Allows to use different OpenGL versions (and different renderer versions).
     /// </summary>
-    internal interface IRendererImpl
+    public interface IRendererImpl
     {
         /// <summary>
         /// Render 2D texture with lower left corner coordinates at (x, y). 
@@ -36,5 +35,18 @@ namespace BattleCity.GameClient.GUI
         /// <param name="x2">X-Coordinate of upper right corner</param>
         /// <param name="y2">Y-Coordinate of upper right corner</param>
         void Render(Texture texture, float x1, float y1, float x2, float y2);
+
+        /// <summary>
+        /// Sets current color
+        /// </summary>
+        /// <param name="color">color, which will be used</param>
+        void SetColor(Color4 color);
+
+        /// <summary>
+        /// Resizes viewport.
+        /// </summary>
+        /// <param name="width">New width</param>
+        /// <param name="height">New height</param>
+        void Resize(int width, int height);
     }
 }

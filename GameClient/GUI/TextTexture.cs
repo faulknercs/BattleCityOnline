@@ -9,7 +9,7 @@ namespace BattleCity.GameClient.GUI
     /// <summary>
     /// Supports text rendering using OpenTK
     /// </summary>
-    internal class TextTexture : Texture
+    public class TextTexture : Texture
     {
         public TextTexture(Font font)
         {
