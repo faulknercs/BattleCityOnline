@@ -60,6 +60,7 @@
     </Compile>
     <Compile Include="Command.cs" />
     <Compile Include="CommandStack.cs" />
+    <Compile Include="EditorMode.cs" />
     <Compile Include="MainWindow.cs">
       <SubType>Form</SubType>
     </Compile>

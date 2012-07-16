@@ -47,7 +47,10 @@
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonsPanel = new System.Windows.Forms.Panel();
             this.glControl = new OpenTK.GLControl();
+            this.buttonBrick = new System.Windows.Forms.Button();
+            this.buttonConcrete = new System.Windows.Forms.Button();
             this.menuStrip.SuspendLayout();
+            this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip
@@ -125,24 +128,24 @@
             // undoToolStripMenuItem
             // 
             this.undoToolStripMenuItem.Name = "undoToolStripMenuItem";
-            this.undoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.undoToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.undoToolStripMenuItem.Text = "Undo";
             // 
             // redoToolStripMenuItem
             // 
             this.redoToolStripMenuItem.Name = "redoToolStripMenuItem";
-            this.redoToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.redoToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.redoToolStripMenuItem.Text = "Redo";
             // 
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(100, 6);
             // 
             // clearToolStripMenuItem
             // 
             this.clearToolStripMenuItem.Name = "clearToolStripMenuItem";
-            this.clearToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearToolStripMenuItem.Size = new System.Drawing.Size(103, 22);
             this.clearToolStripMenuItem.Text = "Clear";
             // 
             // viewToolStripMenuItem
@@ -157,7 +160,7 @@
             // 
             this.gridToolStripMenuItem.CheckOnClick = true;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             // 
             // helpToolStripMenuItem
@@ -171,12 +174,14 @@
             // aboutToolStripMenuItem
             // 
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
-            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(107, 22);
             this.aboutToolStripMenuItem.Text = "About";
             this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutMenuItem_Click);
             // 
             // buttonsPanel
             // 
+            this.buttonsPanel.Controls.Add(this.buttonConcrete);
+            this.buttonsPanel.Controls.Add(this.buttonBrick);
             this.buttonsPanel.Dock = System.Windows.Forms.DockStyle.Left;
             this.buttonsPanel.Location = new System.Drawing.Point(0, 24);
             this.buttonsPanel.Name = "buttonsPanel";
@@ -194,6 +199,26 @@
             this.glControl.VSync = false;
             this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl_Paint);
             // 
+            // buttonBrick
+            // 
+            this.buttonBrick.Location = new System.Drawing.Point(3, 3);
+            this.buttonBrick.Name = "buttonBrick";
+            this.buttonBrick.Size = new System.Drawing.Size(48, 47);
+            this.buttonBrick.TabIndex = 0;
+            this.buttonBrick.Text = "BRICKIMAGE";
+            this.buttonBrick.UseVisualStyleBackColor = true;
+            this.buttonBrick.Click += new System.EventHandler(this.InstrimentButton_Click);
+            // 
+            // buttonConcrete
+            // 
+            this.buttonConcrete.Location = new System.Drawing.Point(52, 4);
+            this.buttonConcrete.Name = "buttonConcrete";
+            this.buttonConcrete.Size = new System.Drawing.Size(48, 46);
+            this.buttonConcrete.TabIndex = 1;
+            this.buttonConcrete.Text = "CONCRETE";
+            this.buttonConcrete.UseVisualStyleBackColor = true;
+            this.buttonConcrete.Click += new System.EventHandler(this.InstrimentButton_Click);
+            // 
             // MainWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,6 +234,7 @@
             this.Load += new System.EventHandler(this.MainWindow_Load);
             this.menuStrip.ResumeLayout(false);
             this.menuStrip.PerformLayout();
+            this.buttonsPanel.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,6 +261,8 @@
         private System.Windows.Forms.ToolStripMenuItem clearToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private OpenTK.GLControl glControl;
+        private System.Windows.Forms.Button buttonConcrete;
+        private System.Windows.Forms.Button buttonBrick;
     }
 }
 

@@ -13,6 +13,9 @@ using OpenTK.Graphics.OpenGL;
 
 namespace BattleCity.MapEditor
 {
+    /// <summary>
+    /// Main window of map editor
+    /// </summary>
     public partial class MainWindow : Form
     {
         public MainWindow()
@@ -27,6 +30,7 @@ namespace BattleCity.MapEditor
 
         //Needs for glControl correct work
         private bool isLoaded = false;
+        private EditorMode editorMode;
 
         private void glControl_Paint(object sender, PaintEventArgs e)
         {
@@ -41,6 +45,16 @@ namespace BattleCity.MapEditor
         {
             Form aboutForm = new AboutWindow();
             aboutForm.ShowDialog();
+        }
+
+        /// <summary>
+        /// Instruments buttons click event handler. Sets current command according to the button.
+        /// </summary>
+        /// <param name="sender">Button, which was clicked</param>
+        /// <param name="e">Event arguments</param>
+        private void InstrimentButton_Click(object sender, EventArgs e)
+        {
+            //if brick button editorMode = ..., etc.
         }
     }
 }

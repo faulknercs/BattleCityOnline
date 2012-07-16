@@ -5,9 +5,18 @@ using System.Text;
 
 namespace BattleCity.MapEditor
 {
-    abstract class Command
+    /// <summary>
+    /// Interface of editor's commands (Add block, remove, etc.)
+    /// </summary>
+    interface Command
     {
-        public abstract void Undo();
-        public abstract void Redo();
+        /// <summary>
+        /// Reverts a changes.
+        /// </summary>
+        void Undo();
+        /// <summary>
+        /// Applies a changes.
+        /// </summary>
+        void Redo();
     }
 }
