@@ -60,16 +60,7 @@ namespace BattleCity.GameClient
         /// <param name="e">Not used.</param>
         protected override void OnResize(EventArgs e)
         {
-            // TODO: replace this code with using IRendererImpl
-            GL.Viewport(0, 0, (int)windowWidth, (int)windowHeight);
-
-            GL.MatrixMode(MatrixMode.Projection);
-            GL.LoadIdentity();
-
-            Matrix4 ortho = Matrix4.CreateOrthographicOffCenter(-windowWidth / 2, windowWidth / 2, -windowHeight / 2, windowHeight / 2, 1, -1);
-            GL.LoadMatrix(ref ortho);
-
-            GL.MatrixMode(MatrixMode.Modelview);
+            renderer.Resize((int)windowWidth, (int)windowHeight);
 
             base.OnResize(e);
         }
@@ -117,20 +108,9 @@ namespace BattleCity.GameClient
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            GL.Color4(Color4.White);
-            t.Bind();
-            GL.Begin(BeginMode.Quads);
-            {
-                GL.TexCoord2(0, 0);
-                GL.Vertex2(0, t.Height);
-                GL.TexCoord2(1, 0);
-                GL.Vertex2(t.Width, t.Height);
-                GL.TexCoord2(1, 1);
-                GL.Vertex2(t.Width, 0);
-                GL.TexCoord2(0, 1);
-                GL.Vertex2(0, 0);
-            }
-            GL.End();
+            renderer.SetColor(Color.White);
+            renderer.Render(t, 0, 0);
+
             if (needDrawMap)
             {
                 gameRenderer.drawMap(map);
@@ -145,6 +125,7 @@ namespace BattleCity.GameClient
             SwapBuffers();
         }
         Texture t;
+        private IRendererImpl renderer = RendererFactory.Instance.CreateRenderer();
         private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";

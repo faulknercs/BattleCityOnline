@@ -15,7 +15,7 @@ namespace BattleCity.GameClient.GUI
         {
             this.menuWidth = menuWidth;
             this.menuHeight = menuHeight;
-            renderer = new GL2_Renderer(); // TODO: make it through AbstractFactory pattern
+            renderer = RendererFactory.Instance.CreateRenderer();
         }
 
         /// <summary>
