@@ -31,13 +31,13 @@ namespace BattleCity.GameClient
                                   new Texture(new Bitmap(Properties.Resources.forest)),
                                   new Texture(new Bitmap(Properties.Resources._base))
                               };
-            
+
             WindowBorder = WindowBorder.Fixed;
             windowWidth = width;
             windowHeight = height;
             gameRenderer = new GameRenderer(windowWidth, windowHeight, textureList);
         }
-        
+
         private GameRenderer gameRenderer;
         private Texture[] textureList;
         private float windowWidth;
@@ -65,9 +65,9 @@ namespace BattleCity.GameClient
             GL.MatrixMode(MatrixMode.Projection);
             Matrix4 ortho = Matrix4.CreateOrthographicOffCenter(-windowWidth / 2, windowWidth / 2, -windowHeight / 2, windowHeight / 2, 1, -1);
             GL.LoadMatrix(ref ortho);
-            
+
             GL.MatrixMode(MatrixMode.Modelview);
-            
+
             base.OnResize(e);
         }
 
@@ -141,6 +141,7 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
+
         Texture t;
         private Map map;
         private Player player = new LocalPlayer();

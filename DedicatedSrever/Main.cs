@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 using BattleCity.GameLib;
 
 namespace BattleCity.DedicatedSrever
@@ -7,26 +8,31 @@ namespace BattleCity.DedicatedSrever
     {
         private static void Main()
         {
-            Console.Write(Message.welcome());
-            Console.Write(Message.help());
-            getCmd();
+            mode = new GameMode(GameMode.Mode.CLASSIC);
+            map = new Map(MapGenerator.generateCLASSIC_Map());
+            cmdThread.Start();
         }
 
+        private static Thread cmdThread = new Thread(o => getCmd());
+        private static Thread gameThread = new Thread(o => getStarted(mode, map));
         public static string localName = "";
-        public static GameMode mode = new GameMode(GameMode.Mode.CLASSIC);
-        public static Map map = new Map(MapGenerator.generateCLASSIC_Map());
+        public static GameMode mode;
+        public static Map map;
+        public static bool start;
+
+        #region cmdThreading
 
         public static void getCmd()
         {
+            Console.Write(Message.welcome());
+            Console.Write(Message.help());
             while (true)
             {
                 Console.Write("> ");
                 string answer = cmdParser(Console.ReadLine());
                 if (answer != null)
-                {
                     if (answer.Equals("quit"))
                         break;
-                }
             }
         }
 
@@ -35,17 +41,23 @@ namespace BattleCity.DedicatedSrever
             string[] cmdParams = cmd.Split(' ');
             switch (cmdParams[0].Replace(" ", "").ToLower())
             {
-                case "":
-                    Console.Write(Message.help());
-                    break;
-                case "start":
-                    Console.Write(Message.error("Cmd is not available now"));
-                    break;
                 case "help":
                     Console.Write(Message.helpList());
                     break;
                 case "hello":
                     Console.Write(Message.hello(localName));
+                    break;
+                case "start":
+                    if (!start)
+                    {
+                        start = true;
+                    }
+                    break;
+                case "stop":
+                    if (start)
+                    {
+                        start = false;
+                    }
                     break;
                 case "set":
                     if (cmdParams.Length > 1 && (cmdParams[1] = cmdParams[1].Replace(" ", "")).Length > 0)
@@ -120,5 +132,15 @@ namespace BattleCity.DedicatedSrever
             }
             return null;
         }
+
+        #endregion cmdThreading
+
+        #region gameThreding
+
+        private static void getStarted(GameMode mode, Map map)
+        {
+        }
+
+        #endregion gameThreding
     }
 }
