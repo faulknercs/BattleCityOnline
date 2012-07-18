@@ -59,9 +59,11 @@ namespace BattleCity.DedicatedSrever
         private static string[,] commandList = new[,]
                                              {
                                                  {"help", "show list of possible cmd's"},
+                                                 {"hello", "great the server"},
                                                  {"quit", "close console window"},
+                                                 {"start", "start game with current mode and map"},
+                                                 {"stop", "stop game"},
                                                  {"set name <name>","set your name (try to choose unique name)"},
-                                                 {"set start", "start game when mode and map are chosen"},
                                                  {"set mode 'classic'|'tdmb'|'tdm'|'dm'","setting new game mode"},
                                                  {"set map","chaging map according to current mode"},
                                                  {"get name","get your name"},

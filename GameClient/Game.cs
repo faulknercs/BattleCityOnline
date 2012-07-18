@@ -31,13 +31,13 @@ namespace BattleCity.GameClient
                                   new Texture(new Bitmap(Properties.Resources.forest)),
                                   new Texture(new Bitmap(Properties.Resources._base))
                               };
-            
+
             WindowBorder = WindowBorder.Fixed;
             windowWidth = width;
             windowHeight = height;
             gameRenderer = new GameRenderer(windowWidth, windowHeight, textureList);
         }
-        
+
         private GameRenderer gameRenderer;
         private Texture[] textureList;
         private float windowWidth;
@@ -61,7 +61,6 @@ namespace BattleCity.GameClient
         protected override void OnResize(EventArgs e)
         {
             renderer.Resize((int)windowWidth, (int)windowHeight);
-
             base.OnResize(e);
         }
 
@@ -124,6 +123,7 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
+
         Texture t;
         private IRendererImpl renderer = RendererFactory.Instance.CreateRenderer();
         private Map map;
