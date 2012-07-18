@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using OpenTK.Graphics.OpenGL;
 
 namespace BattleCity.GameClient.GUI
 {
@@ -34,8 +35,11 @@ namespace BattleCity.GameClient.GUI
 
         private RendererFactory()
         {
-            // TODO: make version chooser
-            rendererImpl = new GL2_Renderer();
+            Version glVersion = new Version(GL.GetString(StringName.Version).Substring(0, 3));
+            //if (glVersion.Major == 2)
+                rendererImpl = new GL2_Renderer();
+            //else
+                
         }
 
         private IRendererImpl rendererImpl = null;

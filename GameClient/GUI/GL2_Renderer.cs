@@ -79,11 +79,15 @@ namespace BattleCity.GameClient.GUI
         {
             GL.Viewport(0, 0, width, height);
             //set new projection whith bottom left corner coordinates (-w,-h), (0, 0) - is center
+
             GL.MatrixMode(MatrixMode.Projection);
             GL.LoadIdentity();
-            GL.Ortho(-width / 1, width / 2, -height / 2, height / 2, -1, 1);
+            GL.Ortho(-width / 2, width / 2, -height / 2, height / 2, -1, 1);
 
             GL.MatrixMode(MatrixMode.Modelview);
         }
+
+        private float projectionWidth;
+        private float projectionHeight;
     }
 }
