@@ -26,6 +26,10 @@ namespace BattleCity.GameClient.GUI
         public override void Render()
         {
             DrawBackGround();
+            renderer.SetColor(textColor);
+            //calculate text position
+
+            //renderer.Render(singlePlayerLabel, );
         }
 
         private void Init()
