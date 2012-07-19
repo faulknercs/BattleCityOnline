@@ -17,11 +17,12 @@ namespace BattleCity.GameClient
         public Game(int width, int height)
             : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 3, 1, GraphicsContextFlags.Default)
         {
+            renderer = RendererFactory.Instance.CreateRenderer();
             Keyboard.KeyRepeat = false;
             GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend);
+            GL.Enable(EnableCap.Blend); 
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-            t = new TextTexture(new Font(FontFamily.GenericMonospace, 12, GraphicsUnit.Pixel), "Text Example");
+            m = new MainMenu(windowWidth, windowHeight);           
             textureList = new[]
                               {
                                   new Texture(new Bitmap(Properties.Resources.empty)),
@@ -60,7 +61,7 @@ namespace BattleCity.GameClient
         /// <param name="e">Not used.</param>
         protected override void OnResize(EventArgs e)
         {
-            renderer.Resize((int)windowWidth, (int)windowHeight);
+            renderer.Resize((int)ClientRectangle.Width, (int)ClientRectangle.Height);
             base.OnResize(e);
         }
 
@@ -108,8 +109,7 @@ namespace BattleCity.GameClient
         protected override void OnRenderFrame(FrameEventArgs e)
         {
             renderer.SetColor(Color.White);
-            renderer.Render(t, 0, 0);
-
+            m.Render();
             if (needDrawMap)
             {
                 gameRenderer.drawMap(map);
@@ -123,9 +123,8 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
-
-        Texture t;
-        private IRendererImpl renderer = RendererFactory.Instance.CreateRenderer();
+        MainMenu m;
+        private IRendererImpl renderer;
         private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";

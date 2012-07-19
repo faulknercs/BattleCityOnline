@@ -10,7 +10,7 @@ using System.Resources;
 [assembly: AssemblyDescription("Online version of the Great game.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("BattleCity Returns")]
+[assembly: AssemblyProduct("BattleCity Online")]
 [assembly: AssemblyCopyright("Copyright ©  2012 BattleCity Online team")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

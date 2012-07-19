@@ -47,6 +47,6 @@ namespace BattleCity.GameClient.GUI
         /// </summary>
         /// <param name="width">New width</param>
         /// <param name="height">New height</param>
-        void Resize(int width, int height);
+        void Resize(float width, float height);
     }
 }

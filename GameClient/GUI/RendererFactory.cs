@@ -35,6 +35,7 @@ namespace BattleCity.GameClient.GUI
 
         private RendererFactory()
         {
+            // TODO: Add version choosing
             Version glVersion = new Version(GL.GetString(StringName.Version).Substring(0, 3));
             //if (glVersion.Major == 2)
                 rendererImpl = new GL2_Renderer();

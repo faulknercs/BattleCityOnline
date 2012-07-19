@@ -75,9 +75,9 @@ namespace BattleCity.GameClient.GUI
             GL.Color4(color);
         }
 
-        public void Resize(int width, int height)
+        public void Resize(float width, float height)
         {
-            GL.Viewport(0, 0, width, height);
+            GL.Viewport(0, 0, (int)width, (int)height);
             //set new projection whith bottom left corner coordinates (-w,-h), (0, 0) - is center
 
             GL.MatrixMode(MatrixMode.Projection);
