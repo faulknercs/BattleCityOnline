@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 
 using OpenTK.Graphics.OpenGL;
@@ -6,16 +7,15 @@ using OpenTK.Graphics.OpenGL;
 namespace BattleCity.GameClient.GUI
 {
     /// <summary>
-    /// Incapsulates opengl 2D textures
+    /// Incapsulates OpenGL 2D textures
     /// </summary>
     public class Texture
     {
         public Texture(Bitmap bitmap)
+            : this()
         {
             width = bitmap.Width;
             height = bitmap.Height;
-
-            glTextureHandle = GL.GenTexture();
             Bind();
 
             GetDataFromBitmap(bitmap);
@@ -31,9 +31,21 @@ namespace BattleCity.GameClient.GUI
 
         protected void GetDataFromBitmap(Bitmap bitmap)
         {
+            if(isNPOTsupported)
+            {
+                potWidth = Width;
+                potHeight = Height;
+            }
+            else
+            {
+                potWidth = (int)Math.Pow(2, Math.Ceiling(Math.Log(Width, 2)));
+                potHeight = (int)Math.Pow(2, Math.Ceiling(Math.Log(Height, 2)));
+            }
             Rectangle rect = new Rectangle(0, 0, bitmap.Width, bitmap.Height);
             BitmapData bitmapData = bitmap.LockBits(rect, ImageLockMode.ReadOnly, System.Drawing.Imaging.PixelFormat.Format32bppArgb);
-            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, bitmapData.Width, bitmapData.Height, 0,
+            GL.TexImage2D(TextureTarget.Texture2D, 0, PixelInternalFormat.Rgba, potWidth, potHeight, 0,
+                OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, IntPtr.Zero);
+            GL.TexSubImage2D(TextureTarget.Texture2D, 0, 0, 0, bitmapData.Width, bitmapData.Height,
                 OpenTK.Graphics.OpenGL.PixelFormat.Bgra, PixelType.UnsignedByte, bitmapData.Scan0);
             bitmap.UnlockBits(bitmapData);
             GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMinFilter, (int)TextureMinFilter.Linear);
@@ -68,7 +80,53 @@ namespace BattleCity.GameClient.GUI
         protected Texture()
         {
             glTextureHandle = GL.GenTexture();
+            CheckNPOT_Support();
         }
+
+        #region NPOT support
+
+        /// <summary>
+        /// Gets texture coordinates of right corner (usualy 1)
+        /// </summary>
+        public float TextureXCoord
+        {
+            get
+            {
+                return isNPOTsupported ? 1 : (float)Width / potWidth;
+            }
+        }
+
+        /// <summary>
+        /// Gets texture coordinates of top corner (usualy 1)
+        /// </summary>
+        public float TextureYCoord
+        {
+            get
+            {
+                return isNPOTsupported ? 1 : (float)Height / potHeight;
+            }
+        }
+
+        private void CheckNPOT_Support()
+        {
+            String ExtensionsRaw = GL.GetString(StringName.Extensions);
+            String[] splitter = new String[] { " " };
+            String[] Extensions = ExtensionsRaw.Split(splitter, StringSplitOptions.None);
+            foreach(String extName in Extensions)
+            {
+                if(extName.Equals("GL_ARB_texture_non_power_of_two"))
+                {
+                    isNPOTsupported = true;
+                    return;
+                }
+            }
+        }
+
+        private bool isNPOTsupported = false;
+        private int potWidth;
+        private int potHeight;
+
+        #endregion
 
         private int width;
         private int height;

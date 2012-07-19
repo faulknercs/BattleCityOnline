@@ -36,8 +36,6 @@ namespace BattleCity.GameClient.GUI
                 y -= label.Height + 5;
                 renderer.Render(label, x, y);
             }
-
-            //renderer.Render(singlePlayerLabel, );
         }
 
         private void Init()
@@ -48,17 +46,11 @@ namespace BattleCity.GameClient.GUI
             textFont = new Font(FontFamily.GenericMonospace, 22, FontStyle.Bold, GraphicsUnit.Pixel); //Incapsulate it in factory in the future
             textColor = Color4.White;
 
-            singlePlayerLabel = new TextTexture(textFont, Properties.StringItems.strSinglePlayer);
-            networkGameLabel = new TextTexture(textFont, Properties.StringItems.strMultiPlayer);
-            optionsLabel = new TextTexture(textFont, Properties.StringItems.strOptions);
-            authorsLabel = new TextTexture(textFont, Properties.StringItems.strAuthors);
-            exitLabel = new TextTexture(textFont, Properties.StringItems.strExit);
-
-            labelTextures[0] = singlePlayerLabel;
-            labelTextures[1] = networkGameLabel;
-            labelTextures[2] = optionsLabel;
-            labelTextures[3] = authorsLabel;
-            labelTextures[4] = exitLabel;
+            labelTextures[0] = new TextTexture(textFont, Properties.StringItems.strSinglePlayer);
+            labelTextures[1] = new TextTexture(textFont, Properties.StringItems.strMultiPlayer);
+            labelTextures[2] = new TextTexture(textFont, Properties.StringItems.strOptions);
+            labelTextures[3] = new TextTexture(textFont, Properties.StringItems.strAuthors);
+            labelTextures[4] = new TextTexture(textFont, Properties.StringItems.strExit);
         }
 
         private void DrawBackGround()
@@ -75,13 +67,8 @@ namespace BattleCity.GameClient.GUI
 
         private Font textFont;
         private Color4 textColor;
-        // TODO: Maybe array will be better
-        private TextTexture singlePlayerLabel;
-        private TextTexture networkGameLabel;
-        private TextTexture optionsLabel;
-        private TextTexture authorsLabel;
-        private TextTexture exitLabel;
 
-        private TextTexture[] labelTextures;
+        private Texture[] labelTextures;
+        private int choosenItemPos;
     }
 }

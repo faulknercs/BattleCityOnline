@@ -18,11 +18,11 @@ namespace BattleCity.GameClient.GUI
             {
                 GL.TexCoord2(0, 0);
                 GL.Vertex2(x, y + texture.Height);
-                GL.TexCoord2(1, 0);
+                GL.TexCoord2(texture.TextureXCoord, 0);
                 GL.Vertex2(x + texture.Width, y + texture.Height);
-                GL.TexCoord2(1, 1);
+                GL.TexCoord2(texture.TextureXCoord, texture.TextureYCoord);
                 GL.Vertex2(x + texture.Width, y);
-                GL.TexCoord2(0, 1);
+                GL.TexCoord2(0, texture.TextureYCoord);
                 GL.Vertex2(x, y);
             }
             GL.End();
@@ -43,11 +43,11 @@ namespace BattleCity.GameClient.GUI
             {
                 GL.TexCoord2(0, 0);
                 GL.Vertex2(v1);
-                GL.TexCoord2(1, 0);
+                GL.TexCoord2(texture.TextureXCoord, 0);
                 GL.Vertex2(v2);
-                GL.TexCoord2(1, 1);
+                GL.TexCoord2(texture.TextureXCoord, texture.TextureYCoord);
                 GL.Vertex2(v3);
-                GL.TexCoord2(0, 1);
+                GL.TexCoord2(0, texture.TextureYCoord);
                 GL.Vertex2(v4);
             }
             GL.End();
@@ -60,11 +60,11 @@ namespace BattleCity.GameClient.GUI
             {
                 GL.TexCoord2(0, 0);
                 GL.Vertex2(x1, y2);
-                GL.TexCoord2(1, 0);
+                GL.TexCoord2(texture.TextureXCoord, 0);
                 GL.Vertex2(x2, y2);
-                GL.TexCoord2(1, 1);
+                GL.TexCoord2(texture.TextureXCoord, texture.TextureYCoord);
                 GL.Vertex2(x2, y1);
-                GL.TexCoord2(0, 1);
+                GL.TexCoord2(0, texture.TextureYCoord);
                 GL.Vertex2(x1, y1);
             }
             GL.End();
