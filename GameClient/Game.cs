@@ -75,6 +75,9 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
+            if (m.GetState(Keyboard, Mouse) == GameState.EXIT)
+                Exit();
+
             if (Keyboard[Key.Q])
             {
                 map = new Map(MapGenerator.generateCLASSIC_Map());
@@ -97,9 +100,6 @@ namespace BattleCity.GameClient
             }
             if (Keyboard[Key.Space])
                 needRefreshMap = true;
-
-            if (Keyboard[Key.Escape])
-                Exit();
         }
 
         /// <summary>

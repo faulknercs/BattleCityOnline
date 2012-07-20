@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
+using OpenTK.Input;
 
 namespace BattleCity.GameClient.GUI
 {
@@ -44,6 +44,15 @@ namespace BattleCity.GameClient.GUI
                 return menuHeight;
             }
         }
+
+        /// <summary>
+        /// Calculates game state according to state of mouse and keyboard.
+        /// (Provides menu control, in other words).
+        /// </summary>
+        /// <param name="keyboard">Keyboard device</param>
+        /// <param name="mouse">Mouse device</param>
+        /// <returns>Game state</returns>
+        public abstract GameState GetState(KeyboardDevice keyboard, MouseDevice mouse);
 
         protected IRendererImpl renderer;
         private float menuWidth;

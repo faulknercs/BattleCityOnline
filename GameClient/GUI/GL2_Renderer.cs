@@ -77,6 +77,7 @@ namespace BattleCity.GameClient.GUI
 
         public void Resize(float width, float height)
         {
+            // TODO: Add support of changing resolution (if it not work with this realization).
             GL.Viewport(0, 0, (int)width, (int)height);
             //set new projection whith bottom left corner coordinates (-w,-h), (0, 0) - is center
 

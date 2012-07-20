@@ -38,6 +38,19 @@ namespace BattleCity.GameClient.GUI
             }
         }
 
+        /// <summary>
+        /// Overriden from abstract menu. Provides control of main menu
+        /// </summary>
+        /// <param name="keyboard">Keyboard device</param>
+        /// <param name="mouse">Mouse device</param>
+        /// <returns>GameState</returns>
+        public override GameState GetState(KeyboardDevice keyboard, MouseDevice mouse)
+        {
+            if (keyboard[Key.Escape])
+                return GameState.EXIT;
+            return GameState.MAINMENU;
+        }
+
         private void Init()
         {
             //load background
