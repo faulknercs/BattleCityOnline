@@ -46,13 +46,11 @@ namespace BattleCity.GameClient.GUI
         }
 
         /// <summary>
-        /// Calculates game state according to state of mouse and keyboard.
-        /// (Provides menu control, in other words).
+        /// Provides menu control by keyboard. Gets game state according to pressed key.
         /// </summary>
-        /// <param name="keyboard">Keyboard device</param>
-        /// <param name="mouse">Mouse device</param>
+        /// <param name="key">Pressed key</param>
         /// <returns>Game state</returns>
-        public abstract GameState GetState(KeyboardDevice keyboard, MouseDevice mouse);
+        public abstract GameState GetStateByKey(KeyboardKeyEventArgs keys);
 
         protected IRendererImpl renderer;
         private float menuWidth;

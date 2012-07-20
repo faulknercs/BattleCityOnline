@@ -22,6 +22,8 @@ namespace BattleCity.GameClient
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend); 
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+            Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(MenuControl);
+            
             m = new MainMenu(windowWidth, windowHeight);           
             textureList = new[]
                               {
@@ -75,9 +77,6 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
-            if (m.GetState(Keyboard, Mouse) == GameState.EXIT)
-                Exit();
-
             if (Keyboard[Key.Q])
             {
                 map = new Map(MapGenerator.generateCLASSIC_Map());
@@ -123,6 +122,13 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
+        
+        private void MenuControl(Object source, KeyboardKeyEventArgs args)
+        {
+            if (m.GetStateByKey(args) == GameState.EXIT)
+                Exit();
+        }
+
         MainMenu m;
         private IRendererImpl renderer;
         private Map map;
