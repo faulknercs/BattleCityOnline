@@ -30,24 +30,33 @@ namespace BattleCity.GameClient.GUI
             //calculate text position
             float x = 0;
             float y = 30;
-            foreach (Texture label in labelTextures)
+            for (int i = 0; i < labelTextures.Length; ++i)
             {
-                x = -label.Width / 2;
-                y -= label.Height + 5;
-                renderer.Render(label, x, y);
+                x = -labelTextures[i].Width / 2;
+                y -= labelTextures[i].Height + 5;
+                if (i == menuItemPointer)
+                    renderer.SetColor(Color4.Red);
+                else
+                    renderer.SetColor(textColor);
+                renderer.Render(labelTextures[i], x, y);
             }
         }
 
         /// <summary>
         /// Overriden from abstract menu. Provides control of main menu
         /// </summary>
-        /// <param name="keyboard">Keyboard device</param>
-        /// <param name="mouse">Mouse device</param>
+        /// <param name="keys">Pressed key</param>
         /// <returns>GameState</returns>
-        public override GameState GetState(KeyboardDevice keyboard, MouseDevice mouse)
+        public override GameState GetStateByKey(KeyboardKeyEventArgs keys)
         {
-            if (keyboard[Key.Escape])
+            if (keys.Key == Key.Escape)
                 return GameState.EXIT;
+            if (keys.Key == Key.Down)
+                IncreaseMenuPointer();
+            if (keys.Key == Key.Up)
+                DecreaseMenuPointer();
+            if (keys.Key == Key.Enter)
+                return GetChoiceResult();
             return GameState.MAINMENU;
         }
 
@@ -76,12 +85,45 @@ namespace BattleCity.GameClient.GUI
             renderer.Render(backGroundTexture, x, y);
         }
 
+        private void IncreaseMenuPointer()
+        {
+            menuItemPointer++;
+            if (menuItemPointer >= labelTextures.Length)
+                menuItemPointer = 0;
+        }
+
+        private void DecreaseMenuPointer()
+        {
+            menuItemPointer--;
+            if (menuItemPointer < 0)
+                menuItemPointer = labelTextures.Length - 1;
+        }
+
+        private GameState GetChoiceResult()
+        {
+            switch (menuItemPointer)
+            {
+                case 0:
+                    return GameState.SINGLEPL;
+                case 1:
+                    return GameState.NETWORK;
+                case 2:
+                    return GameState.OPTIONS;
+                case 3:
+                    return GameState.CREDITS;
+                case 4:
+                    return GameState.EXIT;
+                default:
+                    return GameState.MAINMENU;
+            }
+        }
+
         private Texture backGroundTexture;
 
         private Font textFont;
         private Color4 textColor;
 
         private Texture[] labelTextures;
-        private int choosenItemPos;
+        private int menuItemPointer;
     }
 }
