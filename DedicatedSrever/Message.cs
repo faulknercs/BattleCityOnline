@@ -17,6 +17,11 @@ namespace BattleCity.DedicatedSrever
             return string.Format("'help' to get list of possible cmd's{0}", newLine);
         }
 
+        public static string helpMode()
+        {
+            return string.Format("  Usage: set mode <classic|tdmb|tdm|dm>");
+        }
+
         public static string helpList()
         {
             answer = string.Format("Usage: <cmd> [<param1>] [<param2>] ..{0}", newLine);
@@ -25,12 +30,12 @@ namespace BattleCity.DedicatedSrever
             return answer;
         }
 
-        public static string mode()
+        public static string getMode()
         {
             return string.Format("Current mode is : {0}{1}", Server.mode.mode, newLine);
         }
 
-        public static string map()
+        public static string getMap()
         {
             answer = "";
             MapObject[][] map = Server.map.GetInternalForm();
@@ -59,28 +64,14 @@ namespace BattleCity.DedicatedSrever
         private static string[,] commandList = new[,]
                                              {
                                                  {"help", "show list of possible cmd's"},
-                                                 {"hello", "great the server"},
-                                                 {"quit", "close console window"},
                                                  {"start", "start game with current mode and map"},
                                                  {"stop", "stop game"},
+                                                 {"mode","get current mode"},
+                                                 {"map","get current map"},
                                                  {"set name <name>","set your name (try to choose unique name)"},
-                                                 {"set mode 'classic'|'tdmb'|'tdm'|'dm'","setting new game mode"},
-                                                 {"set map","chaging map according to current mode"},
-                                                 {"get name","get your name"},
-                                                 {"get mode","get current mode"},
-                                                 {"get map","get current map"}
+                                                 {"set mode <classic|tdmb|tdm|dm>","setting new game mode"},
+                                                 {"set map","changing map according to current mode"},
+                                                 {"quit", "close console window"}
                                              };
-
-        public static string hello(string name)
-        {
-            return name == ""
-                ? string.Format("Who the hell are you?!{0}", newLine)
-                : string.Format("Yea, HI, {0}! Welcome!{1}", name, newLine);
-        }
-
-        public static string error(string e)
-        {
-            return string.Format("Error: {0}{1}", e, newLine);
-        }
     }
 }
