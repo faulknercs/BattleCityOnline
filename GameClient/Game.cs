@@ -20,9 +20,9 @@ namespace BattleCity.GameClient
             renderer = RendererFactory.Instance.CreateRenderer();
             Keyboard.KeyRepeat = false;
             GL.Enable(EnableCap.Texture2D);
-            GL.Enable(EnableCap.Blend); 
+            GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-            m = new MainMenu(windowWidth, windowHeight);           
+            m = new MainMenu(windowWidth, windowHeight);
             textureList = new[]
                               {
                                   new Texture(new Bitmap(Properties.Resources.empty)),
@@ -61,7 +61,7 @@ namespace BattleCity.GameClient
         /// <param name="e">Not used.</param>
         protected override void OnResize(EventArgs e)
         {
-            renderer.Resize((int)ClientRectangle.Width, (int)ClientRectangle.Height);
+            renderer.Resize(ClientRectangle.Width, ClientRectangle.Height);
             base.OnResize(e);
         }
 
@@ -80,22 +80,22 @@ namespace BattleCity.GameClient
 
             if (Keyboard[Key.Q])
             {
-                map = new Map(MapGenerator.generateCLASSIC_Map());
+                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.CLASSIC)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.W])
             {
-                map = new Map(MapGenerator.generateDM_Map());
+                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.DM)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.E])
             {
-                map = new Map(MapGenerator.generateTDMB_Map());
+                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.TDMB)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.R])
             {
-                map = new Map(MapGenerator.generateTDM_Map());
+                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.TDM)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.Space])
@@ -123,6 +123,7 @@ namespace BattleCity.GameClient
 
             SwapBuffers();
         }
+
         MainMenu m;
         private IRendererImpl renderer;
         private Map map;
