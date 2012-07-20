@@ -126,105 +126,89 @@ namespace BattleCity.GameLib
         static List<MapObject[][]> listOfStaticElements = new List<MapObject[][]>();
         static Random rnd = new Random();
 
-        #region Map Generator By Mode
-
-        /// <summary>
-        /// Classical mode (one team defends its base, another one attacks trying to destroy the base)
-        /// </summary>
-        public static MapObject[][] generateCLASSIC_Map()
+        public static MapObject[][] generateMap(GameMode mode)
         {
-            while (true)
+            switch (mode.mode)
             {
-                makeConcreteMap();
+                // Classical mode (one team defends its base, another one attacks trying to destroy the base)
+                case GameMode.Mode.CLASSIC:
+                    while (true)
+                    {
+                        makeConcreteMap();
 
-                //clearing space for base
-                map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
+                        //clearing space for base
+                        map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
 
-                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                if (isMapGood()) break;
+                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
+                        if (isMapGood()) break;
+                    }
+                    //adding base
+                    map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
+                    //adding bricks
+                    map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
+                    map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
+                    for (int i = 8; i <= 10; i++)
+                        map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
+                    addBricksOnMap();
+                    addForestOnMap();
+                    break;
+                // Team deathmatch (two teams attacking each other) without bases
+                case GameMode.Mode.TDM:
+                    while (true)
+                    {
+                        makeConcreteMap();
+
+                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
+                        if (isMapGood()) break;
+                    }
+                    addBricksOnMap();
+                    addForestOnMap();
+                    break;
+                // Team deathmatch with bases (both teams have their own base)
+                case GameMode.Mode.TDMB:
+                    while (true)
+                    {
+                        makeConcreteMap();
+
+                        //clearing space for base
+                        map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
+                        map[19][9] = new MapObject(19, 9, MapObject.Types.EMPTY);
+
+                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
+                        if (isMapGood()) break;
+                    }
+                    //adding base
+                    map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
+                    map[19][9] = new MapObject(19, 9, MapObject.Types.BASE);
+
+                    //adding bricks
+                    map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
+                    map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
+                    map[19][9 - 1] = new MapObject(19, 9 - 1, MapObject.Types.BRICK);
+                    map[19][9 + 1] = new MapObject(19, 9 + 1, MapObject.Types.BRICK);
+                    for (int i = 8; i <= 10; i++)
+                    {
+                        map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
+                        map[18][i] = new MapObject(18, 1, MapObject.Types.BRICK);
+                    }
+                    addBricksOnMap();
+                    addForestOnMap();
+                    break;
+                // Deathmatch (every player fights for himself) without bases
+                case GameMode.Mode.DM:
+                    while (true)
+                    {
+                        makeConcreteMap();
+
+                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
+                        if (isMapGood()) break;
+                    }
+                    addBricksOnMap();
+                    addForestOnMap();
+                    break;
             }
-            //adding base
-            map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
-            //adding bricks
-            map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
-            map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
-            for (int i = 8; i <= 10; i++)
-                map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
-            addBricksOnMap();
-            addForestOnMap();
             return map;
         }
-
-        /// <summary>
-        /// Team deathmatch (two teams attacking each other) without bases
-        /// </summary>
-        public static MapObject[][] generateTDM_Map()
-        {
-            while (true)
-            {
-                makeConcreteMap();
-
-                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                if (isMapGood()) break;
-            }
-            addBricksOnMap();
-            addForestOnMap();
-            return map;
-        }
-
-        /// <summary>
-        /// Team deathmatch with bases (both teams have their own base)
-        /// </summary>
-        public static MapObject[][] generateTDMB_Map()
-        {
-            while (true)
-            {
-                makeConcreteMap();
-
-                //clearing space for base
-                map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
-                map[19][9] = new MapObject(19, 9, MapObject.Types.EMPTY);
-
-                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                if (isMapGood()) break;
-            }
-            //adding base
-            map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
-            map[19][9] = new MapObject(19, 9, MapObject.Types.BASE);
-
-            //adding bricks
-            map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
-            map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
-            map[19][9 - 1] = new MapObject(19, 9 - 1, MapObject.Types.BRICK);
-            map[19][9 + 1] = new MapObject(19, 9 + 1, MapObject.Types.BRICK);
-            for (int i = 8; i <= 10; i++)
-            {
-                map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
-                map[18][i] = new MapObject(18, 1, MapObject.Types.BRICK);
-            }
-            addBricksOnMap();
-            addForestOnMap();
-            return map;
-        }
-
-        /// <summary>
-        /// Deathmatch (every player fights for himself) without bases
-        /// </summary>
-        public static MapObject[][] generateDM_Map()
-        {
-            while (true)
-            {
-                makeConcreteMap();
-
-                if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                if (isMapGood()) break;
-            }
-            addBricksOnMap();
-            addForestOnMap();
-            return map;
-        }
-
-        #endregion Map Generator By Mode
 
         #region Methods
 
@@ -255,21 +239,21 @@ namespace BattleCity.GameLib
                 for (int j = 0; j < map[i].Length; j++)
                     tmpMap[i + 1][j + 1] = map[i][j].Type; //copy map to tmpMap
 
-            ////Check if 'C' in middle line
-            //bool concreteBreak = false;
-            //for (int i = 3; i < tmpMap.Length - 3; i++)
-            //    if (tmpMap[i][10].Equals(MapObject.Types.CONCRETE))
-            //        concreteBreak = true;
-            //if (!concreteBreak)
-            //    return false;
-            ////Check Concrete blocks count
-            //int concreteCount = 0;
-            //for (int i = 1; i <= 9; i++)
-            //    for (int j = 1; j <= 10; j++)
-            //        if (tmpMap[i][j].Equals(MapObject.Types.CONCRETE))
-            //            concreteCount++;
-            //if (concreteCount < 25 || concreteCount > 35)
-            //    return false;
+            //Check if 'C' in middle line
+            bool concreteBreak = false;
+            for (int i = 3; i < tmpMap.Length - 3; i++)
+                if (tmpMap[i][10].Equals(MapObject.Types.CONCRETE))
+                    concreteBreak = true;
+            if (!concreteBreak)
+                return false;
+            //Check Concrete blocks count
+            int concreteCount = 0;
+            for (int i = 1; i <= 9; i++)
+                for (int j = 1; j <= 10; j++)
+                    if (tmpMap[i][j].Equals(MapObject.Types.CONCRETE))
+                        concreteCount++;
+            if (concreteCount < 25 || concreteCount > 35)
+                return false;
 
             //Getting random element with 'E'
             int x = rnd.Next(5, 16);
