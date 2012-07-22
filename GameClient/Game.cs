@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using OpenTK.Input;
+using BattleCity.GraphicsLib;
 
 namespace BattleCity.GameClient
 {
@@ -28,12 +29,12 @@ namespace BattleCity.GameClient
             m = new MainMenu(windowWidth, windowHeight);           
             textureList = new[]
                               {
-                                  new Texture(new Bitmap(Properties.Resources.empty)),
-                                  new Texture(new Bitmap(Properties.Resources.brick)),
-                                  new Texture(new Bitmap(Properties.Resources.concrete)),
-                                  new Texture(new Bitmap(Properties.Resources.water)),
-                                  new Texture(new Bitmap(Properties.Resources.forest)),
-                                  new Texture(new Bitmap(Properties.Resources._base))
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.brick)),
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.concrete)),
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.water)),
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.forest)),
+                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources._base))
                               };
 
             WindowBorder = WindowBorder.Fixed;

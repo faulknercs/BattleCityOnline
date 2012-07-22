@@ -4,6 +4,7 @@ using BattleCity.GameLib;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using BattleCity.GraphicsLib;
 
 namespace BattleCity.GameClient
 {

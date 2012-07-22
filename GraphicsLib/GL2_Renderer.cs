@@ -3,7 +3,7 @@
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
-namespace BattleCity.GameClient.GUI
+namespace BattleCity.GraphicsLib
 {
     /// <summary>
     /// Rendering subsystem for OpenGL 2.0 version

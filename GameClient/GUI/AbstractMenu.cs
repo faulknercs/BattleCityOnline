@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using OpenTK.Input;
+using BattleCity.GraphicsLib;
 
 namespace BattleCity.GameClient.GUI
 {

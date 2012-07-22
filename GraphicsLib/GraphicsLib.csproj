@@ -5,11 +5,11 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A6AC5841-FAAB-44AA-A9A1-41FE323DB8BB}</ProjectGuid>
+    <ProjectGuid>{C892876D-8CD8-4C33-BC57-7339F7EAB767}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BattleCity.GameLib</RootNamespace>
-    <AssemblyName>GameLib</AssemblyName>
+    <RootNamespace>BattleCity.GraphicsLib</RootNamespace>
+    <AssemblyName>GraphicsLib</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -21,9 +21,6 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <PlatformTarget>AnyCPU</PlatformTarget>
-    <DocumentationFile>
-    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -33,32 +30,56 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
-  </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK">
+      <HintPath>..\ThirdParty\OpenTK.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Drawing" />
     <Reference Include="Microsoft.CSharp" />
-    <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
-    <Compile Include="GameLogic.cs" />
-    <Compile Include="GameMode.cs" />
-    <Compile Include="Level.cs" />
-    <Compile Include="MapGenerator.cs" />
-    <Compile Include="MapObject.cs" />
-    <Compile Include="MapSave.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="Map.cs" />
-    <Compile Include="MapLoader.cs" />
-    <Compile Include="PlayerKeyEventArgs.cs" />
+    <Compile Include="GL2_Renderer.cs" />
+    <Compile Include="IRendererImpl.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TankObject.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="RendererFactory.cs" />
+    <Compile Include="TextTexture.cs" />
+    <Compile Include="Texture.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\base.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\brick.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\concrete.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\empty.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\forest.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\MapElements\water.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Textures\Bonuses\" />
+    <Folder Include="Textures\Tanks\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

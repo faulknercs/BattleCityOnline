@@ -2,7 +2,7 @@
 
 using OpenTK.Graphics;
 
-namespace BattleCity.GameClient.GUI
+namespace BattleCity.GraphicsLib
 {
     /// <summary>
     /// Interface of rendering subsystem. 

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using OpenTK.Graphics.OpenGL;
 
-namespace BattleCity.GameClient.GUI
+namespace BattleCity.GraphicsLib
 {
     /// <summary>
     /// Factory, which produces IRendererImpl classes according to OpenGL version

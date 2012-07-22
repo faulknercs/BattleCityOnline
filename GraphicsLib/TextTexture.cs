@@ -4,7 +4,7 @@ using System.Drawing.Text;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
-namespace BattleCity.GameClient.GUI
+namespace BattleCity.GraphicsLib
 {
     /// <summary>
     /// Supports text rendering using OpenTK

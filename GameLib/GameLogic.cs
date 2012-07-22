@@ -24,7 +24,7 @@ namespace BattleCity.GameLib
         /// </summary>
         public void NextState()
         {
-            
+
         }
 
         private void CreatePlayersTanks()
@@ -37,7 +37,7 @@ namespace BattleCity.GameLib
 
         }
 
-        private Map currentMap;
+        private Level currentMap;
         private IList<Player> players = new List<Player>();
         private bool gameOver = false;
     }

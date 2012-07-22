@@ -96,13 +96,13 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameClient\GameClient.csproj">
-      <Project>{EE30ABF6-D55A-4B4B-B1AE-696422AE47C2}</Project>
-      <Name>GameClient</Name>
-    </ProjectReference>
     <ProjectReference Include="..\GameLib\GameLib.csproj">
       <Project>{A6AC5841-FAAB-44AA-A9A1-41FE323DB8BB}</Project>
       <Name>GameLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\GraphicsLib\GraphicsLib.csproj">
+      <Project>{C892876D-8CD8-4C33-BC57-7339F7EAB767}</Project>
+      <Name>GraphicsLib</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

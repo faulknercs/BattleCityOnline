@@ -4,7 +4,7 @@ using System.Drawing.Imaging;
 
 using OpenTK.Graphics.OpenGL;
 
-namespace BattleCity.GameClient.GUI
+namespace BattleCity.GraphicsLib
 {
     /// <summary>
     /// Incapsulates OpenGL 2D textures
