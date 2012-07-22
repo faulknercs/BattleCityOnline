@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="GameLogic.cs" />
     <Compile Include="GameMode.cs" />
+    <Compile Include="Level.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MapSave.cs" />
