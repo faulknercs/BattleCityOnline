@@ -1,4 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Net;
+using System.Net.Sockets;
 using System.Threading;
 using BattleCity.GameLib;
 
@@ -8,16 +11,21 @@ namespace BattleCity.DedicatedSrever
     {
         private static void Main()
         {
-            mode = new GameMode(GameMode.Mode.CLASSIC);
-            map = new Map(MapGenerator.generateMap(mode));
+            round = new Round(new GameMode(GameMode.Mode.CLASSIC), new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.CLASSIC))), new List<Player>());
+            serverIP = SocketListener.getServerIP();
+            serverPort = SocketListener.getServerPort();
+            socketListener = new SocketListener();
             cmdThread.Start();
+            connectionThread.Start();
         }
 
         private static Thread cmdThread = new Thread(o => getCmd());
-        private static Thread gameThread = new Thread(o => getStarted(mode, map));
-        public static GameMode mode;
-        public static Map map;
-        public static bool start;
+        private static Thread connectionThread = new Thread(o => getConnection());
+        private static SocketListener socketListener;
+
+        public static Round round;
+        public static IPAddress serverIP;
+        public static int serverPort;
 
         #region cmdThreading
 
@@ -43,22 +51,34 @@ namespace BattleCity.DedicatedSrever
                 case 1:
                     switch (cmdParams[0].ToLower())
                     {
+                        case "connect":
+                            connect();
+                            break;
                         case "help":
                             Console.Write(Message.helpList());
                             break;
                         case "quit":
                             return "quit";
                         case "start":
-                            //start a game
+                            round.State = true;
                             break;
                         case "stop":
-                            //stop a game
+                            round.State = false;
                             break;
                         case "mode":
                             Console.Write(Message.getMode());
                             break;
                         case "map":
                             Console.Write(Message.getMap());
+                            break;
+                        case "players":
+                            Console.Write(Message.getPlayerList());
+                            break;
+                        case "ip":
+                            Console.Write(Message.getServerIP());
+                            break;
+                        case "port":
+                            Console.Write(Message.getServerPort());
                             break;
                         default:
                             Console.Write(Message.help());
@@ -68,7 +88,7 @@ namespace BattleCity.DedicatedSrever
                 case 2:
                     if (cmdParams[0].ToLower().Equals("set") && cmdParams[1].ToLower().Equals("map"))
                     {
-                        map = new Map(MapGenerator.generateMap(mode));
+                        round.Map = new Map(MapGenerator.generateMap(round.Mode));
                         Console.Write(Message.getMap());
                     }
                     else
@@ -82,20 +102,20 @@ namespace BattleCity.DedicatedSrever
                                 switch (cmdParams[2].ToLower())
                                 {
                                     case "classic":
-                                        mode = new GameMode(GameMode.Mode.CLASSIC);
-                                        map = new Map(MapGenerator.generateMap(mode));
+                                        round.Mode = new GameMode(GameMode.Mode.CLASSIC);
+                                        round.Map = new Map(MapGenerator.generateMap(round.Mode));
                                         break;
                                     case "dm":
-                                        mode = new GameMode(GameMode.Mode.DM);
-                                        map = new Map(MapGenerator.generateMap(mode));
+                                        round.Mode = new GameMode(GameMode.Mode.DM);
+                                        round.Map = new Map(MapGenerator.generateMap(round.Mode));
                                         break;
                                     case "tdm":
-                                        mode = new GameMode(GameMode.Mode.TDM);
-                                        map = new Map(MapGenerator.generateMap(mode));
+                                        round.Mode = new GameMode(GameMode.Mode.TDM);
+                                        round.Map = new Map(MapGenerator.generateMap(round.Mode));
                                         break;
                                     case "tdmb":
-                                        mode = new GameMode(GameMode.Mode.TDMB);
-                                        map = new Map(MapGenerator.generateMap(mode));
+                                        round.Mode = new GameMode(GameMode.Mode.TDMB);
+                                        round.Map = new Map(MapGenerator.generateMap(round.Mode));
                                         break;
                                     default:
                                         Console.Write(Message.help());
@@ -116,12 +136,24 @@ namespace BattleCity.DedicatedSrever
 
         #endregion cmdThreading
 
-        #region gameThreding
+        #region connectionThreading
 
-        private static void getStarted(GameMode mode, Map map)
+        private static void getConnection()
         {
+            while (true)
+            {
+                socketListener.getConnection();
+            }
         }
 
-        #endregion gameThreding
+        #endregion connectionThreading
+
+        private static void connect()
+        {
+            Socket s = new Socket(AddressFamily.InterNetwork, SocketType.Stream, ProtocolType.Tcp); //Создаем основной сокет
+            IPEndPoint Addr = new IPEndPoint(serverIP, serverPort); //"localhost" = 127.0.0.1
+            s.Connect(Addr); //Коннектимся к срверу
+            s.Close();
+        }
     }
 }
