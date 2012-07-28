@@ -8,7 +8,7 @@ namespace BattleCity.GameLib
     /// <summary>
     /// Represents game proccess
     /// </summary>
-    public class GameLogic
+    public class ServerProcess
     {
         /// <summary>
         /// Add new player to the game
@@ -29,7 +29,7 @@ namespace BattleCity.GameLib
 
         private void CreatePlayersTanks()
         {
-
+            
         }
 
         private void ChangePlayersState()

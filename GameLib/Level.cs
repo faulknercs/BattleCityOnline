@@ -18,6 +18,42 @@ namespace BattleCity.GameLib
             return tanks;
         }
 
+        public void ProcessTanks()
+        {
+            foreach(TankObject tank in tanks)
+            {
+
+            }
+        }
+
+        public void ProcessBullets()
+        {
+            foreach(Bullet bullet in bullets)
+            {
+
+            }
+        }
+
+        private void MoveTankUp(TankObject tank)
+        {
+
+        }
+
+        private void MoveTankDown(TankObject tank)
+        {
+
+        }
+
+        private void MoveTankRight(TankObject tank)
+        {
+
+        }
+
+        private void MoveTankLeft(TankObject tank)
+        {
+
+        }
+
         private IList<Bullet> bullets = new List<Bullet>();
         private IList<TankObject> tanks = new List<TankObject>();
     }

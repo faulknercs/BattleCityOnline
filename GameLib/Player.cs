@@ -30,6 +30,8 @@ namespace BattleCity.GameLib
         public uint Score { get; set; }
         public uint Lives { get; set; }
 
+        public abstract void MessageEventHandler(Object source, MessageEventArgs args);// TODO: event args
+
         protected virtual void OnUpCommand(PlayerKeyEventArgs args)
         {
             if (UpCommand != null)

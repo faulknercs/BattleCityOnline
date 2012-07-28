@@ -41,6 +41,11 @@ namespace BattleCity.GameClient
                 OnShootCommand(p_args);
         }
 
+        public override void MessageEventHandler(Object source, MessageEventArgs args)
+        {
+            throw new NotImplementedException();
+        }
+
         private KeySettings keys;
     }
 }

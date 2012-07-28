@@ -47,7 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
-    <Compile Include="GameLogic.cs" />
+    <Compile Include="MessageEventArgs.cs" />
+    <Compile Include="ServerProcess.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="MapGenerator.cs" />

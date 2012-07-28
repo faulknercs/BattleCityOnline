@@ -4,6 +4,7 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
+    // TODO: remake this, thinks, we can del class
     public class Map
     {
         public Map(MapObject[][] content)
@@ -16,7 +17,7 @@ namespace BattleCity.GameLib
             return map;
         }
 
-        private MapObject[][] map;
+        protected MapObject[][] map;
 
         private const uint width = 19;
         private const uint height = 20;
