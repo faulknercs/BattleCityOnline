@@ -32,13 +32,13 @@ namespace BattleCity.DedicatedSrever
 
         public static string getMode()
         {
-            return string.Format("Current mode is : {0}{1}", Server.mode.mode, newLine);
+            return string.Format("Current mode is : {0}{1}", Server.round.Mode.mode, newLine);
         }
 
         public static string getMap()
         {
             answer = "";
-            MapObject[][] map = Server.map.GetInternalForm();
+            MapObject[][] map = Server.round.Map.GetInternalForm();
             for (int i = 0; i < 21; i++)
                 answer += "X ";
             answer += newLine;
@@ -61,6 +61,24 @@ namespace BattleCity.DedicatedSrever
             return answer + newLine;
         }
 
+        public static string getPlayerList()
+        {
+            answer = string.Format("Player count : {0}{1}", Server.round.PlayerList.Count, newLine);
+            for (int i = 0; i < Server.round.PlayerList.Count; i++)
+                answer += string.Format("{0} - {1}{2}", (i + 1), Server.round.PlayerList[i].Name, newLine);
+            return answer;
+        }
+
+        public static string getServerIP()
+        {
+            return string.Format("Server IP : {0}{1}", Server.serverIP, newLine);
+        }
+
+        public static string getServerPort()
+        {
+            return string.Format("Server Port : {0}{1}", Server.serverPort, newLine);
+        }
+
         private static string[,] commandList = new[,]
                                              {
                                                  {"help", "show list of possible cmd's"},
@@ -68,6 +86,9 @@ namespace BattleCity.DedicatedSrever
                                                  {"stop", "stop game"},
                                                  {"mode","get current mode"},
                                                  {"map","get current map"},
+                                                 {"ip","get server ip"},
+                                                 {"port","get server port"},
+                                                 {"players","get list of connected players"},
                                                  {"set name <name>","set your name (try to choose unique name)"},
                                                  {"set mode <classic|tdmb|tdm|dm>","setting new game mode"},
                                                  {"set map","changing map according to current mode"},
