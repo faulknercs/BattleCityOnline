@@ -47,7 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Bullet.cs" />
-    <Compile Include="MessageEventArgs.cs" />
+    <Compile Include="ClientProcess.cs" />
+    <Compile Include="Events\MessageEventArgs.cs" />
     <Compile Include="ServerProcess.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="Level.cs" />
@@ -57,7 +58,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />
-    <Compile Include="PlayerKeyEventArgs.cs" />
+    <Compile Include="Events\PlayerKeyEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TankObject.cs" />
   </ItemGroup>

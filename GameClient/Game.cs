@@ -16,7 +16,7 @@ namespace BattleCity.GameClient
     internal class Game : GameWindow
     {
         public Game(int width, int height)
-            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 3, 1, GraphicsContextFlags.Default)
+            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 4, 1, GraphicsContextFlags.Default)
         {
             renderer = RendererFactory.Instance.CreateRenderer();
             Keyboard.KeyRepeat = false;

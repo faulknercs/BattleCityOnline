@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using BattleCity.GameLib.Events;
 
 namespace BattleCity.GameLib
 {
@@ -30,7 +31,7 @@ namespace BattleCity.GameLib
         public uint Score { get; set; }
         public uint Lives { get; set; }
 
-        public abstract void MessageEventHandler(Object source, MessageEventArgs args);// TODO: event args
+        public abstract void MessageEventHandler(Object source, MessageEventArgs args);
 
         protected virtual void OnUpCommand(PlayerKeyEventArgs args)
         {

@@ -35,10 +35,7 @@ namespace BattleCity.GameClient.GUI
             {
                 x = -labelTextures[i].Width / 2;
                 y -= labelTextures[i].Height + 5;
-                if (i == menuItemPointer)
-                    renderer.SetColor(Color4.Red);
-                else
-                    renderer.SetColor(textColor);
+                renderer.SetColor(i == menuItemPointer ? Color4.Red : textColor);
                 renderer.Render(labelTextures[i], x, y);
             }
         }
@@ -50,14 +47,19 @@ namespace BattleCity.GameClient.GUI
         /// <returns>GameState</returns>
         public override GameState GetStateByKey(KeyboardKeyEventArgs keys)
         {
-            if (keys.Key == Key.Escape)
-                return GameState.EXIT;
-            if (keys.Key == Key.Down)
-                IncreaseMenuPointer();
-            if (keys.Key == Key.Up)
-                DecreaseMenuPointer();
-            if (keys.Key == Key.Enter)
-                return GetChoiceResult();
+            switch(keys.Key)
+            {
+                case Key.Escape:
+                    return GameState.EXIT;
+                case Key.Down:
+                    IncreaseMenuPointer();
+                    break;
+                case Key.Up:
+                    DecreaseMenuPointer();
+                    break;
+                case Key.Enter:
+                    return GetChoiceResult();
+            }
             return GameState.MAINMENU;
         }
 

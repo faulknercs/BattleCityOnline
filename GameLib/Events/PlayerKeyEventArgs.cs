@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace BattleCity.GameLib
+namespace BattleCity.GameLib.Events
 {
     /// <summary>
     ///  Represents arguments of PlayerKeyEvent
