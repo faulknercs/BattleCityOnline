@@ -26,7 +26,7 @@ namespace BattleCity.GameClient.GUI
         /// </summary>
         public override void Render()
         {
-            //DrawBackGround();
+            //RenderBackGround();
             renderer.SetColor(textColor);
             //calculate text position
             float x = 0;
@@ -66,7 +66,8 @@ namespace BattleCity.GameClient.GUI
         private void Init()
         {
             //load background
-            //backGroundTexture = new Texture(new Bitmap(Properties.Resources.main_background));
+            //backGroundTexture = new Texture(new Bitmap(GraphicsLib.Properties.Resources.main_background));
+
             labelTextures = new TextTexture[5];
             textFont = new Font(FontFamily.GenericMonospace, 22, FontStyle.Bold, GraphicsUnit.Pixel); //Incapsulate it in factory in the future
             textColor = Color4.White;
@@ -78,11 +79,11 @@ namespace BattleCity.GameClient.GUI
             labelTextures[4] = new TextTexture(textFont, Properties.StringItems.strExit);
         }
 
-        private void DrawBackGround()
+        protected void RenderBackground()
         {
             //backGround has to have window size, or use other Render overload
+            renderer.SetColor(Color4.White);
             backGroundTexture.Bind();
-            GL.Color4(Color4.White);
             float x = - Width / 2;
             float y = Height / 2;
             renderer.Render(backGroundTexture, x, y);

@@ -4,6 +4,7 @@ using System.Text;
 
 using BattleCity.GameLib;
 using OpenTK.Input;
+using BattleCity.GameLib.Events;
 
 namespace BattleCity.GameClient
 {

@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using BattleCity.GameLib.Events;
 
-namespace BattleCity.GameLib
+namespace BattleCity.GameLib.Tanks
 {
     /// <summary>
     /// Class, which represents game tank
     /// </summary>
-    class TankObject : MapObject
+    abstract class TankObject : MapObject
     {
         public TankObject(Player managingPlayer, int x, int y)
             : base (x, y, Types.TANK)
@@ -24,6 +25,8 @@ namespace BattleCity.GameLib
         public bool IsLeftState { get; private set; }
 
         public bool IsRightState { get; private set; }
+
+        public abstract Bullet CreateBullet();
 
         private void UpCommandHandler(Object source, PlayerKeyEventArgs args)
         {
