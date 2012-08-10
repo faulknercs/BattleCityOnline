@@ -60,10 +60,7 @@ namespace BattleCity.GameLib
                                 obj = new MapObject(x, y, MapObject.Types.EMPTY);
                                 mapObjects[x][y] = obj;
                                 break;
-                            case "TANK":
-                                obj = new MapObject(x, y, MapObject.Types.TANK);
-                                mapObjects[x][y] = obj;
-                                break;
+
                             case "BRICK":
                                 obj = new MapObject(x, y, MapObject.Types.BRICK);
                                 mapObjects[x][y] = obj;

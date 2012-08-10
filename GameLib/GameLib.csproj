@@ -52,7 +52,7 @@
     <Compile Include="ServerProcess.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="MapGenerator.cs" />
+    <Compile Include="Generator\MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MapSave.cs" />
     <Compile Include="Player.cs" />
@@ -61,7 +61,7 @@
     <Compile Include="Events\PlayerKeyEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tanks\FastTank.cs" />
-    <Compile Include="Tanks\TankObject.cs" />
+    <Compile Include="Tanks\Tank.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

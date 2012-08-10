@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BattleCity.GameLib.Tanks
 {
-    class FastTank : TankObject
+    class FastTank : Tank
     {
         public FastTank(Player managingPlayer, int x, int y)
             : base(managingPlayer, x, y)

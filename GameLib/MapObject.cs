@@ -13,10 +13,9 @@ namespace BattleCity.GameLib
         /// <summary>
         /// Types of the objects, which can exists on game map
         /// </summary>
-        public enum Types
+        public enum Types// TODO: Maybe, should define it outside of class in separate file?
         {
             EMPTY = 0,
-            TANK,
             BRICK,
             HALF_BRICK_LEFT,
             HALF_BRICK_RIGHT,

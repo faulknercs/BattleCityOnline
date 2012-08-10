@@ -14,14 +14,14 @@ namespace BattleCity.GameLib
 
         }
 
-        public IList<TankObject> GetTanks()
+        public IList<Tank> GetTanks()
         {
             return tanks;
         }
 
         public void ProcessTanks()
         {
-            foreach(TankObject tank in tanks)
+            foreach(Tank tank in tanks)
             {
 
             }
@@ -35,27 +35,28 @@ namespace BattleCity.GameLib
             }
         }
 
-        private void MoveTankUp(TankObject tank)
+        private void MoveTankUp(Tank tank)
         {
 
         }
 
-        private void MoveTankDown(TankObject tank)
+        private void MoveTankDown(Tank tank)
         {
 
         }
 
-        private void MoveTankRight(TankObject tank)
+        private void MoveTankRight(Tank tank)
         {
 
         }
 
-        private void MoveTankLeft(TankObject tank)
+        private void MoveTankLeft(Tank tank)
         {
 
         }
 
+        private const int mapBlockSize = 20;
         private IList<Bullet> bullets = new List<Bullet>();
-        private IList<TankObject> tanks = new List<TankObject>();
+        private IList<Tank> tanks = new List<Tank>();
     }
 }

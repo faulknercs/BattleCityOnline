@@ -9,10 +9,9 @@ namespace BattleCity.GameLib.Tanks
     /// <summary>
     /// Class, which represents game tank
     /// </summary>
-    abstract class TankObject : MapObject
+    abstract class Tank
     {
-        public TankObject(Player managingPlayer, int x, int y)
-            : base (x, y, Types.TANK)
+        public Tank(Player managingPlayer, int x, int y)
         {
             this.managingPlayer = managingPlayer;
             Init();
