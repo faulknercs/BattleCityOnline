@@ -49,10 +49,14 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="ClientProcess.cs" />
     <Compile Include="Events\MessageEventArgs.cs" />
+    <Compile Include="Generators\ClassicMapGenerator.cs" />
+    <Compile Include="Generators\DmMapGenerator.cs" />
+    <Compile Include="Generators\TdmBasesMapGenerator.cs" />
+    <Compile Include="Generators\TdmMapGenerator.cs" />
     <Compile Include="ServerProcess.cs" />
     <Compile Include="GameMode.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="Generator\MapGenerator.cs" />
+    <Compile Include="Generators\MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
     <Compile Include="MapSave.cs" />
     <Compile Include="Player.cs" />

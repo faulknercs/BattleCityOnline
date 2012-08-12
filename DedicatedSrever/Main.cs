@@ -4,7 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using BattleCity.GameLib;
-using BattleCity.GameLib.Generator;
+using BattleCity.GameLib.Generators;
 
 namespace BattleCity.DedicatedSrever
 {

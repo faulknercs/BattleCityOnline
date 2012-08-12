@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace BattleCity.GameLib.Generator
+namespace BattleCity.GameLib.Generators
 {
-    // TODO: make it not static and abstract. create concrete generator classes
+    // TODO: make it not static but abstract. create concrete generator classes
     public class MapGenerator
     {
         private static void objectInit()

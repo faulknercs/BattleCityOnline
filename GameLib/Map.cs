@@ -7,6 +7,11 @@ namespace BattleCity.GameLib
     // TODO: remake this, thinks, we can del class
     public class Map
     {
+        public Map()
+        {
+
+        }
+
         public Map(MapObject[][] content)
         {
             map = content;

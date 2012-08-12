@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections.ObjectModel;
 using BattleCity.GameLib.Tanks;
 
 namespace BattleCity.GameLib
@@ -9,14 +10,36 @@ namespace BattleCity.GameLib
     class Level : Map
     {
         public Level(Map map)
-            : base(map.GetInternalForm())
         {
-
+            for (int i = 0; i < this.map.Length; ++i )
+            {
+                for (int j = 0; j < this.map[i].Length; ++j)
+                {
+                    this.map[i][j] = map.GetInternalForm()[i][j];// TODO: thinks, there is better variant...
+                }
+            }
         }
 
-        public IList<Tank> GetTanks()
+        /// <summary>
+        /// Gets read-only collection of tanks, which exist on current level
+        /// </summary>
+        public IList<Tank> Tanks
         {
-            return tanks;
+            get
+            {
+                return new ReadOnlyCollection<Tank>(tanks);
+            }
+        }
+
+        /// <summary>
+        /// Gets read-only collection of bullets, which exist on current level
+        /// </summary>
+        public IList<Bullet> Bullets
+        {
+            get
+            {
+                return new ReadOnlyCollection<Bullet>(bullets);
+            }
         }
 
         public void ProcessTanks()
