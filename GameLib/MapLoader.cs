@@ -16,7 +16,7 @@ namespace BattleCity.GameLib
         private MapObject[][] mapObjects;
         private GameMode mode;
         private XmlTextReader reader = null;
-        public Map loadMap(String filePath)
+        public Map LoadMap(String filePath)
         {
             int x,y;
             mapObjects  = new MapObject[20][];
@@ -91,7 +91,7 @@ namespace BattleCity.GameLib
             map = new Map(mapObjects);
             return map;
         }
-        public GameMode getMode()
+        public GameMode GetMode()
         {
             return mode;
         }

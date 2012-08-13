@@ -58,7 +58,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Generators\MapGenerator.cs" />
     <Compile Include="MapObject.cs" />
-    <Compile Include="MapSave.cs" />
+    <Compile Include="MapSaver.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Map.cs" />
     <Compile Include="MapLoader.cs" />

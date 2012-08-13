@@ -7,7 +7,7 @@ namespace BattleCity.GameLib.Generators
     // TODO: make it not static but abstract. create concrete generator classes
     public class MapGenerator
     {
-        private static void objectInit()
+        private static void ObjectInit()
         {
             for (int i = 0; i < map.Length; i++) //initialize mapInfo
                 map[i] = new MapObject[19];
@@ -127,7 +127,7 @@ namespace BattleCity.GameLib.Generators
         static List<MapObject[][]> listOfStaticElements = new List<MapObject[][]>();
         static Random rnd = new Random();
 
-        public static MapObject[][] generateMap(GameMode mode)
+        public static MapObject[][] GenerateMap(GameMode mode)
         {
             switch (mode.mode)
             {
@@ -135,13 +135,13 @@ namespace BattleCity.GameLib.Generators
                 case GameMode.Mode.CLASSIC:
                     while (true)
                     {
-                        makeConcreteMap();
+                        MakeConcreteMap();
 
                         //clearing space for base
                         map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
 
-                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                        if (isMapGood()) break;
+                        if (rnd.Next(0, 2).Equals(0)) AddWaterOnMap(); //Water on map 50%
+                        if (IsMapGood()) break;
                     }
                     //adding base
                     map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
@@ -150,33 +150,33 @@ namespace BattleCity.GameLib.Generators
                     map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
                     for (int i = 8; i <= 10; i++)
                         map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
-                    addBricksOnMap();
+                    AddBricksOnMap();
                     addForestOnMap();
                     break;
                 // Team deathmatch (two teams attacking each other) without bases
                 case GameMode.Mode.TDM:
                     while (true)
                     {
-                        makeConcreteMap();
+                        MakeConcreteMap();
 
-                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                        if (isMapGood()) break;
+                        if (rnd.Next(0, 2).Equals(0)) AddWaterOnMap(); //Water on map 50%
+                        if (IsMapGood()) break;
                     }
-                    addBricksOnMap();
+                    AddBricksOnMap();
                     addForestOnMap();
                     break;
                 // Team deathmatch with bases (both teams have their own base)
                 case GameMode.Mode.TDMB:
                     while (true)
                     {
-                        makeConcreteMap();
+                        MakeConcreteMap();
 
                         //clearing space for base
                         map[0][9] = new MapObject(0, 9, MapObject.Types.EMPTY);
                         map[19][9] = new MapObject(19, 9, MapObject.Types.EMPTY);
 
-                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                        if (isMapGood()) break;
+                        if (rnd.Next(0, 2).Equals(0)) AddWaterOnMap(); //Water on map 50%
+                        if (IsMapGood()) break;
                     }
                     //adding base
                     map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
@@ -192,19 +192,19 @@ namespace BattleCity.GameLib.Generators
                         map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
                         map[18][i] = new MapObject(18, 1, MapObject.Types.BRICK);
                     }
-                    addBricksOnMap();
+                    AddBricksOnMap();
                     addForestOnMap();
                     break;
                 // Deathmatch (every player fights for himself) without bases
                 case GameMode.Mode.DM:
                     while (true)
                     {
-                        makeConcreteMap();
+                        MakeConcreteMap();
 
-                        if (rnd.Next(0, 2).Equals(0)) addWaterOnMap(); //Water on map 50%
-                        if (isMapGood()) break;
+                        if (rnd.Next(0, 2).Equals(0)) AddWaterOnMap(); //Water on map 50%
+                        if (IsMapGood()) break;
                     }
-                    addBricksOnMap();
+                    AddBricksOnMap();
                     addForestOnMap();
                     break;
             }
@@ -217,7 +217,7 @@ namespace BattleCity.GameLib.Generators
         /// Is element proper to current position
         /// </summary>
         /// <returns>true - box is good</returns>
-        private static bool isEmptyBox(MapObject[][] map, int x, int y)
+        private static bool IsEmptyBox(MapObject[][] map, int x, int y)
         {
             if (map[x - 1][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y].Type.Equals(MapObject.Types.EMPTY) && map[x - 1][y + 1].Type.Equals(MapObject.Types.EMPTY))
                 if (map[x][y - 1].Type.Equals(MapObject.Types.EMPTY) && map[x][y].Type.Equals(MapObject.Types.EMPTY) && map[x][y + 1].Type.Equals(MapObject.Types.EMPTY))
@@ -226,7 +226,7 @@ namespace BattleCity.GameLib.Generators
             return false;
         }
 
-        private static bool isMapGood()
+        private static bool IsMapGood()
         {
             //initialize tmpMap with size +2 then map by x and y
             MapObject.Types[][] tmpMap = new MapObject.Types[22][];
@@ -306,9 +306,9 @@ namespace BattleCity.GameLib.Generators
 
         #region ADD : CONCRETE | BRICK | WATER | FOREST
 
-        private static void makeConcreteMap()
+        private static void MakeConcreteMap()
         {
-            objectInit();
+            ObjectInit();
 
             //"clear" map
             for (int i = 0; i < map.Length; i++)
@@ -319,11 +319,11 @@ namespace BattleCity.GameLib.Generators
 
             for (int i = 1; i < 10 - 1; i++)
                 for (int j = 1; j < 9 - 1; j++)
-                    if (isEmptyBox(map, i, j))
+                    if (IsEmptyBox(map, i, j))
                         if (rnd.Next(0, 4).Equals(0)) //should be element be added
                         {
-                            MapObject[][] element = getRandomElementFromListOfStaticElements();
-                            addConcreteStaticElementOnMap(map, element, i, j);
+                            MapObject[][] element = GetRandomElementFromListOfStaticElements();
+                            AddConcreteStaticElementOnMap(map, element, i, j);
                         }
 
             #endregion Fill part of a map (1/4)
@@ -348,14 +348,14 @@ namespace BattleCity.GameLib.Generators
                            : new MapObject(i, 9, MapObject.Types.EMPTY);
         }
 
-        private static void addConcreteStaticElementOnMap(MapObject[][] map, MapObject[][] element, int x, int y)
+        private static void AddConcreteStaticElementOnMap(MapObject[][] map, MapObject[][] element, int x, int y)
         {
             for (int i = 0; i < element.Length; i++)
                 for (int j = 0; j < element[i].Length; j++)
                     map[x - 1 + i][y - 1 + j] = new MapObject(x - 1 + i, y - 1 + j, element[i][j].Type);
         }
 
-        private static void addBricksOnMap()
+        private static void AddBricksOnMap()
         {
             foreach (MapObject t1 in map.SelectMany(t => t.Where(t1 => t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 4).Equals(0))))
                 t1.Type = MapObject.Types.BRICK;
@@ -367,7 +367,7 @@ namespace BattleCity.GameLib.Generators
                 t1.Type = MapObject.Types.FOREST;
         }
 
-        private static void addWaterOnMap()
+        private static void AddWaterOnMap()
         {
             foreach (MapObject t1 in from t in map from t1 in t where t1.Type.Equals(MapObject.Types.EMPTY) && rnd.Next(0, 16).Equals(0) select t1)
                 t1.Type = MapObject.Types.WATER;
@@ -377,16 +377,16 @@ namespace BattleCity.GameLib.Generators
 
         #region Element By Random
 
-        private static MapObject[][] getRandomElementFromListOfStaticElements()
+        private static MapObject[][] GetRandomElementFromListOfStaticElements()
         {
             MapObject[][] element = listOfStaticElements[rnd.Next(0, listOfStaticElements.Count)];
             int rotationAngle = rnd.Next(0, 5);
             for (int k = 0; k < rotationAngle; k++)
-                element = rotateStaticElement(element);
+                element = RotateStaticElement(element);
             return element;
         }
 
-        private static MapObject[][] rotateStaticElement(MapObject[][] element)
+        private static MapObject[][] RotateStaticElement(MapObject[][] element)
         {
             MapObject[][] tmp = new[] { new MapObject[3], new MapObject[3], new MapObject[3] };
             for (int i = 0; i < element.Length; i++)

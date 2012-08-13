@@ -7,9 +7,9 @@ using System.IO;
 
 namespace BattleCity.GameLib
 {
-    public class MapSave
+    public class MapSaver
     {
-        public MapSave(Map map, GameMode mode)
+        public MapSaver(Map map, GameMode mode)
         {
             this.map = map;
             this.mode = mode;
@@ -17,7 +17,7 @@ namespace BattleCity.GameLib
         private Map map;
         private GameMode mode;
         private XmlWriter writer = null;
-        public void createXMLDoc(String filePath)
+        public void CreateXMLDoc(String filePath)
         {
             XmlWriterSettings settings = new XmlWriterSettings();
             settings.Indent = true;

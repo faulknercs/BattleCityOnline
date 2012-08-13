@@ -82,22 +82,22 @@ namespace BattleCity.GameClient
 
             if (Keyboard[Key.Q])
             {
-                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.CLASSIC)));
+                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.W])
             {
-                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.DM)));
+                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.DM)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.E])
             {
-                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.TDMB)));
+                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDMB)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.R])
             {
-                map = new Map(MapGenerator.generateMap(new GameMode(GameMode.Mode.TDM)));
+                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDM)));
                 needDrawMap = true;
             }
             if (Keyboard[Key.Space])
