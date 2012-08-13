@@ -9,7 +9,7 @@ namespace BattleCity.GraphicsLib
     /// <summary>
     /// Incapsulates OpenGL 2D textures
     /// </summary>
-    public class Texture
+    public class Texture : IDisposable
     {
         public Texture(Bitmap bitmap)
             : this()
@@ -131,5 +131,40 @@ namespace BattleCity.GraphicsLib
         private int width;
         private int height;
         private int glTextureHandle;
+
+        #region IDisposable support
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        private void Dispose(bool manual)
+        {
+            if (!disposed)
+            {
+                if (manual)
+                {
+                    GL.DeleteTexture(glTextureHandle);
+                    disposed = true;
+                }
+                else
+                {
+                    //GC.KeepAlive(this);
+                    //Not able to delete resources at current OpenTK version
+                    // TODO: Fix this, when possible
+                }
+            }
+        }
+
+        ~Texture()
+        {
+            Dispose(false);
+        }
+
+        private bool disposed;
+
+        #endregion
     }
 }
