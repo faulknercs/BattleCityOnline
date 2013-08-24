@@ -143,15 +143,17 @@ namespace BattleCity.GameLib.Generators
                         if (rnd.Next(0, 2).Equals(0)) AddWaterOnMap(); //Water on map 50%
                         if (IsMapGood()) break;
                     }
-                    //adding base
-                    map[0][9] = new MapObject(0, 9, MapObject.Types.BASE);
-                    //adding bricks
-                    map[0][9 - 1] = new MapObject(0, 9 - 1, MapObject.Types.BRICK);
-                    map[0][9 + 1] = new MapObject(0, 9 + 1, MapObject.Types.BRICK);
-                    for (int i = 8; i <= 10; i++)
-                        map[1][i] = new MapObject(1, i, MapObject.Types.BRICK);
                     AddBricksOnMap();
                     addForestOnMap();
+                    //adding base
+                    map[19][9] = new MapObject(19, 9, MapObject.Types.BASE);
+                    //adding bricks
+                    map[19][9 - 1] = new MapObject(19, 9 - 1, MapObject.Types.BRICK);
+                    map[19][9 + 1] = new MapObject(19, 9 + 1, MapObject.Types.BRICK);
+                    map[19][9 - 2] = new MapObject(19, 9 - 2, MapObject.Types.EMPTY);
+                    map[19][9 + 2] = new MapObject(19, 9 + 2, MapObject.Types.EMPTY);
+                    for (int i = 8; i <= 10; i++)
+                        map[18][i] = new MapObject(18, i, MapObject.Types.BRICK);
                     break;
                 // Team deathmatch (two teams attacking each other) without bases
                 case GameMode.Mode.TDM:
