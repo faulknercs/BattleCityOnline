@@ -163,6 +163,7 @@
             this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "Grid";
             this.gridToolStripMenuItem.CheckedChanged += new System.EventHandler(this.gridToolStripMenuItem_CheckedChanged);
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 

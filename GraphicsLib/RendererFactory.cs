@@ -37,10 +37,12 @@ namespace BattleCity.GraphicsLib
         {
             // TODO: Add version choosing
             Version glVersion = new Version(GL.GetString(StringName.Version).Substring(0, 3));
-            //if (glVersion.Major == 2)
-                rendererImpl = new GL2_Renderer();
-            //else
-                
+            switch (glVersion.Major)
+            {
+                case 2:
+                    rendererImpl = new GL2_Renderer();
+                    break;
+            }
         }
 
         private IRendererImpl rendererImpl = null;

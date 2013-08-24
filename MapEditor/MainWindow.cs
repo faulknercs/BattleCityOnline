@@ -67,7 +67,6 @@ namespace BattleCity.MapEditor
 
         private void DrawGrid()
         {
-            GL.ClearColor(Color.Black);
             if (gridToolStripMenuItem.Checked)
             {
                 for (double i = 0; i < 19; i++)
@@ -95,11 +94,20 @@ namespace BattleCity.MapEditor
 
                 glControl.SwapBuffers();
             }
+            else
+            {
+                
+            }
         }
 
         private void gridToolStripMenuItem_CheckedChanged(object sender, EventArgs e)
         {
             DrawGrid();
+        }
+
+        private void gridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

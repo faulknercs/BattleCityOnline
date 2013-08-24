@@ -17,17 +17,16 @@ namespace BattleCity.GameClient
     internal class Game : GameWindow
     {
         public Game(int width, int height)
-            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 4, 1, GraphicsContextFlags.Default)
+            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 2, 1, GraphicsContextFlags.Default)
         {
             renderer = RendererFactory.Instance.CreateRenderer();
             Keyboard.KeyRepeat = false;
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
+            
             m = new MainMenu(windowWidth, windowHeight);
             Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(MenuControl);
-            
-            m = new MainMenu(windowWidth, windowHeight);           
             textureList = new[]
                               {
                                   new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
