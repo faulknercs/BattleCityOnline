@@ -7,27 +7,34 @@ using BattleCity.GameLib.Tanks;
 
 namespace BattleCity.GameLib
 {
-    class Level : Map
+    public class Level : Map
     {
         public Level(Map map)
         {
-            for (int i = 0; i < this.map.Length; ++i )
+            this.map = (new Map(map.MapInstance)).MapInstance;
+        }
+
+        public void AddTank(Player player, AbstractTank.Type tankType, int x, int y)
+        {
+            switch (tankType)
             {
-                for (int j = 0; j < this.map[i].Length; ++j)
-                {
-                    this.map[i][j] = map.GetInternalForm()[i][j];// TODO: thinks, there is better variant...
-                }
+                case AbstractTank.Type.PlayerNormal:
+                    tanks.Add(new NormalTank(player, x, y));
+                    break;
+                case AbstractTank.Type.PlayerFast:
+                    tanks.Add(new FastTank(player, x, y));
+                    break;
             }
         }
 
         /// <summary>
         /// Gets read-only collection of tanks, which exist on current level
         /// </summary>
-        public IList<Tank> Tanks
+        public IList<AbstractTank> Tanks
         {
             get
             {
-                return new ReadOnlyCollection<Tank>(tanks);
+                return new ReadOnlyCollection<AbstractTank>(tanks);
             }
         }
 
@@ -44,7 +51,7 @@ namespace BattleCity.GameLib
 
         public void ProcessTanks()
         {
-            foreach(Tank tank in tanks)
+            foreach(AbstractTank tank in tanks)
             {
 
             }
@@ -58,28 +65,28 @@ namespace BattleCity.GameLib
             }
         }
 
-        private void MoveTankUp(Tank tank)
+        private void MoveTankUp(AbstractTank tank)
         {
 
         }
 
-        private void MoveTankDown(Tank tank)
+        private void MoveTankDown(AbstractTank tank)
         {
 
         }
 
-        private void MoveTankRight(Tank tank)
+        private void MoveTankRight(AbstractTank tank)
         {
 
         }
 
-        private void MoveTankLeft(Tank tank)
+        private void MoveTankLeft(AbstractTank tank)
         {
 
         }
 
         private const int mapBlockSize = 20;
         private IList<Bullet> bullets = new List<Bullet>();
-        private IList<Tank> tanks = new List<Tank>();
+        private IList<AbstractTank> tanks = new List<AbstractTank>();
     }
 }

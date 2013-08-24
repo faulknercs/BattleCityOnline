@@ -17,9 +17,12 @@ namespace BattleCity.GameLib
             map = content;
         }
 
-        public MapObject[][] GetInternalForm()
+        public MapObject[][] MapInstance
         {
-            return map;
+            get
+            {
+                return map;
+            }
         }
 
         protected MapObject[][] map;

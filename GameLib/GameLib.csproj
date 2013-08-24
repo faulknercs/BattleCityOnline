@@ -65,7 +65,8 @@
     <Compile Include="Events\PlayerKeyEventArgs.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tanks\FastTank.cs" />
-    <Compile Include="Tanks\Tank.cs" />
+    <Compile Include="Tanks\AbstractTank.cs" />
+    <Compile Include="Tanks\NormalTank.cs" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -39,7 +39,7 @@ namespace BattleCity.GameLib
             //Writing map structure block
             writer.WriteStartElement("structure");      //
             //MapObject[][] tempMapObject = map.GetInternalForm();
-            foreach (MapObject[] m in map.GetInternalForm())
+            foreach (MapObject[] m in map.MapInstance)
             {
                 for (int j = 0; j < m.Length; j++)
                 {

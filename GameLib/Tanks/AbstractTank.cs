@@ -9,13 +9,27 @@ namespace BattleCity.GameLib.Tanks
     /// <summary>
     /// Class, which represents game tank
     /// </summary>
-    abstract class Tank
+    public abstract class AbstractTank
     {
-        public Tank(Player managingPlayer, int x, int y)
+        public enum Type 
+        {
+            PlayerNormal,
+            PlayerFast
+        }
+
+        public Type type { get; protected set; }
+
+        public AbstractTank(Player managingPlayer, int x, int y)
         {
             this.managingPlayer = managingPlayer;
+            X = x;
+            Y = y;
             Init();
         }
+
+        public int X { get; private set; }
+
+        public int Y { get; private set; }
 
         public bool IsUpState { get; private set; }
 
