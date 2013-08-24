@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using BattleCity.GameLib.Tanks;
+using BattleCity.GraphicsLib;
 
 namespace BattleCity.GameLib
 {
@@ -14,15 +15,15 @@ namespace BattleCity.GameLib
             this.map = (new Map(map.MapInstance)).MapInstance;
         }
 
-        public void AddTank(Player player, AbstractTank.Type tankType, int x, int y)
+        public void AddTank(Player player, AbstractTank.Type tankType, int x, int y, Texture.Rotation rotation)
         {
             switch (tankType)
             {
                 case AbstractTank.Type.PlayerNormal:
-                    tanks.Add(new NormalTank(player, x, y));
+                    tanks.Add(new NormalTank(player, x, y, rotation));
                     break;
                 case AbstractTank.Type.PlayerFast:
-                    tanks.Add(new FastTank(player, x, y));
+                    tanks.Add(new FastTank(player, x, y, rotation));
                     break;
             }
         }

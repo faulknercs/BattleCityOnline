@@ -93,7 +93,7 @@ namespace BattleCity.GameClient
                 if (Keyboard[Key.Q])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.W])
@@ -186,7 +186,7 @@ namespace BattleCity.GameClient
                     case GameState.SINGLEPL:
                         player = new LocalPlayer();
                         level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
-                        level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
+                        level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
                         Keyboard.KeyDown += player.KeyEventHandler;
                         needDrawMap = true;
                         break;

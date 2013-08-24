@@ -68,7 +68,12 @@
     <Compile Include="Tanks\AbstractTank.cs" />
     <Compile Include="Tanks\NormalTank.cs" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\GraphicsLib\GraphicsLib.csproj">
+      <Project>{C892876D-8CD8-4C33-BC57-7339F7EAB767}</Project>
+      <Name>GraphicsLib</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

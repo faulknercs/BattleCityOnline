@@ -50,12 +50,36 @@ namespace BattleCity.GameClient
         private Texture[] mapTextureList;
         private Texture[] tankTextureList;
 
-        private void DrawTexture(int x, int y, Texture texture)
+        private void DrawTexture(int x, int y, Texture texture, Texture.Rotation rotation)
         {
-            Vector2 v1 = new Vector2(x, y);
-            Vector2 v2 = new Vector2(x + elementWidth, y);
-            Vector2 v3 = new Vector2(x + elementWidth, y - elementHeight);
-            Vector2 v4 = new Vector2(x, y - elementHeight);
+            Vector2 v1 = new Vector2(), v2 = new Vector2(), v3 = new Vector2(), v4 = new Vector2();
+            switch (rotation)
+            {
+                case Texture.Rotation.Top:
+                    v1 = new Vector2(x, y);
+                    v2 = new Vector2(x + elementWidth, y);
+                    v3 = new Vector2(x + elementWidth, y - elementHeight);
+                    v4 = new Vector2(x, y - elementHeight);
+                    break;
+                case Texture.Rotation.Right:
+                    v1 = new Vector2(x + elementWidth, y);
+                    v2 = new Vector2(x + elementWidth, y - elementHeight);
+                    v3 = new Vector2(x, y - elementHeight);
+                    v4 = new Vector2(x, y);
+                    break;
+                case Texture.Rotation.Bottom:
+                    v1 = new Vector2(x + elementWidth, y - elementHeight);
+                    v2 = new Vector2(x, y - elementHeight);
+                    v3 = new Vector2(x, y);
+                    v4 = new Vector2(x + elementWidth, y);
+                    break;
+                case Texture.Rotation.Left:
+                    v1 = new Vector2(x, y - elementHeight);
+                    v2 = new Vector2(x, y);
+                    v3 = new Vector2(x + elementWidth, y);
+                    v4 = new Vector2(x + elementWidth, y - elementHeight);
+                    break;
+            }
             //Clear zone
             GL.Begin(BeginMode.Quads);
             {
@@ -72,7 +96,7 @@ namespace BattleCity.GameClient
             GL.Begin(BeginMode.Quads);
             {
                 GL.Color4(Color4.Transparent);
-                GL.TexCoord2(0, 0);
+                GL.TexCoord2(0, 0); 
                 GL.Vertex2(v1);
                 GL.TexCoord2(1, 0);
                 GL.Vertex2(v2);
@@ -130,12 +154,10 @@ namespace BattleCity.GameClient
 
         private void DrawMapPart(int x, int y, int textureIndex)
         {
-            Vector2 v1 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight);
-            Vector2 v2 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                                   windowHeight / 2 - x * elementHeight);
-            Vector2 v3 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                           windowHeight / 2 - x * elementHeight - elementHeight);
-            Vector2 v4 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight - elementHeight);
+            Vector2 v1 = new Vector2(-windowWidth/2 + y*elementWidth, windowHeight/2 - x*elementHeight);
+            Vector2 v2 = new Vector2(-windowWidth/2 + y*elementWidth + elementWidth, windowHeight/2 - x*elementHeight);
+            Vector2 v3 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth, windowHeight / 2 - x * elementHeight - elementHeight);
+            Vector2 v4 = new Vector2(-windowWidth/2 + y*elementWidth, windowHeight/2 - x*elementHeight - elementHeight);
             //Clear zone
             GL.Begin(BeginMode.Quads);
             {
@@ -175,7 +197,7 @@ namespace BattleCity.GameClient
                 switch (tank.type)
                 {
                     case AbstractTank.Type.PlayerNormal:
-                        DrawTexture(tank.X, tank.Y, tankTextureList[0]);
+                        DrawTexture(tank.X, tank.Y, tankTextureList[0], tank.rotation);
                         break;
                     case AbstractTank.Type.PlayerFast:
                         break;
@@ -183,12 +205,12 @@ namespace BattleCity.GameClient
             }
         }
 
-        public void DrawTank(int x, int y, AbstractTank.Type type)
+        public void DrawTank(int x, int y, AbstractTank.Type type, Texture.Rotation rotation)
         {
             switch (type)
             {
                 case AbstractTank.Type.PlayerNormal:
-                    DrawTexture(x, y, tankTextureList[0]);
+                    DrawTexture(x, y, tankTextureList[0], rotation);
                     //DrawTank(x, y, 0);
                     break;
                 case AbstractTank.Type.PlayerFast:
