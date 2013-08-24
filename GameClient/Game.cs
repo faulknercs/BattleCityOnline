@@ -26,7 +26,7 @@ namespace BattleCity.GameClient
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
             
             m = new MainMenu(windowWidth, windowHeight);
-            Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(MenuControl);
+            Keyboard.KeyDown += MenuControl;
             textureList = new[]
                               {
                                   new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
@@ -79,28 +79,33 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
-            if (Keyboard[Key.Q])
+            if (activeState.Equals(GameState.SINGLEPL))
             {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC)));
-                needDrawMap = true;
+                if (Keyboard[Key.Q])
+                {
+                    map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC)));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.W])
+                {
+                    map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.DM)));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.E])
+                {
+                    map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDMB)));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.R])
+                {
+                    map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDM)));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.Space])
+                {
+                    
+                }
             }
-            if (Keyboard[Key.W])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.DM)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.E])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDMB)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.R])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDM)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.Space])
-                needRefreshMap = true;
         }
 
         /// <summary>
@@ -109,8 +114,11 @@ namespace BattleCity.GameClient
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            renderer.SetColor(Color.White);
-            m.Render();
+            if (activeState.Equals(GameState.MAINMENU))
+            {
+                renderer.SetColor(Color.White);
+                m.Render();
+            }
             if (needDrawMap)
             {
                 gameRenderer.drawMap(map);
@@ -118,7 +126,7 @@ namespace BattleCity.GameClient
             }
             if (needRefreshMap)
             {
-                gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
+                //gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
                 needRefreshMap = false;
             }
 
@@ -127,8 +135,19 @@ namespace BattleCity.GameClient
 
         private void MenuControl(Object source, KeyboardKeyEventArgs args)
         {
-            if (m.GetStateByKey(args) == GameState.EXIT)
-                Exit();
+            if (activeState.Equals(GameState.MAINMENU))
+            {
+                switch (activeState = m.GetStateByKey(args))
+                {
+                    case GameState.SINGLEPL:
+                        map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC)));
+                        needDrawMap = true;
+                        break;
+                    case GameState.EXIT:
+                        Exit();
+                        break;
+                }
+            }
         }
 
         MainMenu m;
@@ -136,5 +155,7 @@ namespace BattleCity.GameClient
         private Map map;
         private Player player = new LocalPlayer();
         private const String windowName = "Battle City Online";
+
+        private GameState activeState = GameState.MAINMENU;
     }
 }
