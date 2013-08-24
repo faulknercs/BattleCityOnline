@@ -26,7 +26,9 @@ namespace BattleCity.GameClient
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
             
             m = new MainMenu(windowWidth, windowHeight);
-            Keyboard.KeyDown += MenuControl;
+            Keyboard.KeyDown += OnMenuControl;
+            WindowStateChanged += OnWindowStateChanged;
+            
             textureList = new[]
                               {
                                   new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
@@ -127,13 +129,41 @@ namespace BattleCity.GameClient
             if (needRefreshMap)
             {
                 //gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
+                gameRenderer.drawMap(map);
                 needRefreshMap = false;
             }
 
             SwapBuffers();
         }
 
-        private void MenuControl(Object source, KeyboardKeyEventArgs args)
+        private void OnWindowStateChanged(object sender, EventArgs eventArgs)
+        {
+            switch (WindowState)
+            {
+                case WindowState.Normal:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+                case WindowState.Minimized:
+                    break;
+                case WindowState.Maximized:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+                case WindowState.Fullscreen:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+            }
+        }
+
+        private void OnMenuControl(object source, KeyboardKeyEventArgs args)
         {
             if (activeState.Equals(GameState.MAINMENU))
             {
