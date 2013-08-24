@@ -2,6 +2,7 @@
 using System.Drawing;
 using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
+using BattleCity.GameLib.Tanks;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -28,25 +29,31 @@ namespace BattleCity.GameClient
             m = new MainMenu(windowWidth, windowHeight);
             Keyboard.KeyDown += OnMenuControl;
             WindowStateChanged += OnWindowStateChanged;
-            
-            textureList = new[]
-                              {
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.brick)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.concrete)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.water)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.forest)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources._base))
-                              };
+
+            mapTextureList = new[]
+                {
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.brick)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.concrete)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.water)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.forest)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources._base))
+                };
+
+            tankTextureList = new[]
+                {
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.tankPlayerNormal)),
+                };
 
             WindowBorder = WindowBorder.Fixed;
             windowWidth = width;
             windowHeight = height;
-            gameRenderer = new GameRenderer(windowWidth, windowHeight, textureList);
+            gameRenderer = new GameRenderer(windowWidth, windowHeight, mapTextureList, tankTextureList);
         }
 
         private GameRenderer gameRenderer;
-        private Texture[] textureList;
+        private Texture[] mapTextureList;
+        private Texture[] tankTextureList;
         private float windowWidth;
         private float windowHeight;
         private bool needDrawMap, needRefreshMap;
@@ -85,27 +92,31 @@ namespace BattleCity.GameClient
             {
                 if (Keyboard[Key.Q])
                 {
-                    map = new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC));
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.W])
                 {
-                    map = new Map(MapGenerator.GenerateMap(GameMode.Mode.DM));
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.DM)));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.E])
                 {
-                    map = new Map(MapGenerator.GenerateMap(GameMode.Mode.TDMB));
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDMB)));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.R])
                 {
-                    map = new Map(MapGenerator.GenerateMap(GameMode.Mode.TDM));
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDM)));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.Space])
                 {
-                    
+                    needRefreshMap = true;
                 }
             }
         }
@@ -121,15 +132,18 @@ namespace BattleCity.GameClient
                 renderer.SetColor(Color.White);
                 m.Render();
             }
-            if (needDrawMap)
+            if (level != null)
             {
-                gameRenderer.drawMap(map);
-                needDrawMap = false;
+                gameRenderer.DrawMap(level.MapInstance);
+                gameRenderer.DrawTanks(level.Tanks);
             }
+            //if (needDrawMap)
+            //{
+            //    needDrawMap = false;
+            //}
             if (needRefreshMap)
             {
-                //gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
-                gameRenderer.drawMap(map);
+                //gameRenderer.DrawTank(0, 1, AbstractTank.Type.PlayerNormal);
                 needRefreshMap = false;
             }
 
@@ -170,7 +184,10 @@ namespace BattleCity.GameClient
                 switch (activeState = m.GetStateByKey(args))
                 {
                     case GameState.SINGLEPL:
-                        map = new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC));
+                        player = new LocalPlayer();
+                        level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
+                        level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                        Keyboard.KeyDown += player.KeyEventHandler;
                         needDrawMap = true;
                         break;
                     case GameState.EXIT:
@@ -182,8 +199,8 @@ namespace BattleCity.GameClient
 
         MainMenu m;
         private IRendererImpl renderer;
-        private Map map;
-        private Player player = new LocalPlayer();
+        private Level level;
+        private LocalPlayer player;
         private const String windowName = "Battle City Online";
 
         private GameState activeState = GameState.MAINMENU;
