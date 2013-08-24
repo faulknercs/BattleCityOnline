@@ -25,10 +25,64 @@ namespace BattleCity.GameClient
             elementHeight = windowHeight / 20;
         }
 
+        public float WindowWidth 
+        {
+            get { return windowWidth; }
+        }
+
+        public float WindowHeight
+        {
+            get { return windowHeight; }
+        }
+
+        public float ElementWidth
+        {
+            get { return elementWidth; }
+        }
+
+        public float ElementHeight
+        {
+            get { return elementHeight; }
+        }
+
         private float windowWidth, windowHeight;
         private float elementWidth, elementHeight;
         private Texture[] mapTextureList;
         private Texture[] tankTextureList;
+
+        private void DrawTexture(int x, int y, Texture texture)
+        {
+            Vector2 v1 = new Vector2(x, y);
+            Vector2 v2 = new Vector2(x + elementWidth, y);
+            Vector2 v3 = new Vector2(x + elementWidth, y - elementHeight);
+            Vector2 v4 = new Vector2(x, y - elementHeight);
+            //Clear zone
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.Color3(Color.Black);
+                GL.Vertex2(v1);
+                GL.Vertex2(v2);
+                GL.Vertex2(v3);
+                GL.Vertex2(v4);
+            }
+            GL.End();
+
+            //mapping texture
+            texture.Bind();
+            GL.Begin(BeginMode.Quads);
+            {
+                GL.Color4(Color4.Transparent);
+                GL.TexCoord2(0, 0);
+                GL.Vertex2(v1);
+                GL.TexCoord2(1, 0);
+                GL.Vertex2(v2);
+                GL.TexCoord2(1, 1);
+                GL.Vertex2(v3);
+                GL.TexCoord2(0, 1);
+                GL.Vertex2(v4);
+            }
+            GL.End();
+        }
 
         #region Map Methods
 
@@ -116,12 +170,12 @@ namespace BattleCity.GameClient
         
         public void DrawTanks(IList<AbstractTank> tanks)
         {
-            foreach (var abstractTank in tanks)
+            foreach (var tank in tanks)
             {
-                switch (abstractTank.type)
+                switch (tank.type)
                 {
                     case AbstractTank.Type.PlayerNormal:
-                        DrawTank(abstractTank.Y, abstractTank.X, 0);
+                        DrawTexture(tank.X, tank.Y, tankTextureList[0]);
                         break;
                     case AbstractTank.Type.PlayerFast:
                         break;
@@ -134,47 +188,12 @@ namespace BattleCity.GameClient
             switch (type)
             {
                 case AbstractTank.Type.PlayerNormal:
-                    DrawTank(x, y, 0);
+                    DrawTexture(x, y, tankTextureList[0]);
+                    //DrawTank(x, y, 0);
                     break;
                 case AbstractTank.Type.PlayerFast:
                     break;
             }
-        }
-
-        private void DrawTank(int x, int y, int textureIndex)
-        {
-            Vector2 v1 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight);
-            Vector2 v2 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                                   windowHeight / 2 - x * elementHeight);
-            Vector2 v3 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                           windowHeight / 2 - x * elementHeight - elementHeight);
-            Vector2 v4 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight - elementHeight);
-            //Clear zone
-            GL.Begin(BeginMode.Quads);
-            {
-                GL.Color3(Color.Black);
-                GL.Vertex2(v1);
-                GL.Vertex2(v2);
-                GL.Vertex2(v3);
-                GL.Vertex2(v4);
-            }
-            GL.End();
-
-            //mapping texture
-            tankTextureList[textureIndex].Bind();
-            GL.Begin(BeginMode.Quads);
-            {
-                GL.Color4(Color4.Transparent);
-                GL.TexCoord2(0, 0);
-                GL.Vertex2(v1);
-                GL.TexCoord2(1, 0);
-                GL.Vertex2(v2);
-                GL.TexCoord2(1, 1);
-                GL.Vertex2(v3);
-                GL.TexCoord2(0, 1);
-                GL.Vertex2(v4);
-            }
-            GL.End();
         }
 
         #endregion Tank Methods

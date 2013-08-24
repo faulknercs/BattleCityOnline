@@ -93,25 +93,25 @@ namespace BattleCity.GameClient
                 if (Keyboard[Key.Q])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.W])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.DM)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.E])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDMB)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.R])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDM)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
                     needDrawMap = true;
                 }
                 if (Keyboard[Key.Space])
@@ -186,7 +186,7 @@ namespace BattleCity.GameClient
                     case GameState.SINGLEPL:
                         player = new LocalPlayer();
                         level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
-                        level.AddTank(player, AbstractTank.Type.PlayerNormal, 7, 19);
+                        level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
                         Keyboard.KeyDown += player.KeyEventHandler;
                         needDrawMap = true;
                         break;
