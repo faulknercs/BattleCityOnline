@@ -116,38 +116,31 @@ namespace BattleCity.GameClient
             GL.ClearColor(Color.Black);
             for (int i = 0; i < map.Length; i++)
                 for (int j = 0; j < map[i].Length; j++)
-                    switch (map[i][j].Type)
-                    {
-                        case MapObject.Types.EMPTY: DrawMapPart(j, i, 0);
-                            break;
-                        case MapObject.Types.BRICK: DrawMapPart(j, i, 1);
-                            break;
-                        case MapObject.Types.CONCRETE: DrawMapPart(j, i, 2);
-                            break;
-                        case MapObject.Types.WATER: DrawMapPart(j, i, 3);
-                            break;
-                        case MapObject.Types.FOREST: DrawMapPart(j,i, 4);
-                            break;
-                        case MapObject.Types.BASE: DrawMapPart(j, i, 5);
-                            break;
-                    }
+                {
+                    MapTextureSwitcher(j, i, map[i][j].Type);
+                }
         }
 
         public void DrawMapPart(int x, int y, MapObject.Types type)
         {
+            MapTextureSwitcher(x, y, type);
+        }
+
+        private void MapTextureSwitcher(int mapPartX, int mapPartY, MapObject.Types type)
+        {
             switch (type)
             {
-                case MapObject.Types.EMPTY: DrawMapPart(x, y, 0);
+                case MapObject.Types.EMPTY: DrawMapPart(mapPartX, mapPartY, 0);
                     break;
-                case MapObject.Types.BRICK: DrawMapPart(x, y, 1);
+                case MapObject.Types.BRICK: DrawMapPart(mapPartX, mapPartY, 1);
                     break;
-                case MapObject.Types.CONCRETE: DrawMapPart(x, y, 2);
+                case MapObject.Types.CONCRETE: DrawMapPart(mapPartX, mapPartY, 2);
                     break;
-                case MapObject.Types.WATER: DrawMapPart(x, y, 3);
+                case MapObject.Types.WATER: DrawMapPart(mapPartX, mapPartY, 3);
                     break;
-                case MapObject.Types.FOREST: DrawMapPart(x, y, 4);
+                case MapObject.Types.FOREST: DrawMapPart(mapPartX, mapPartY, 4);
                     break;
-                case MapObject.Types.BASE: DrawMapPart(x, y, 5);
+                case MapObject.Types.BASE: DrawMapPart(mapPartX, mapPartY, 5);
                     break;
             }
         }
