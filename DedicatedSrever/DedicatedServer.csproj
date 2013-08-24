@@ -8,8 +8,8 @@
     <ProjectGuid>{8FF5687B-1401-4BE1-91E4-9FC37E1D3D7C}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>BattleCity.DedicatedSrever</RootNamespace>
-    <AssemblyName>DedicatedSrever</AssemblyName>
+    <RootNamespace>BattleCity.DedicatedServer</RootNamespace>
+    <AssemblyName>DedicatedServer</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <TargetFrameworkProfile>Client</TargetFrameworkProfile>
     <FileAlignment>512</FileAlignment>

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DedicatedSrever", "DedicatedSrever\DedicatedSrever.csproj", "{8FF5687B-1401-4BE1-91E4-9FC37E1D3D7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DedicatedServer", "DedicatedSrever\DedicatedServer.csproj", "{8FF5687B-1401-4BE1-91E4-9FC37E1D3D7C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GameLib", "GameLib\GameLib.csproj", "{A6AC5841-FAAB-44AA-A9A1-41FE323DB8BB}"
 EndProject

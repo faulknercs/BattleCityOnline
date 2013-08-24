@@ -3,7 +3,7 @@ using System.IO;
 using System.Net;
 using System.Net.Sockets;
 
-namespace BattleCity.DedicatedSrever
+namespace BattleCity.DedicatedServer
 {
     public class SocketListener
     {

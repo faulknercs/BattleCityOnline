@@ -1,6 +1,6 @@
 ﻿using BattleCity.GameLib;
 
-namespace BattleCity.DedicatedSrever
+namespace BattleCity.DedicatedServer
 {
     internal class Message
     {

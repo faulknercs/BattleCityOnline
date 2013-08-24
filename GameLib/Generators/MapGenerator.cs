@@ -127,9 +127,9 @@ namespace BattleCity.GameLib.Generators
         static List<MapObject[][]> listOfStaticElements = new List<MapObject[][]>();
         static Random rnd = new Random();
 
-        public static MapObject[][] GenerateMap(GameMode mode)
+        public static MapObject[][] GenerateMap(GameMode.Mode mode)
         {
-            switch (mode.mode)
+            switch (mode)
             {
                 // Classical mode (one team defends its base, another one attacks trying to destroy the base)
                 case GameMode.Mode.CLASSIC:
