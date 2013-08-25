@@ -2,6 +2,7 @@
 using System.Drawing;
 using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
+using BattleCity.GameLib.Tanks;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -17,35 +18,42 @@ namespace BattleCity.GameClient
     internal class Game : GameWindow
     {
         public Game(int width, int height)
-            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 4, 1, GraphicsContextFlags.Default)
+            : base(width, height, GraphicsMode.Default, windowName, GameWindowFlags.Default, DisplayDevice.Default, 2, 1, GraphicsContextFlags.Default)
         {
             renderer = RendererFactory.Instance.CreateRenderer();
             Keyboard.KeyRepeat = false;
             GL.Enable(EnableCap.Texture2D);
             GL.Enable(EnableCap.Blend);
             GL.BlendFunc(BlendingFactorSrc.One, BlendingFactorDest.OneMinusSrcAlpha);
-            m = new MainMenu(windowWidth, windowHeight);
-            Keyboard.KeyDown += new EventHandler<KeyboardKeyEventArgs>(MenuControl);
             
-            m = new MainMenu(windowWidth, windowHeight);           
-            textureList = new[]
-                              {
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.brick)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.concrete)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.water)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources.forest)),
-                                  new Texture(new Bitmap(GraphicsLib.Properties.Resources._base))
-                              };
+            m = new MainMenu(windowWidth, windowHeight);
+            Keyboard.KeyDown += OnMenuControl;
+            WindowStateChanged += OnWindowStateChanged;
+
+            mapTextureList = new[]
+                {
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.empty)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.brick)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.concrete)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.water)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.forest)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources._base))
+                };
+
+            tankTextureList = new[]
+                {
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.tankPlayerNormal)),
+                };
 
             WindowBorder = WindowBorder.Fixed;
             windowWidth = width;
             windowHeight = height;
-            gameRenderer = new GameRenderer(windowWidth, windowHeight, textureList);
+            gameRenderer = new GameRenderer(windowWidth, windowHeight, mapTextureList, tankTextureList);
         }
 
         private GameRenderer gameRenderer;
-        private Texture[] textureList;
+        private Texture[] mapTextureList;
+        private Texture[] tankTextureList;
         private float windowWidth;
         private float windowHeight;
         private bool needDrawMap, needRefreshMap;
@@ -80,28 +88,58 @@ namespace BattleCity.GameClient
             //GameLogic gameplay = new GameLogic();
             //gameplay.AddPlayer(player);
 
-            if (Keyboard[Key.Q])
+            if (activeState.Equals(GameState.SINGLEPL))
             {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC)));
-                needDrawMap = true;
+                if (Keyboard[Key.Q])
+                {
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
+                    level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.W])
+                {
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.DM)));
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.E])
+                {
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDMB)));
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.R])
+                {
+                    level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDM)));
+                    //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
+                    needDrawMap = true;
+                }
+                if (Keyboard[Key.Space])
+                {
+                    needRefreshMap = true;
+                }
+                Title = player.tank.IsUpState.ToString();
+                if (player.tank.IsUpState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Top);
+                    player.tank.MoveUp();
+                }
+                else if (player.tank.IsDownState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Bottom);
+                    player.tank.MoveDown();
+                }
+                else if (player.tank.IsRightState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Right);
+                    player.tank.MoveRight();
+                }
+                else if (player.tank.IsLeftState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Left);
+                    player.tank.MoveLeft();
+                }
             }
-            if (Keyboard[Key.W])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.DM)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.E])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDMB)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.R])
-            {
-                map = new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.TDM)));
-                needDrawMap = true;
-            }
-            if (Keyboard[Key.Space])
-                needRefreshMap = true;
         }
 
         /// <summary>
@@ -110,32 +148,82 @@ namespace BattleCity.GameClient
         /// <param name="e">Contains timing information.</param>
         protected override void OnRenderFrame(FrameEventArgs e)
         {
-            renderer.SetColor(Color.White);
-            m.Render();
-            if (needDrawMap)
+            if (activeState.Equals(GameState.MAINMENU))
             {
-                gameRenderer.drawMap(map);
-                needDrawMap = false;
+                renderer.SetColor(Color.White);
+                m.Render();
             }
+            if (level != null)
+            {
+                gameRenderer.DrawMap(level.MapInstance);
+                gameRenderer.DrawTanks(level.Tanks);
+            }
+            //if (needDrawMap)
+            //{
+            //    needDrawMap = false;
+            //}
             if (needRefreshMap)
             {
-                gameRenderer.drawMap(0, 1, MapObject.Types.WATER);
                 needRefreshMap = false;
             }
 
             SwapBuffers();
         }
 
-        private void MenuControl(Object source, KeyboardKeyEventArgs args)
+        private void OnWindowStateChanged(object sender, EventArgs eventArgs)
         {
-            if (m.GetStateByKey(args) == GameState.EXIT)
-                Exit();
+            switch (WindowState)
+            {
+                case WindowState.Normal:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+                case WindowState.Minimized:
+                    break;
+                case WindowState.Maximized:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+                case WindowState.Fullscreen:
+                    if (activeState.Equals(GameState.SINGLEPL))
+                    {
+                        needRefreshMap = true;
+                    }
+                    break;
+            }
+        }
+
+        private void OnMenuControl(object source, KeyboardKeyEventArgs args)
+        {
+            if (activeState.Equals(GameState.MAINMENU))
+            {
+                switch (activeState = m.GetStateByKey(args))
+                {
+                    case GameState.SINGLEPL:
+                        player = new LocalPlayer();
+                        level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
+                        level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
+                        Keyboard.KeyUp += player.KeyUpEventHandler;
+                        Keyboard.KeyDown += player.KeyDownEventHandler;
+                        needDrawMap = true;
+                        break;
+                    case GameState.EXIT:
+                        Exit();
+                        break;
+                }
+            }
         }
 
         MainMenu m;
         private IRendererImpl renderer;
-        private Map map;
-        private Player player = new LocalPlayer();
+        private Level level;
+        private LocalPlayer player;
         private const String windowName = "Battle City Online";
+
+        private GameState activeState = GameState.MAINMENU;
     }
 }

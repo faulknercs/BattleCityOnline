@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using BattleCity.GameLib;
 
-namespace BattleCity.DedicatedSrever
+namespace BattleCity.DedicatedServer
 {
     public class Round
     {

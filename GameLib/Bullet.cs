@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BattleCity.GameLib
 {
-    class Bullet
+    public class Bullet
     {
     }
 }

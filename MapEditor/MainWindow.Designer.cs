@@ -46,9 +46,9 @@
             this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buttonsPanel = new System.Windows.Forms.Panel();
-            this.glControl = new OpenTK.GLControl();
-            this.buttonBrick = new System.Windows.Forms.Button();
             this.buttonConcrete = new System.Windows.Forms.Button();
+            this.buttonBrick = new System.Windows.Forms.Button();
+            this.glControl = new OpenTK.GLControl();
             this.menuStrip.SuspendLayout();
             this.buttonsPanel.SuspendLayout();
             this.SuspendLayout();
@@ -160,8 +160,10 @@
             // 
             this.gridToolStripMenuItem.CheckOnClick = true;
             this.gridToolStripMenuItem.Name = "gridToolStripMenuItem";
-            this.gridToolStripMenuItem.Size = new System.Drawing.Size(96, 22);
+            this.gridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.gridToolStripMenuItem.Text = "Grid";
+            this.gridToolStripMenuItem.CheckedChanged += new System.EventHandler(this.gridToolStripMenuItem_CheckedChanged);
+            this.gridToolStripMenuItem.Click += new System.EventHandler(this.gridToolStripMenuItem_Click);
             // 
             // helpToolStripMenuItem
             // 
@@ -188,16 +190,15 @@
             this.buttonsPanel.Size = new System.Drawing.Size(100, 362);
             this.buttonsPanel.TabIndex = 2;
             // 
-            // glControl
+            // buttonConcrete
             // 
-            this.glControl.BackColor = System.Drawing.Color.Black;
-            this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.glControl.Location = new System.Drawing.Point(100, 24);
-            this.glControl.Name = "glControl";
-            this.glControl.Size = new System.Drawing.Size(364, 362);
-            this.glControl.TabIndex = 3;
-            this.glControl.VSync = false;
-            this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl_Paint);
+            this.buttonConcrete.Location = new System.Drawing.Point(52, 4);
+            this.buttonConcrete.Name = "buttonConcrete";
+            this.buttonConcrete.Size = new System.Drawing.Size(48, 46);
+            this.buttonConcrete.TabIndex = 1;
+            this.buttonConcrete.Text = "CONCRETE";
+            this.buttonConcrete.UseVisualStyleBackColor = true;
+            this.buttonConcrete.Click += new System.EventHandler(this.InstrimentButton_Click);
             // 
             // buttonBrick
             // 
@@ -209,15 +210,17 @@
             this.buttonBrick.UseVisualStyleBackColor = true;
             this.buttonBrick.Click += new System.EventHandler(this.InstrimentButton_Click);
             // 
-            // buttonConcrete
+            // glControl
             // 
-            this.buttonConcrete.Location = new System.Drawing.Point(52, 4);
-            this.buttonConcrete.Name = "buttonConcrete";
-            this.buttonConcrete.Size = new System.Drawing.Size(48, 46);
-            this.buttonConcrete.TabIndex = 1;
-            this.buttonConcrete.Text = "CONCRETE";
-            this.buttonConcrete.UseVisualStyleBackColor = true;
-            this.buttonConcrete.Click += new System.EventHandler(this.InstrimentButton_Click);
+            this.glControl.BackColor = System.Drawing.Color.Black;
+            this.glControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.glControl.Location = new System.Drawing.Point(100, 24);
+            this.glControl.Name = "glControl";
+            this.glControl.Size = new System.Drawing.Size(364, 362);
+            this.glControl.TabIndex = 3;
+            this.glControl.VSync = false;
+            this.glControl.Paint += new System.Windows.Forms.PaintEventHandler(this.glControl_Paint);
+            this.glControl.Resize += new System.EventHandler(this.glControl_Resize);
             // 
             // MainWindow
             // 

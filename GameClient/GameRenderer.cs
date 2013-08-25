@@ -1,6 +1,8 @@
-﻿using System.Drawing;
+﻿using System.Collections.Generic;
+using System.Drawing;
 using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
+using BattleCity.GameLib.Tanks;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -13,71 +15,71 @@ namespace BattleCity.GameClient
     /// </summary>
     internal class GameRenderer
     {//think, we can load textures in Renderer instead of passing them as parameter
-        public GameRenderer(float windowWidth, float windowHeight, Texture[] textureList)
+        public GameRenderer(float windowWidth, float windowHeight, Texture[] mapTextureList, Texture[] tankTextureList)
         {
             this.windowWidth = windowWidth;
             this.windowHeight = windowHeight;
-            this.textureList = textureList;
+            this.mapTextureList = mapTextureList;
+            this.tankTextureList = tankTextureList;
             elementWidth = windowWidth / 19;
             elementHeight = windowHeight / 20;
         }
 
+        public float WindowWidth 
+        {
+            get { return windowWidth; }
+        }
+
+        public float WindowHeight
+        {
+            get { return windowHeight; }
+        }
+
+        public float ElementWidth
+        {
+            get { return elementWidth; }
+        }
+
+        public float ElementHeight
+        {
+            get { return elementHeight; }
+        }
+
         private float windowWidth, windowHeight;
         private float elementWidth, elementHeight;
-        private Texture[] textureList;
+        private Texture[] mapTextureList;
+        private Texture[] tankTextureList;
 
-        #region Map Methods
-
-        public void drawMap(Map map)
+        private void DrawTexture(int x, int y, Texture texture, Texture.Rotation rotation)
         {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-            GL.ClearColor(Color.Black);
-            for (int i = 0; i < map.GetInternalForm().Length; i++)
-                for (int j = 0; j < map.GetInternalForm()[i].Length; j++)
-                    switch (map.GetInternalForm()[i][j].Type)
-                    {
-                        case MapObject.Types.EMPTY: DrawMapPart(i, j, 0);
-                            break;
-                        case MapObject.Types.BRICK: DrawMapPart(i, j, 1);
-                            break;
-                        case MapObject.Types.CONCRETE: DrawMapPart(i, j, 2);
-                            break;
-                        case MapObject.Types.WATER: DrawMapPart(i, j, 3);
-                            break;
-                        case MapObject.Types.FOREST: DrawMapPart(i, j, 4);
-                            break;
-                        case MapObject.Types.BASE: DrawMapPart(i, j, 5);
-                            break;
-                    }
-        }
-
-        public void drawMap(int x, int y, MapObject.Types type)
-        {
-            switch (type)
+            Vector2 v1 = new Vector2(), v2 = new Vector2(), v3 = new Vector2(), v4 = new Vector2();
+            switch (rotation)
             {
-                case MapObject.Types.EMPTY: DrawMapPart(x, y, 0);
+                case Texture.Rotation.Top:
+                    v1 = new Vector2(x, y);
+                    v2 = new Vector2(x + elementWidth, y);
+                    v3 = new Vector2(x + elementWidth, y - elementHeight);
+                    v4 = new Vector2(x, y - elementHeight);
                     break;
-                case MapObject.Types.BRICK: DrawMapPart(x, y, 1);
+                case Texture.Rotation.Right:
+                    v1 = new Vector2(x + elementWidth, y);
+                    v2 = new Vector2(x + elementWidth, y - elementHeight);
+                    v3 = new Vector2(x, y - elementHeight);
+                    v4 = new Vector2(x, y);
                     break;
-                case MapObject.Types.CONCRETE: DrawMapPart(x, y, 2);
+                case Texture.Rotation.Bottom:
+                    v1 = new Vector2(x + elementWidth, y - elementHeight);
+                    v2 = new Vector2(x, y - elementHeight);
+                    v3 = new Vector2(x, y);
+                    v4 = new Vector2(x + elementWidth, y);
                     break;
-                case MapObject.Types.WATER: DrawMapPart(x, y, 3);
-                    break;
-                case MapObject.Types.FOREST: DrawMapPart(x, y, 4);
-                    break;
-                case MapObject.Types.BASE: DrawMapPart(x, y, 5);
+                case Texture.Rotation.Left:
+                    v1 = new Vector2(x, y - elementHeight);
+                    v2 = new Vector2(x, y);
+                    v3 = new Vector2(x + elementWidth, y);
+                    v4 = new Vector2(x + elementWidth, y - elementHeight);
                     break;
             }
-        }
-
-        private void DrawMapPart(int x, int y, int textureIndex)
-        {
-            Vector2 v1 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight);
-            Vector2 v2 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                                   windowHeight / 2 - x * elementHeight);
-            Vector2 v3 = new Vector2(-windowWidth / 2 + y * elementWidth + elementWidth,
-                           windowHeight / 2 - x * elementHeight - elementHeight);
-            Vector2 v4 = new Vector2(-windowWidth / 2 + y * elementWidth, windowHeight / 2 - x * elementHeight - elementHeight);
             //Clear zone
             GL.Begin(BeginMode.Quads);
             {
@@ -90,11 +92,11 @@ namespace BattleCity.GameClient
             GL.End();
 
             //mapping texture
-            textureList[textureIndex].Bind();
+            texture.Bind();
             GL.Begin(BeginMode.Quads);
             {
                 GL.Color4(Color4.Transparent);
-                GL.TexCoord2(0, 0);
+                GL.TexCoord2(0, 0); 
                 GL.Vertex2(v1);
                 GL.TexCoord2(1, 0);
                 GL.Vertex2(v2);
@@ -106,9 +108,81 @@ namespace BattleCity.GameClient
             GL.End();
         }
 
+        #region Map Methods
+
+        public void DrawMap(MapObject[][] map)
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+            GL.ClearColor(Color.Black);
+            for (int i = 0; i < map.Length; i++)
+                for (int j = 0; j < map[i].Length; j++)
+                {
+                    MapTextureSwitcher(j, i, map[i][j].Type);
+                }
+        }
+
+        public void DrawMapPart(int x, int y, MapObject.Types type)
+        {
+            MapTextureSwitcher(x, y, type);
+        }
+
+        private void MapTextureSwitcher(int mapPartX, int mapPartY, MapObject.Types type)
+        {
+            switch (type)
+            {
+                case MapObject.Types.EMPTY: DrawMapPart(mapPartX, mapPartY, 0);
+                    break;
+                case MapObject.Types.BRICK: DrawMapPart(mapPartX, mapPartY, 1);
+                    break;
+                case MapObject.Types.CONCRETE: DrawMapPart(mapPartX, mapPartY, 2);
+                    break;
+                case MapObject.Types.WATER: DrawMapPart(mapPartX, mapPartY, 3);
+                    break;
+                case MapObject.Types.FOREST: DrawMapPart(mapPartX, mapPartY, 4);
+                    break;
+                case MapObject.Types.BASE: DrawMapPart(mapPartX, mapPartY, 5);
+                    break;
+            }
+        }
+
+        private void DrawMapPart(int x, int y, int textureIndex)
+        {
+            DrawTexture((int) (-windowWidth/2 + x*elementWidth),
+                        (int) (windowHeight/2 - y*elementHeight),
+                        mapTextureList[textureIndex], Texture.Rotation.Top);
+        }
+
         #endregion Map Methods
 
         #region Tank Methods
+        
+        public void DrawTanks(IList<AbstractTank> tanks)
+        {
+            foreach (var tank in tanks)
+            {
+                switch (tank.type)
+                {
+                    case AbstractTank.Type.PlayerNormal:
+                        DrawTexture(tank.X, tank.Y, tankTextureList[0], tank.rotation);
+                        break;
+                    case AbstractTank.Type.PlayerFast:
+                        break;
+                }
+            }
+        }
+
+        public void DrawTank(int x, int y, AbstractTank.Type type, Texture.Rotation rotation)
+        {
+            switch (type)
+            {
+                case AbstractTank.Type.PlayerNormal:
+                    DrawTexture(x, y, tankTextureList[0], rotation);
+                    //DrawTank(x, y, 0);
+                    break;
+                case AbstractTank.Type.PlayerFast:
+                    break;
+            }
+        }
 
         #endregion Tank Methods
 
