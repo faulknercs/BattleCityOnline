@@ -79,7 +79,9 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Textures\Bonuses\" />
-    <Folder Include="Textures\Tanks\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Textures\Tanks\NormalPlayerTank.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

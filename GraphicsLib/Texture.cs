@@ -128,6 +128,16 @@ namespace BattleCity.GraphicsLib
 
         #endregion
 
+        public enum Rotation
+        {
+            Top,
+            Bottom,
+            Left,
+            Right
+        }
+
+        public Rotation rotation { get; private set; }
+
         private int width;
         private int height;
         private int glTextureHandle;

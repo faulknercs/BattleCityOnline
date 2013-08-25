@@ -6,13 +6,13 @@ using System.Threading;
 using BattleCity.GameLib;
 using BattleCity.GameLib.Generators;
 
-namespace BattleCity.DedicatedSrever
+namespace BattleCity.DedicatedServer
 {
     internal class Server
     {
         private static void Main()
         {
-            round = new Round(new GameMode(GameMode.Mode.CLASSIC), new Map(MapGenerator.GenerateMap(new GameMode(GameMode.Mode.CLASSIC))), new List<Player>());
+            round = new Round(new GameMode(GameMode.Mode.CLASSIC), new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)), new List<Player>());
             serverIP = SocketListener.getServerIP();
             serverPort = SocketListener.getServerPort();
             socketListener = new SocketListener();
@@ -89,7 +89,7 @@ namespace BattleCity.DedicatedSrever
                 case 2:
                     if (cmdParams[0].ToLower().Equals("set") && cmdParams[1].ToLower().Equals("map"))
                     {
-                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode));
+                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode.mode));
                         Console.Write(Message.getMap());
                     }
                     else
@@ -104,19 +104,19 @@ namespace BattleCity.DedicatedSrever
                                 {
                                     case "classic":
                                         round.Mode = new GameMode(GameMode.Mode.CLASSIC);
-                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode));
+                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode.mode));
                                         break;
                                     case "dm":
                                         round.Mode = new GameMode(GameMode.Mode.DM);
-                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode));
+                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode.mode));
                                         break;
                                     case "tdm":
                                         round.Mode = new GameMode(GameMode.Mode.TDM);
-                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode));
+                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode.mode));
                                         break;
                                     case "tdmb":
                                         round.Mode = new GameMode(GameMode.Mode.TDMB);
-                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode));
+                                        round.Map = new Map(MapGenerator.GenerateMap(round.Mode.mode));
                                         break;
                                     default:
                                         Console.Write(Message.help());

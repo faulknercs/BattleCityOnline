@@ -1,6 +1,6 @@
 ﻿using BattleCity.GameLib;
 
-namespace BattleCity.DedicatedSrever
+namespace BattleCity.DedicatedServer
 {
     internal class Message
     {
@@ -38,7 +38,7 @@ namespace BattleCity.DedicatedSrever
         public static string getMap()
         {
             answer = "";
-            MapObject[][] map = Server.round.Map.GetInternalForm();
+            MapObject[][] map = Server.round.Map.MapInstance;
             for (int i = 0; i < 21; i++)
                 answer += "X ";
             answer += newLine;
