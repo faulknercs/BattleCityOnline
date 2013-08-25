@@ -28,7 +28,6 @@ namespace BattleCity.GameClient
             
             m = new MainMenu(windowWidth, windowHeight);
             Keyboard.KeyDown += OnMenuControl;
-            WindowStateChanged += OnWindowStateChanged;
 
             mapTextureList = new[]
                 {
@@ -42,7 +41,7 @@ namespace BattleCity.GameClient
 
             tankTextureList = new[]
                 {
-                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.tankPlayerNormal)),
+                    new Texture(new Bitmap(GraphicsLib.Properties.Resources.tankPlayerNormal))
                 };
 
             WindowBorder = WindowBorder.Fixed;
@@ -56,7 +55,6 @@ namespace BattleCity.GameClient
         private Texture[] tankTextureList;
         private float windowWidth;
         private float windowHeight;
-        private bool needDrawMap, needRefreshMap;
 
         /// <summary>
         /// Load resources before main loop
@@ -94,50 +92,56 @@ namespace BattleCity.GameClient
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
                     level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
-                    needDrawMap = true;
                 }
                 if (Keyboard[Key.W])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.DM)));
                     //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
-                    needDrawMap = true;
                 }
                 if (Keyboard[Key.E])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDMB)));
                     //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
-                    needDrawMap = true;
                 }
                 if (Keyboard[Key.R])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.TDM)));
                     //level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight));
-                    needDrawMap = true;
                 }
                 if (Keyboard[Key.Space])
                 {
-                    needRefreshMap = true;
                 }
-                Title = player.tank.IsUpState.ToString();
                 if (player.tank.IsUpState)
                 {
                     player.tank.Rotate(Texture.Rotation.Top);
-                    player.tank.MoveUp();
+                    if (TankCanMove(level, player.tank, Texture.Rotation.Top))
+                    {
+                        player.tank.MoveUp();
+                    }
                 }
                 else if (player.tank.IsDownState)
                 {
                     player.tank.Rotate(Texture.Rotation.Bottom);
-                    player.tank.MoveDown();
+                    if (TankCanMove(level, player.tank, Texture.Rotation.Bottom))
+                    {
+                        player.tank.MoveDown();
+                    }
                 }
                 else if (player.tank.IsRightState)
                 {
                     player.tank.Rotate(Texture.Rotation.Right);
-                    player.tank.MoveRight();
+                    if (TankCanMove(level, player.tank, Texture.Rotation.Right))
+                    {
+                        player.tank.MoveRight();
+                    }
                 }
                 else if (player.tank.IsLeftState)
                 {
                     player.tank.Rotate(Texture.Rotation.Left);
-                    player.tank.MoveLeft();
+                    if (TankCanMove(level, player.tank, Texture.Rotation.Left))
+                    {
+                        player.tank.MoveLeft();
+                    }
                 }
             }
         }
@@ -158,43 +162,8 @@ namespace BattleCity.GameClient
                 gameRenderer.DrawMap(level.MapInstance);
                 gameRenderer.DrawTanks(level.Tanks);
             }
-            //if (needDrawMap)
-            //{
-            //    needDrawMap = false;
-            //}
-            if (needRefreshMap)
-            {
-                needRefreshMap = false;
-            }
 
             SwapBuffers();
-        }
-
-        private void OnWindowStateChanged(object sender, EventArgs eventArgs)
-        {
-            switch (WindowState)
-            {
-                case WindowState.Normal:
-                    if (activeState.Equals(GameState.SINGLEPL))
-                    {
-                        needRefreshMap = true;
-                    }
-                    break;
-                case WindowState.Minimized:
-                    break;
-                case WindowState.Maximized:
-                    if (activeState.Equals(GameState.SINGLEPL))
-                    {
-                        needRefreshMap = true;
-                    }
-                    break;
-                case WindowState.Fullscreen:
-                    if (activeState.Equals(GameState.SINGLEPL))
-                    {
-                        needRefreshMap = true;
-                    }
-                    break;
-            }
         }
 
         private void OnMenuControl(object source, KeyboardKeyEventArgs args)
@@ -209,13 +178,104 @@ namespace BattleCity.GameClient
                         level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
                         Keyboard.KeyUp += player.KeyUpEventHandler;
                         Keyboard.KeyDown += player.KeyDownEventHandler;
-                        needDrawMap = true;
                         break;
                     case GameState.EXIT:
                         Exit();
                         break;
                 }
             }
+        }
+
+        private bool TankCanMove(Level level, AbstractTank tank, Texture.Rotation rotation)
+        {
+            //if (tank.Y < windowHeight/2 &&
+            //    tank.Y - gameRenderer.ElementHeight >= -windowHeight/2 &&
+            //    tank.X + gameRenderer.ElementWidth < windowWidth/2 &&
+            //    tank.X > -windowWidth/2)
+            MapObject.Types mapObjectType = NextMapObject(level, tank, rotation);
+            if (!mapObjectType.Equals(MapObject.Types.TEMPORARY))
+            {
+                switch (rotation)
+                {
+                    case Texture.Rotation.Top:
+                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                            mapObjectType.Equals(MapObject.Types.EMPTY))
+                        {
+                            return true;
+                        }
+                        break;
+                    case Texture.Rotation.Bottom:
+                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                            mapObjectType.Equals(MapObject.Types.EMPTY))
+                        {
+                            return true;
+                        }
+                        break;
+                    case Texture.Rotation.Right:
+                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                            mapObjectType.Equals(MapObject.Types.EMPTY))
+                        {
+                            return true;
+                        }
+                        break;
+                    case Texture.Rotation.Left:
+                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                            mapObjectType.Equals(MapObject.Types.EMPTY))
+                        {
+                            return true;
+                        }
+                        break;
+                }
+            }
+            return false;
+        }
+
+        private MapObject.Types NextMapObject(Level level, AbstractTank tank, Texture.Rotation rotation)
+        {
+            PointF tankPositionOnMap = TankPositionOnMap(tank);
+            float fX = (float) Math.Round(tankPositionOnMap.X, 0), fY = (float)Math.Round(tankPositionOnMap.Y, 0);
+
+            switch (rotation)
+            {
+                case Texture.Rotation.Top:
+                    if (tank.Y.Equals((int) (windowHeight/2 - fY*gameRenderer.ElementHeight)))
+                    {
+                        if (Math.Round(tankPositionOnMap.Y, 0).Equals(0)) return MapObject.Types.TEMPORARY;
+                        return
+                            level.MapInstance[(int) Math.Round(tankPositionOnMap.Y, 0) - 1][
+                                (int) Math.Round(tankPositionOnMap.X, 0)].Type;
+                    }
+                    break;
+                case Texture.Rotation.Bottom:
+                    if ((tank.Y - gameRenderer.ElementHeight).Equals((int)(windowHeight/2 - (fY+1) * gameRenderer.ElementHeight)))
+                    {
+                        if (Math.Round(tankPositionOnMap.Y, 0).Equals(19)) return MapObject.Types.TEMPORARY;
+                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0) + 1][(int)Math.Round(tankPositionOnMap.X, 0)].Type;
+                    }
+                    break;
+                case Texture.Rotation.Right:
+                    if ((tank.X + gameRenderer.ElementWidth).Equals((int)(-windowWidth / 2 + (fX + 1) * gameRenderer.ElementWidth)))
+                    {
+                        if (Math.Round(tankPositionOnMap.X, 0).Equals(18)) return MapObject.Types.TEMPORARY;
+                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0) + 1].Type;
+                    }
+                    break;
+                case Texture.Rotation.Left:
+                    if (tank.X.Equals((int)(-windowWidth/2 + fX * gameRenderer.ElementWidth)))
+                    {
+                        if (Math.Round(tankPositionOnMap.X, 0).Equals(0)) return MapObject.Types.TEMPORARY;
+                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0) - 1].Type;
+                    }
+                    break;
+            }
+            return MapObject.Types.EMPTY;
+                //level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0)].Type;
+        }
+
+        private PointF TankPositionOnMap(AbstractTank tank)
+        {
+            return new PointF((tank.X + windowWidth/2)/gameRenderer.ElementWidth,
+                              (tank.Y - windowHeight/2)/gameRenderer.ElementHeight * -1);
         }
 
         MainMenu m;

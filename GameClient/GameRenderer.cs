@@ -81,15 +81,15 @@ namespace BattleCity.GameClient
                     break;
             }
             //Clear zone
-            GL.Begin(BeginMode.Quads);
-            {
-                GL.Color3(Color.Black);
-                GL.Vertex2(v1);
-                GL.Vertex2(v2);
-                GL.Vertex2(v3);
-                GL.Vertex2(v4);
-            }
-            GL.End();
+            //GL.Begin(BeginMode.Quads);
+            //{
+            //    GL.Color3(Color.Black);
+            //    GL.Vertex2(v1);
+            //    GL.Vertex2(v2);
+            //    GL.Vertex2(v3);
+            //    GL.Vertex2(v4);
+            //}
+            //GL.End();
 
             //mapping texture
             texture.Bind();
@@ -166,6 +166,8 @@ namespace BattleCity.GameClient
                         DrawTexture(tank.X, tank.Y, tankTextureList[0], tank.rotation);
                         break;
                     case AbstractTank.Type.PlayerFast:
+                        // TODO: texture of fast tank
+                        DrawTexture(tank.X, tank.Y, tankTextureList[0], tank.rotation);
                         break;
                 }
             }

@@ -44,6 +44,13 @@ namespace BattleCity.GameLib.Tanks
 
         public int Y { get; private set; }
 
+        public int Speed { get; protected set; }
+
+        public void SetSpeed(int speed)
+        {
+            Speed = speed;
+        }
+
         public bool IsUpState { get; private set; }
 
         public bool IsDownState { get; private set; }
@@ -94,22 +101,22 @@ namespace BattleCity.GameLib.Tanks
 
         public void MoveUp()
         {
-            Y++;
+            Y = Y + Speed;
         }
 
         public void MoveDown()
         {
-            Y--;
+            Y = Y - Speed;
         }
 
         public void MoveLeft()
         {
-            X--;
+            X = X - Speed;
         }
 
         public void MoveRight()
         {
-            X++;
+            X = X + Speed;
         }
 
         private Player managingPlayer;
