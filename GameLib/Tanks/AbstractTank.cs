@@ -24,6 +24,7 @@ namespace BattleCity.GameLib.Tanks
 
         public AbstractTank(Player managingPlayer, int x, int y, Texture.Rotation rotation)
         {
+            managingPlayer.tank = this;
             this.managingPlayer = managingPlayer;
             X = x;
             Y = y;
@@ -43,38 +44,34 @@ namespace BattleCity.GameLib.Tanks
 
         public int Y { get; private set; }
 
-        //public bool IsUpState { get; private set; }
+        public bool IsUpState { get; private set; }
 
-        //public bool IsDownState { get; private set; }
+        public bool IsDownState { get; private set; }
 
-        //public bool IsLeftState { get; private set; }
+        public bool IsLeftState { get; private set; }
 
-        //public bool IsRightState { get; private set; }
+        public bool IsRightState { get; private set; }
 
         public abstract Bullet CreateBullet();
 
         private void UpCommandHandler(Object source, PlayerKeyEventArgs args)
         {
-            Rotate(Texture.Rotation.Top);
-            //IsUpState = args.KeyReleased;
+            IsUpState = args.KeyReleased;
         }
 
         private void DownCommandHandler(Object source, PlayerKeyEventArgs args)
         {
-            Rotate(Texture.Rotation.Bottom);
-            //IsDownState = args.KeyReleased;
+            IsDownState = args.KeyReleased;
         }
 
         private void RightCommandHandler(Object source, PlayerKeyEventArgs args)
         {
-            Rotate(Texture.Rotation.Right);
-            //IsRightState = args.KeyReleased;
+            IsRightState = args.KeyReleased;
         }
 
         private void LeftCommandHandler(Object source, PlayerKeyEventArgs args)
         {
-            Rotate(Texture.Rotation.Left);
-            //IsLeftState = args.KeyReleased;
+            IsLeftState = args.KeyReleased;
         }
 
         private void Init()
@@ -84,10 +81,35 @@ namespace BattleCity.GameLib.Tanks
             managingPlayer.LeftCommand += LeftCommandHandler;
             managingPlayer.RightCommand += RightCommandHandler;
 
-            //IsUpState = false;
-            //IsDownState = false;
-            //IsLeftState = false;
-            //IsRightState = false;
+            StateClear();
+        }
+
+        private void StateClear()
+        {
+            IsUpState = false;
+            IsDownState = false;
+            IsLeftState = false;
+            IsRightState = false;
+        }
+
+        public void MoveUp()
+        {
+            Y++;
+        }
+
+        public void MoveDown()
+        {
+            Y--;
+        }
+
+        public void MoveLeft()
+        {
+            X--;
+        }
+
+        public void MoveRight()
+        {
+            X++;
         }
 
         private Player managingPlayer;

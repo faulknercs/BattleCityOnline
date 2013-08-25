@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using BattleCity.GameLib.Events;
+using BattleCity.GameLib.Tanks;
 
 namespace BattleCity.GameLib
 {
@@ -30,6 +31,8 @@ namespace BattleCity.GameLib
 
         public uint Score { get; set; }
         public uint Lives { get; set; }
+
+        public AbstractTank tank;
 
         public abstract void MessageEventHandler(Object source, MessageEventArgs args);
 
@@ -62,6 +65,5 @@ namespace BattleCity.GameLib
             if (ShootCommand != null)
                 ShootCommand(this, args);
         }
-
     }
 }

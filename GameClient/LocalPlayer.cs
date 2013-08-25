@@ -27,9 +27,24 @@ namespace BattleCity.GameClient
         /// </summary>
         /// <param name="source">Source of event. Not used.</param>
         /// <param name="args">Arguments of event. Uses to determine, is key up or down</param>
-        public void KeyEventHandler(Object source, KeyboardKeyEventArgs args)
+        public void KeyDownEventHandler(Object source, KeyboardKeyEventArgs args)
         {
             PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyUp(args.Key));
+            if (args.Key == keys.UpKey)
+                OnUpCommand(p_args);
+            if (args.Key == keys.DownKey)
+                OnDownCommand(p_args);
+            if (args.Key == keys.LeftKey)
+                OnLeftCommand(p_args);
+            if (args.Key == keys.RightKey)
+                OnRightCommand(p_args);
+            if (args.Key == keys.ShootKey)
+                OnShootCommand(p_args);
+        }
+
+        public void KeyUpEventHandler(Object source, KeyboardKeyEventArgs args)
+        {
+            PlayerKeyEventArgs p_args = new PlayerKeyEventArgs(Keyboard.GetState().IsKeyDown(args.Key));
             if (args.Key == keys.UpKey)
                 OnUpCommand(p_args);
             if (args.Key == keys.DownKey)

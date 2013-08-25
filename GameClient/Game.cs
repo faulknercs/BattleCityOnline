@@ -118,6 +118,27 @@ namespace BattleCity.GameClient
                 {
                     needRefreshMap = true;
                 }
+                Title = player.tank.IsUpState.ToString();
+                if (player.tank.IsUpState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Top);
+                    player.tank.MoveUp();
+                }
+                else if (player.tank.IsDownState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Bottom);
+                    player.tank.MoveDown();
+                }
+                else if (player.tank.IsRightState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Right);
+                    player.tank.MoveRight();
+                }
+                else if (player.tank.IsLeftState)
+                {
+                    player.tank.Rotate(Texture.Rotation.Left);
+                    player.tank.MoveLeft();
+                }
             }
         }
 
@@ -143,7 +164,6 @@ namespace BattleCity.GameClient
             //}
             if (needRefreshMap)
             {
-                //gameRenderer.DrawTank(0, 1, AbstractTank.Type.PlayerNormal);
                 needRefreshMap = false;
             }
 
@@ -187,7 +207,8 @@ namespace BattleCity.GameClient
                         player = new LocalPlayer();
                         level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
                         level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
-                        Keyboard.KeyDown += player.KeyEventHandler;
+                        Keyboard.KeyUp += player.KeyUpEventHandler;
+                        Keyboard.KeyDown += player.KeyDownEventHandler;
                         needDrawMap = true;
                         break;
                     case GameState.EXIT:
