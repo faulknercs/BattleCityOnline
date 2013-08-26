@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using BattleCity.GameClient.GUI;
 using BattleCity.GameLib;
@@ -91,7 +92,7 @@ namespace BattleCity.GameClient
                 if (Keyboard[Key.Q])
                 {
                     level = new Level(new Map(MapGenerator.GenerateMap(GameMode.Mode.CLASSIC)));
-                    level.AddTank(player, AbstractTank.Type.PlayerNormal, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
+                    level.AddTank(player, AbstractTank.Type.PlayerFast, (int)(-windowWidth / 2 + gameRenderer.ElementWidth * 7), (int)(windowHeight / 2 - 19 * gameRenderer.ElementHeight), Texture.Rotation.Top);
                 }
                 if (Keyboard[Key.W])
                 {
@@ -188,90 +189,153 @@ namespace BattleCity.GameClient
 
         private bool TankCanMove(Level level, AbstractTank tank, Texture.Rotation rotation)
         {
-            //if (tank.Y < windowHeight/2 &&
-            //    tank.Y - gameRenderer.ElementHeight >= -windowHeight/2 &&
-            //    tank.X + gameRenderer.ElementWidth < windowWidth/2 &&
-            //    tank.X > -windowWidth/2)
-            MapObject.Types mapObjectType = NextMapObject(level, tank, rotation);
-            if (!mapObjectType.Equals(MapObject.Types.TEMPORARY))
-            {
-                switch (rotation)
-                {
-                    case Texture.Rotation.Top:
-                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
-                            mapObjectType.Equals(MapObject.Types.EMPTY))
-                        {
-                            return true;
-                        }
-                        break;
-                    case Texture.Rotation.Bottom:
-                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
-                            mapObjectType.Equals(MapObject.Types.EMPTY))
-                        {
-                            return true;
-                        }
-                        break;
-                    case Texture.Rotation.Right:
-                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
-                            mapObjectType.Equals(MapObject.Types.EMPTY))
-                        {
-                            return true;
-                        }
-                        break;
-                    case Texture.Rotation.Left:
-                        if (mapObjectType.Equals(MapObject.Types.FOREST) ||
-                            mapObjectType.Equals(MapObject.Types.EMPTY))
-                        {
-                            return true;
-                        }
-                        break;
-                }
-            }
-            return false;
+            PointF pos = TankPositionOnMap(tank);
+            List<MapObject.Types> nextMapObjectType = NextMapObjects(level, tank, rotation);
+            List<MapObject.Types> currentMapObjectType = CurrentMapObjects(level, tank, rotation);
+            nextMapObjectType.RemoveAll(x => x.Equals(MapObject.Types.FOREST) || x.Equals(MapObject.Types.EMPTY));
+            currentMapObjectType.RemoveAll(x => x.Equals(MapObject.Types.FOREST) || x.Equals(MapObject.Types.EMPTY));
+            return currentMapObjectType.Count.Equals(0);
+            //TODO: Maybe tank size reduce in 2 pixels, so we can get real 1 pixel differ in borders of textures
+            //if (currentMapObjectType.Count.Equals(0))
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return nextMapObjectType.Count.Equals(0);
+            //}
+
+            //if (!mapObjectType.Exists(x => x.Equals(MapObject.Types.TEMPORARY)))
+                ////{
+                //    if (mapObjectType.Count.Equals(0))
+                //    {
+                //        return true;
+                //    }
+                    //switch (rotation)
+                    //{
+                    //    case Texture.Rotation.Top:
+                    //        return nextMapObjectType.Count.Equals(0);
+                    //    case Texture.Rotation.Bottom:
+                    //        //if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                    //        //    mapObjectType.Equals(MapObject.Types.EMPTY))
+                    //        {
+                    //            return true;
+                    //        }
+                    //        break;
+                    //    case Texture.Rotation.Right:
+                    //        //if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                    //        //    mapObjectType.Equals(MapObject.Types.EMPTY))
+                    //        {
+                    //            return true;
+                    //        }
+                    //        break;
+                    //    case Texture.Rotation.Left:
+                    //        //if (mapObjectType.Equals(MapObject.Types.FOREST) ||
+                    //        //    mapObjectType.Equals(MapObject.Types.EMPTY))
+                    //        {
+                    //            return true;
+                    //        }
+                    //        break;
+                    //}
+                //}
+            //}
+            //return false;
         }
 
-        private MapObject.Types NextMapObject(Level level, AbstractTank tank, Texture.Rotation rotation)
+        private List<MapObject.Types> CurrentMapObjects(Level level, AbstractTank tank, Texture.Rotation rotation)
         {
             PointF tankPositionOnMap = TankPositionOnMap(tank);
             float fX = (float) Math.Round(tankPositionOnMap.X, 0), fY = (float)Math.Round(tankPositionOnMap.Y, 0);
+            List<MapObject.Types> objects = new List<MapObject.Types>();
 
             switch (rotation)
             {
                 case Texture.Rotation.Top:
-                    if (tank.Y.Equals((int) (windowHeight/2 - fY*gameRenderer.ElementHeight)))
+                    objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
+                    if (tank.Y.Equals((int)(windowHeight / 2 - fY * gameRenderer.ElementHeight)))
                     {
-                        if (Math.Round(tankPositionOnMap.Y, 0).Equals(0)) return MapObject.Types.TEMPORARY;
-                        return
-                            level.MapInstance[(int) Math.Round(tankPositionOnMap.Y, 0) - 1][
-                                (int) Math.Round(tankPositionOnMap.X, 0)].Type;
+                        if (tankPositionOnMap.Y.Equals(0)) return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
+                    }
+                    else
+                    {
+                        if (tankPositionOnMap.X - ((int)tankPositionOnMap.X) > 0)
+                        {
+                            objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X + 1].Type);
+                        }
                     }
                     break;
                 case Texture.Rotation.Bottom:
-                    if ((tank.Y - gameRenderer.ElementHeight).Equals((int)(windowHeight/2 - (fY+1) * gameRenderer.ElementHeight)))
+                    objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
+                    if ((tank.Y-gameRenderer.ElementHeight).Equals((int)(windowHeight / 2 - (fY+1) * gameRenderer.ElementHeight)))
                     {
-                        if (Math.Round(tankPositionOnMap.Y, 0).Equals(19)) return MapObject.Types.TEMPORARY;
-                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0) + 1][(int)Math.Round(tankPositionOnMap.X, 0)].Type;
+                        if (tankPositionOnMap.Y.Equals(19)) return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
+                    }
+                    else
+                    {
+                        if (tankPositionOnMap.X - ((int)tankPositionOnMap.X) > 0)
+                        {
+                            objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X + 1].Type);
+                        }
                     }
                     break;
+                    //TODO: Do other stuff
                 case Texture.Rotation.Right:
                     if ((tank.X + gameRenderer.ElementWidth).Equals((int)(-windowWidth / 2 + (fX + 1) * gameRenderer.ElementWidth)))
                     {
-                        if (Math.Round(tankPositionOnMap.X, 0).Equals(18)) return MapObject.Types.TEMPORARY;
-                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0) + 1].Type;
+                        if (Math.Round(tankPositionOnMap.X, 0).Equals(18))
+                            return new List<MapObject.Types> {MapObject.Types.TEMPORARY};
+                        return new List<MapObject.Types>
+                            {
+                                level.MapInstance[(int) Math.Round(tankPositionOnMap.Y, 0)][(int) Math.Round(tankPositionOnMap.X, 0) + 1].Type
+                            };
                     }
                     break;
                 case Texture.Rotation.Left:
                     if (tank.X.Equals((int)(-windowWidth/2 + fX * gameRenderer.ElementWidth)))
                     {
-                        if (Math.Round(tankPositionOnMap.X, 0).Equals(0)) return MapObject.Types.TEMPORARY;
-                        return level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0) - 1].Type;
+                        if (Math.Round(tankPositionOnMap.X, 0).Equals(0))
+                            return new List<MapObject.Types> {MapObject.Types.TEMPORARY};
+                        return new List<MapObject.Types>
+                            {
+                                level.MapInstance[(int) Math.Round(tankPositionOnMap.Y, 0)][(int) Math.Round(tankPositionOnMap.X, 0) - 1].Type
+                            };
                     }
                     break;
             }
-            return MapObject.Types.EMPTY;
-                //level.MapInstance[(int)Math.Round(tankPositionOnMap.Y, 0)][(int)Math.Round(tankPositionOnMap.X, 0)].Type;
+            return objects;
         }
 
+        private List<MapObject.Types> NextMapObjects(Level level, AbstractTank tank, Texture.Rotation rotation)
+        {
+            PointF tankPositionOnMap = TankPositionOnMap(tank);
+            float fX = (float)Math.Round(tankPositionOnMap.X, 0), fY = (float)Math.Round(tankPositionOnMap.Y, 0);
+            List<MapObject.Types> objects = new List<MapObject.Types>();
+
+            switch (rotation)
+            {
+                case Texture.Rotation.Top:
+                    //if (tank.Y.Equals((int)(windowHeight / 2 - fY * gameRenderer.ElementHeight)))
+                    //{
+                    //    if (tankPositionOnMap.Y.Equals(0)) return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
+                    //}
+                    //else
+                    //{
+                    //    objects.Add(level.MapInstance[(int)tankPositionOnMap.Y-1][(int)tankPositionOnMap.X].Type);
+                    //    if (tankPositionOnMap.X - ((int)tankPositionOnMap.X) > 0)
+                    //    {
+                    //        objects.Add(level.MapInstance[(int)tankPositionOnMap.Y-1][(int)tankPositionOnMap.X + 1].Type);
+                    //    }
+                    //}
+                    break;
+                case Texture.Rotation.Bottom:
+                    break;
+                case Texture.Rotation.Right:
+                    break;
+                case Texture.Rotation.Left:
+                    break;
+            }
+            return objects;
+        }
         private PointF TankPositionOnMap(AbstractTank tank)
         {
             return new PointF((tank.X + windowWidth/2)/gameRenderer.ElementWidth,
