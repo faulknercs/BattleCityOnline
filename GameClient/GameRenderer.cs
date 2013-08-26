@@ -156,15 +156,15 @@ namespace BattleCity.GameClient
             {
                 case Texture.Rotation.Top:
                     objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
-                    if (!tank.Y.Equals((int) (windowHeight/2 - fY*ElementHeight)) &&
-                        tankPositionOnMap.X - ((int) tankPositionOnMap.X) > 0)
+                    if (!tank.Y.Equals((int) (windowHeight/2 - fY*elementHeight)) &&
+                        tankPositionOnMap.X - ((int)tankPositionOnMap.X) > 0)
                     {
                         objects.Add(level.MapInstance[(int) tankPositionOnMap.Y][(int) tankPositionOnMap.X + 1].Type);
                     }
                     break;
                 case Texture.Rotation.Bottom:
                     objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
-                    if (!(tank.Y - ElementHeight).Equals((int) (windowHeight/2 - (fY + 1)*ElementHeight)) &&
+                    if (!(tank.Y - ElementHeight).Equals((int) (windowHeight/2 - (fY + 1)*elementHeight)) &&
                         tankPositionOnMap.X - ((int) tankPositionOnMap.X) > 0)
                     {
                         objects.Add(level.MapInstance[(int) tankPositionOnMap.Y][(int) tankPositionOnMap.X + 1].Type);
@@ -172,16 +172,16 @@ namespace BattleCity.GameClient
                     break;
                 case Texture.Rotation.Right:
                     objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
-                    if (!(tank.Y - ElementHeight).Equals((int) (windowHeight/2 - (fY + 1)*ElementHeight)) &&
-                        tankPositionOnMap.X - ((int) tankPositionOnMap.X) > 0)
+                    if (!(tank.X + elementWidth).Equals((int) (-windowWidth/2 + (fX + 1)*ElementHeight)) &&
+                        tankPositionOnMap.Y - ((int) tankPositionOnMap.Y) > 0)
                     {
                         objects.Add(level.MapInstance[(int) tankPositionOnMap.Y + 1][(int) tankPositionOnMap.X].Type);
                     }
                     break;
                 case Texture.Rotation.Left:
                     objects.Add(level.MapInstance[(int)tankPositionOnMap.Y][(int)tankPositionOnMap.X].Type);
-                    if (!(tank.Y - ElementHeight).Equals((int) (windowHeight/2 - (fY + 1)*ElementHeight)) &&
-                        tankPositionOnMap.X - ((int) tankPositionOnMap.X) > 0)
+                    if (!tank.X.Equals((int) (-windowWidth/2 + fX*elementWidth)) &&
+                        tankPositionOnMap.Y - ((int) tankPositionOnMap.Y) > 0)
                     {
                         objects.Add(level.MapInstance[(int) tankPositionOnMap.Y + 1][(int) tankPositionOnMap.X].Type);
                     }
@@ -193,7 +193,6 @@ namespace BattleCity.GameClient
         private List<MapObject.Types> NextMapObjects(Level level, AbstractTank tank, Texture.Rotation rotation)
         {
             PointF tankPositionOnMap = TankPositionOnMap(tank);
-            float fX = (float)Math.Round(tankPositionOnMap.X, 0), fY = (float)Math.Round(tankPositionOnMap.Y, 0);
             List<MapObject.Types> objects = new List<MapObject.Types>();
 
             switch (rotation)
