@@ -198,7 +198,7 @@ namespace BattleCity.GameClient
             switch (rotation)
             {
                 case Texture.Rotation.Top:
-                    if (tankPositionOnMap.Y.Equals(0))
+                    if (((int)(tankPositionOnMap.Y)).Equals(0))
                     {
                         return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
                     }
@@ -209,7 +209,7 @@ namespace BattleCity.GameClient
                     }
                     break;
                 case Texture.Rotation.Bottom:
-                    if (tankPositionOnMap.Y.Equals(19))
+                    if (((int)(tankPositionOnMap.Y)).Equals(19))
                     {
                         return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
                     }
@@ -220,7 +220,7 @@ namespace BattleCity.GameClient
                     }
                     break;
                 case Texture.Rotation.Right:
-                    if (tankPositionOnMap.X.Equals(18))
+                    if (((int)(tankPositionOnMap.X)).Equals(18))
                     {
                         return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
                     }
@@ -231,7 +231,7 @@ namespace BattleCity.GameClient
                     }
                     break;
                 case Texture.Rotation.Left:
-                    if (tankPositionOnMap.X.Equals(0))
+                    if (((int)(tankPositionOnMap.X)).Equals(0))
                     {
                         return new List<MapObject.Types> { MapObject.Types.TEMPORARY };
                     }
