@@ -12,6 +12,7 @@ namespace BattleCity.GameLib.Tanks
             : base(managingPlayer, x, y, rotation)
         {
             type = Type.PlayerNormal;
+            Speed = 1;
         }
 
         public override Bullet CreateBullet()
